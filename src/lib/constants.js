@@ -10,8 +10,8 @@ export const STATUS_CODE = {
 
 export const ROUTES = {
     HOME: "/home",
-    ROADMAP : "/home/roadmap",
-    COMMUNITY : "/home/community",
+    ROADMAP : "/roadmap",
+    COMMUNITY : "/community",
 }
 
 export const HOME_NAV_LABELS = {

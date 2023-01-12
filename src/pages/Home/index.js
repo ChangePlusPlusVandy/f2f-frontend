@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext } from "react";
-import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
@@ -42,7 +41,7 @@ export const Home = () => {
     fetchFact();
   }, [currentUser]);
 
-  const lastName = "Adams";
+  const lastName = "Adam's";
   const goal = 100;
   const points = 71;
   const hpList = ["Medicaid Waitlist"];
@@ -59,11 +58,11 @@ export const Home = () => {
   ));
 
   return (
-    <div>
+    <div style={{overflow:"scroll", overscrollBehavior: "none", height: "92vh"}}>
       <div className={cx(styles.text_div, "first")}>
         <text className={cx(styles.welcome)}>Welcome&nbsp;</text>
         <text className={cx(styles.welcome, "family")}>
-          {" " + lastName} Family!
+          {lastName} Family!
         </text>
       </div>
       <div className={cx(styles.text_div, "second")}>
