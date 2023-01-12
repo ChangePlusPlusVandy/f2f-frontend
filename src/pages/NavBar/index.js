@@ -4,6 +4,8 @@ import classNames from 'classnames/bind';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useWindowSize } from '../../lib/hooks';
 import { HOME_NAV_LABELS, ROUTES, WINDOW_TYPE } from '../../lib/constants';
+import { HomeIcon, RoadmapIcon, CommunityIcon } from '../../lib/icons';
+
 const cx = classNames.bind(styles);
 
 export const NavBar = () => {
@@ -23,25 +25,21 @@ export const NavBar = () => {
             [styles.mobile]: isMobile
         })}
     >
-        <div
-        className={cx(styles.navBar, {
-            [styles.small]: isSmall
-        })}
-        >
-            <div onClick={() => goTo(ROUTES.HOME)} className={cx(styles.navItem, {
-                [styles.selected]: pathname === ROUTES.HOME
-            })}>
-                <span className={cx(styles.navItemLabel)}>{HOME_NAV_LABELS.HOME}</span>
+        <div className={cx(styles.navBar)}>
+            <div onClick={() => goTo(ROUTES.HOME)} className={cx(styles.navItem)}>
+                <div className={cx(styles.icon_div)}>
+                    <HomeIcon filled={pathname === ROUTES.HOME}/>
+                </div>
             </div>  
-            <div onClick={() => goTo(ROUTES.ROADMAP)} className={cx(styles.navItem, {
-                [styles.selected]: pathname === ROUTES.ROADMAP
-            })}>
-                <span className={cx(styles.navItemLabel)}>{HOME_NAV_LABELS.ROADMAP}</span>
+            <div onClick={() => goTo(ROUTES.ROADMAP)} className={cx(styles.navItem)}>
+                <div className={cx(styles.icon_div)}>
+                    <RoadmapIcon filled={pathname === ROUTES.ROADMAP}/>
+                </div>
             </div>  
-            <div onClick={() => goTo(ROUTES.COMMUNITY)} className={cx(styles.navItem, {
-                [styles.selected]: pathname === ROUTES.COMMUNITY
-            })}>
-                <span className={cx(styles.navItemLabel)}>{HOME_NAV_LABELS.COMMUNITY}</span>
+            <div onClick={() => goTo(ROUTES.COMMUNITY)} className={cx(styles.navItem)}>
+                <div className={cx(styles.icon_div)}>
+                    <CommunityIcon filled={pathname === ROUTES.COMMUNITY}/>
+                </div>
             </div> 
         </div>
     </div>
