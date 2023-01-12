@@ -14,7 +14,7 @@
 
 .navBar {
     width: 100%;
-    height: 10%;
+    height: 8vh;
     left: 0;
     bottom: 0;
     position: absolute;
@@ -27,13 +27,6 @@
         top: 0;
     }
  }
-
-/* .navBar.small { */
-    /* position: absolute; */
-    /* left: 0; */
-    /* bottom: 0; */
-    /* display: flex; */
-/* } */
 
 .navItem {
     box-sizing: border-box;
