@@ -51,29 +51,29 @@ export const Home = () => {
   ];
 
   const hpElements = hpList.map((thing, index) => (
-    <p className={styles.list}>{index + 1 + ". " + thing}</p>
+    <p className={styles.list} key = {index}>{index + 1 + ". " + thing}</p>
   ));
   const elseElements = elseList.map((thing, index) => (
-    <p className={styles.list}>{index + 1 + ". " + thing}</p>
+    <p className={styles.list} key = {index}>{index + 1 + ". " + thing}</p>
   ));
 
   return (
     <div style={{overflow:"scroll", overscrollBehavior: "none", height: "92vh"}}>
       <div className={cx(styles.text_div, "first")}>
-        <text className={cx(styles.welcome)}>Welcome&nbsp;</text>
-        <text className={cx(styles.welcome, "family")}>
+        <p className={cx(styles.welcome)}>Welcome&nbsp;</p>
+        <p className={cx(styles.welcome, "family")}>
           {lastName} Family!
-        </text>
+        </p>
       </div>
       <div className={cx(styles.text_div, "second")}>
-        <text className={cx(styles.cruising)}>You're&nbsp;</text>
-        <text className={cx(styles.cruising, "color")}>Cruising it!</text>
+        <p className={cx(styles.cruising)}>You're&nbsp;</p>
+        <p className={cx(styles.cruising, "color")}>Cruising it!</p>
       </div>
       <div className={cx(styles.text_div)}>
-        <text className={cx(styles.points)}>{goal - points}</text>
-        <text className={cx(styles.points, "text")}>
+        <p className={cx(styles.points)}>{goal - points}</p>
+        <p className={cx(styles.points, "text")}>
           &nbsp;points away from your weekly goal
-        </text>
+        </p>
       </div>
       <div className={cx(styles.progress_circle)}>
         <CircularProgressbarWithChildren value={(100 * points) / goal} strokeWidth={16} styles={buildStyles({
@@ -100,8 +100,6 @@ export const Home = () => {
     </div>
   );
 };
-
-export default Home;
 
 //issues:
 //what happens when todo list becomes larger than the screen
