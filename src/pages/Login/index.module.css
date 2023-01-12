@@ -5,6 +5,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 15vh;
+  overflow: hidden;
 }
 
 .image.logo {
@@ -18,12 +19,12 @@
   .content {
     margin-top: 0;
     width: 85vw;
+    overflow: hidden;
   }
-  .image.logo {
+  .image {
     padding-top: 30%;
-    width: 80%;
+    width: 90%;
     max-height: auto;
-    margin-left: 10%;
   }
   .header.description {
     font-size: 1.5vh;
@@ -36,9 +37,13 @@
   }
 }
 
-.content.image {
+.image {
   margin-left: auto;
   margin-right: auto;
+  min-width: 50%;
+  max-width: 80%;
+  display: flex;
+  justify-content: center;
 }
 
 .header {
@@ -63,13 +68,14 @@
 }
 
 .login_form > label {
+  font-family: "Poppins";
   font-size: 1.8vh;
   color: rgb(129, 129, 129);
 }
 
 .login_form > input[type="email"] {
   background-color: rgb(234, 239, 241);
-  width: 100%;
+  width: 98%;
   height: 4vh;
   margin: 0;
   border-radius: 15px;
@@ -81,7 +87,7 @@
 
 .login_form > input[type="password"] {
   background-color: rgb(234, 239, 241);
-  width: 100%;
+  width: 98%;
   height: 4vh;
   margin: 0;
   border-radius: 15px;
@@ -109,6 +115,7 @@
 }
 
 .form_extras > label {
+  font-family: "Poppins";
   margin-left: 1px;
   margin-right: auto;
   font-size: 1.5vh;
@@ -120,6 +127,7 @@
 
 .form_extras.desc {
   font-size: 1.5vh;
+  font-family: "Poppins";
 }
 
 .login_form > input[type="submit"] {
@@ -147,11 +155,13 @@
   display: flex;
   justify-content: center;
   font-size: 1.5vh;
+  font-family: "Poppins";
   margin-top: 0.5vh;
 }
 
 .signup.desc {
   color: rgb(129, 129, 129);
+  font-family: "Poppins";
 }
 
 .error {
