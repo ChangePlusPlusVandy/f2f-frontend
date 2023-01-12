@@ -7,6 +7,7 @@ import { Home } from "./pages/Home";
 import { ForgotPassword } from "./pages/ForgetPassword";
 import { Roadmap } from "./pages/Roadmap";
 import { Community } from "./pages/Community";
+import { Login } from "./pages/Login";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="home" element={<Home />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="community" element={<Community />} />
+        <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   </AuthProvider>
