@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+.header {
+  font-family: "Poppins";
+  font-style: normal;
+  font-size: 8vw;
+  font-weight: 900;
+  display: inline-block;
+  color: black;
+  margin-bottom: 0;
+}
+
+.header.small {
+  font-size: 3vw;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.tasks_div {
+  border: 4px black;
+  border-style: solid;
+  border-radius: 50px;
+  margin-top: 8vw;
+  margin-left: 3vw;
+  margin-right: 3vw;
+  padding: 3vw;
+  background-color: #dbf0f5;
+}
+
+.tasks_div.all {
+  background-color: #f9f6dc;
+}
+
+.icon {
+  height: 12vw;
+  width: 12vw;
+}
+
+.taskDesc {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  display: inline-block;
+  font-family: "Poppins";
+  font-style: normal;
+  font-size: 7vw;
+  font-weight: 900;
+}
+
+.taskNum {
+  display: inline-block;
+  font-family: "Poppins";
+  font-style: normal;
+  font-size: 6vw;
+  font-weight: bolder;
+  margin-left: auto;
+}
+
+/* just for mvp */
+.todo_div {
+  border: 6px #0198ba;
+  border-style: solid;
+  border-radius: 50px;
+  margin-top: 10vw;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  padding-left: 3vw;
+  padding-bottom: 10vw;
+}
+
+.radar {
+  font-family: "Poppins";
+  font-weight: 900;
+  color: black;
+  font-size: 7vw;
+  margin-top: 3vw;
+}
+
+.priority {
+  font-family: "Poppins";
+  font-weight: bolder;
+  color: #8b5674;
+  font-size: 5vw;
+  margin-top: 6vw;
+}
+
+.priority.else {
+  color: #e3d150;
+}
+
+.list {
+  font-family: "Poppins";
+  color: black;
+  font-weight: 600;
+}

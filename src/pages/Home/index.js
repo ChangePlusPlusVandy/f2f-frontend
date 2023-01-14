@@ -5,65 +5,55 @@ import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
 import { ROUTES } from "../../lib/constants";
 
-import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const cx = classNames.bind(styles);
 
 export const Home = () => {
-  const [fact, setFact] = useState("");
-  const { currentUser } = useAuth();
-
-  // for the request to our backend API. I suggest using ReactQuery. The normal fetch() method is
-  // amazing, but it gets tedious when dealing with caching, retries, and so on. ReactQuery takes
-  // care of that for us.
-
-  useEffect(() => {
-    const fetchFact = async () => {
-      console.log("called");
-      try {
-        const token = await currentUser.getIdToken();
-
-        const payloadHeader = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-
-        const res = await fetch("http://localhost:8080/data", payloadHeader);
-        setFact(await res.text());
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchFact();
-  }, [currentUser]);
-
-  const lastName = "Adam's";
-  const goal = 100;
-  const points = 71;
-  const hpList = ["Medicaid Waitlist"];
-  const elseList = [
+  const [lastName, setLastName] = useState("Adam's");
+  const [goal, setGoal] = useState(100);
+  const [points, setPoints] = useState(71);
+  const [hpList, sethpList] = useState(["Medicaid Waitlist"]);
+  const [elseList, setElseList] = useState([
     "Register for Autism Symposium",
     "Intensive IEP support & training",
-  ];
+  ]);
+
+  useEffect(() => {
+    fetch("/userData")
+      .then((response) => response.json())
+      .then((data) => {
+        setLastName = data.lastName;
+        setGoal = data.goal;
+        setPoints = data.points;
+        sethpList = data.hpList;
+        setElseList = data.elseList;
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const hpElements = hpList.map((thing, index) => (
-    <p className={styles.list} key = {index}>{index + 1 + ". " + thing}</p>
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing}
+    </p>
   ));
   const elseElements = elseList.map((thing, index) => (
-    <p className={styles.list} key = {index}>{index + 1 + ". " + thing}</p>
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing}
+    </p>
   ));
 
   return (
-    <div style={{overflow:"scroll", overscrollBehavior: "none", height: "92vh"}}>
+    <div
+      style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
+    >
       <div className={cx(styles.text_div, "first")}>
         <p className={cx(styles.welcome)}>Welcome&nbsp;</p>
-        <p className={cx(styles.welcome, "family")}>
-          {lastName} Family!
-        </p>
+        <p className={cx(styles.welcome, "family")}>{lastName} Family!</p>
       </div>
       <div className={cx(styles.text_div, "second")}>
         <p className={cx(styles.cruising)}>You're&nbsp;</p>
@@ -76,10 +66,14 @@ export const Home = () => {
         </p>
       </div>
       <div className={cx(styles.progress_circle)}>
-        <CircularProgressbarWithChildren value={(100 * points) / goal} strokeWidth={16} styles={buildStyles({
-          pathColor: "#E3D150",
-          trailColor: "#F9F6DC",
-        })}>
+        <CircularProgressbarWithChildren
+          value={(100 * points) / goal}
+          strokeWidth={16}
+          styles={buildStyles({
+            pathColor: "#E3D150",
+            trailColor: "#F9F6DC",
+          })}
+        >
           <div className={cx(styles.progress_circle_text)}>{points}</div>
           <div className={cx(styles.progress_circle_text)}>Points</div>
         </CircularProgressbarWithChildren>
