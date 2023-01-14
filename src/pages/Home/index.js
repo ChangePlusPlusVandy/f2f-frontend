@@ -1,86 +1,79 @@
 import React, { useState, useEffect, createContext } from "react";
-import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
 import { ROUTES } from "../../lib/constants";
 
-import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const cx = classNames.bind(styles);
 
 export const Home = () => {
-  const [fact, setFact] = useState("");
-  const { currentUser } = useAuth();
-
-  // for the request to our backend API. I suggest using ReactQuery. The normal fetch() method is
-  // amazing, but it gets tedious when dealing with caching, retries, and so on. ReactQuery takes
-  // care of that for us.
-
-  useEffect(() => {
-    const fetchFact = async () => {
-      console.log("called");
-      try {
-        const token = await currentUser.getIdToken();
-
-        const payloadHeader = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-
-        const res = await fetch("http://localhost:8080/data", payloadHeader);
-        setFact(await res.text());
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchFact();
-  }, [currentUser]);
-
-  const lastName = "Adams";
-  const goal = 100;
-  const points = 71;
-  const hpList = ["Medicaid Waitlist"];
-  const elseList = [
+  const [lastName, setLastName] = useState("Adam's");
+  const [goal, setGoal] = useState(100);
+  const [points, setPoints] = useState(71);
+  const [hpList, sethpList] = useState(["Medicaid Waitlist"]);
+  const [elseList, setElseList] = useState([
     "Register for Autism Symposium",
     "Intensive IEP support & training",
-  ];
+  ]);
+
+  useEffect(() => {
+    fetch("/userData")
+      .then((response) => response.json())
+      .then((data) => {
+        setLastName = data.lastName;
+        setGoal = data.goal;
+        setPoints = data.points;
+        sethpList = data.hpList;
+        setElseList = data.elseList;
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const hpElements = hpList.map((thing, index) => (
-    <p className={styles.list}>{index + 1 + ". " + thing}</p>
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing}
+    </p>
   ));
   const elseElements = elseList.map((thing, index) => (
-    <p className={styles.list}>{index + 1 + ". " + thing}</p>
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing}
+    </p>
   ));
 
   return (
-    <div>
+    <div
+      style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
+    >
       <div className={cx(styles.text_div, "first")}>
-        <text className={cx(styles.welcome)}>Welcome&nbsp;</text>
-        <text className={cx(styles.welcome, "family")}>
-          {" " + lastName} Family!
-        </text>
+        <p className={cx(styles.welcome)}>Welcome&nbsp;</p>
+        <p className={cx(styles.welcome, "family")}>{lastName} Family!</p>
       </div>
       <div className={cx(styles.text_div, "second")}>
-        <text className={cx(styles.cruising)}>You're&nbsp;</text>
-        <text className={cx(styles.cruising, "color")}>Cruising it!</text>
+        <p className={cx(styles.cruising)}>You're&nbsp;</p>
+        <p className={cx(styles.cruising, "color")}>Cruising it!</p>
       </div>
       <div className={cx(styles.text_div)}>
-        <text className={cx(styles.points)}>{goal - points}</text>
-        <text className={cx(styles.points, "text")}>
+        <p className={cx(styles.points)}>{goal - points}</p>
+        <p className={cx(styles.points, "text")}>
           &nbsp;points away from your weekly goal
-        </text>
+        </p>
       </div>
       <div className={cx(styles.progress_circle)}>
-        <CircularProgressbarWithChildren value={(100 * points) / goal} strokeWidth={16} styles={buildStyles({
-          pathColor: "#E3D150",
-          trailColor: "#F9F6DC",
-        })}>
+        <CircularProgressbarWithChildren
+          value={(100 * points) / goal}
+          strokeWidth={16}
+          styles={buildStyles({
+            pathColor: "#E3D150",
+            trailColor: "#F9F6DC",
+          })}
+        >
           <div className={cx(styles.progress_circle_text)}>{points}</div>
           <div className={cx(styles.progress_circle_text)}>Points</div>
         </CircularProgressbarWithChildren>
@@ -101,8 +94,6 @@ export const Home = () => {
     </div>
   );
 };
-
-export default Home;
 
 //issues:
 //what happens when todo list becomes larger than the screen

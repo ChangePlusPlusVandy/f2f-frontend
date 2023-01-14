@@ -13,7 +13,11 @@ export const ROUTES = {
     SIGN_UP: "/sign-up",
     PROFILE : "/home/profile",
     RESOURCES : "/home/resources",
-    FAQ: "home/faq"
+    FAQ: "home/faq",
+    ROADMAP : "/roadmap",
+    COMMUNITY : "/community",
+    UPCOMING_TASKS: "/upcoming",
+    ALL_TASKS: "/tasks",
 }
 
 export const HOME_NAV_LABELS = {
@@ -45,61 +49,84 @@ export const CAPTIONS = {
 
 export const DISABILITY = [
     {label: "ADHD/ADD"},
-    {label: "Anxiety"}
+    {label: "Anxiety"},
+
+    {label: "Auditory"},
+    {label: "Autism"},
+    {label: "Bipolar"},
+    {label: "Cerebral Palsy"},
+    {label: "Deaf Blind"},
+    {label: "Depression"},
+    {label: "Developmental"},
+    {label: "Down Syndrome"},
+    {label: "Dyslexia"},
+    {label: "Intellectual"},
+    {label: "Learning"},
+    {label: "Mental Health"},
+    {label: "Multiple"},
+    {label: "Other Health Impairment"},
+    {label: "Physical/Orthopedic"},
+    {label: "Sensory"},
+    {label: "Speech"},
+    {label: "Visual"},
+
+    {label: "Traumatic Brain Injury"},
+    {label: "Unknown"}
 ]
 
 export const SCHOOL_DISTRICT = [
     {label: "Adult"},
     {label: "Not in School"},
+    {label: "Home School"},
+    {label: "Private School"},
+    {label: "Charter School"},
+    {label: "Aldine"},
+    {label: "Alief"},
+    {label: "Alvin ISD"},
+    {label: "Anahuac"},
+    {label: "Angleton"},
+    {label: "Barbers Hill"},
+    {label: "Brazosport"},
+    {label: "Channelview"},
+    {label: "Cleveland"},
+    {label: "Columbia-Brazoria"},
+    {label: "Columbus"},
+    {label: "Crosby"},
+    {label: "Cypress-Fairbanks"},
+    {label: "Damon"},
+    {label: "Danbury"},
+    {label: "Dayton"},
+    {label: "Deer Park"},
+    {label: "Devers"},
+    {label: "Dickinson"},
+    
+    {label: "Fort Bend"},
+    {label: "Friendswood"},
+    {label: "Galena Park"},
+    {label: "Galveston"},
+    {label: "Goose Creek"},
+    {label: "Hempstead"},
+    {label: "Hitchcock"},
+    {label: "Houston"},
+    {label: "Huffman"},
+    {label: "Katy"},
+    {label: "Klein"},
+    {label: "La Porte"},
 
+    {label: "Lamar Consolidated"},
+    {label: "Needville"},
+    {label: "Pasadenaa"},
+    {label: "Pearland"},
+    {label: "Royal"},
+    {label: "Santa Fe"},
+    {label: "Sheldon"},
+    {label: "Spring"},
+    {label: "Spring Branch"},
+    {label: "Stafford"},
+    {label: "Sweeny"},
+    {label: "Tarkington"},
 
-// Home School
-// Private School
-// Charter School
-// Aldine
-// Alief
-// Alvin ISD
-// Anahuac
-// Angleton
-// Barbers Hill
-// Brazosport
-// Channelview
-// Cleveland
-// Columbia-Brazoria
-// Columbus
-// Crosby 
-// Cypress-Fairbanks
-// Damon
-// Danbury
-// Dayton 
-// Deer Park
-// Devers
-// Dickinson
-// Fort Bend
-// Friendswood
-// Galena Park
-// Galveston
-// Goose Creek
-// Hempstead
-// Hitchcock
-// Houston
-// Huffman
-// Katy
-// Klein
-// La Porte
-// Lamar Consolidated
-// Needville
-// Pasadena
-// Pearland
-// Royal
-// Santa Fe
-// Sheldon
-// Spring
-// Spring Branch
-// Stafford
-// Sweeny
-// Tarkington
-// Texas City
-// Tomball
-// Waller
+    {label: "Texas City"},
+    {label: "Tomball"},
+    {label: "Waller"},
 ]
