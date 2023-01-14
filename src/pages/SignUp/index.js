@@ -1,7 +1,9 @@
 import styles from './index.module.css';
 import classNames from 'classnames/bind';
-import { AUTH_INPUT_LABELS, STATUS_CODE } from '../../lib/constants';
+import { AUTH_INPUT_LABELS, SCHOOL_DISTRICT, DISABILITY, STATUS_CODE } from '../../lib/constants';
 import { AuthInputBlock } from '../../components/AuthInputBlock';
+import { AuthSelectBlock } from '../../components/AuthSelectBlock';
+import { PageTitle } from '../../components/Caption';
 import { AuthButton } from '../../components/AuthButton';
 import { useState } from 'react';
 // import { signUp } from '../../lib/services';
@@ -18,6 +20,7 @@ export const SignUp = ({ toast }) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [schoolDistrict, setSchoolDistrict] = useState("");
+    const [disability, setDisability] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -30,6 +33,7 @@ export const SignUp = ({ toast }) => {
         else if(!firstName) toast('Please provide your first name');
         else if(!lastName) toast('Please provide your last name');
         else if(!schoolDistrict) toast('Please provide your children\'s school district');
+        else if(!disability) toast('Please provide your children\'s disability');
         else if(!zipCode) toast('Please provide your zip code');
         else if(!phoneNumber) toast('Please provide your phone number');
         else {
@@ -67,35 +71,44 @@ export const SignUp = ({ toast }) => {
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.FIRST_NAME}
             containerClassName={cx(styles.inputBlock)}
-            value={repeatPassword}
+            value={firstName}
             onChange={setFirstName}
             hide={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.LAST_NAME}
             containerClassName={cx(styles.inputBlock)}
-            value={repeatPassword}
+            value={lastName}
             onChange={setLastName}
             hide={true}
         />
-        <AuthInputBlock
+        <AuthSelectBlock
             label={AUTH_INPUT_LABELS.SCHOOL_DISTRICT}
-            containerClassName={cx(styles.inputBlock)}
-            value={repeatPassword}
+            containerClassName={cx(styles.selectBlock)}
+            options={SCHOOL_DISTRICT}
             onChange={setSchoolDistrict}
-            hide={true}
+            placeholder={"Select School District..."}
+            isClearable={true}
+        />
+        <AuthSelectBlock
+            label={AUTH_INPUT_LABELS.DISABILITY}
+            containerClassName={cx(styles.selectBlock)}
+            options={DISABILITY}
+            onChange={setDisability}
+            placeholder={"Select Disability..."}
+            isClearable={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.ZIP_CODE}
             containerClassName={cx(styles.inputBlock)}
-            value={repeatPassword}
+            value={zipCode}
             onChange={setZipCode}
             hide={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.PHONE_NUMBER}
             containerClassName={cx(styles.inputBlock)}
-            value={repeatPassword}
+            value={phoneNumber}
             onChange={setPhoneNumber}
             hide={true}
         />

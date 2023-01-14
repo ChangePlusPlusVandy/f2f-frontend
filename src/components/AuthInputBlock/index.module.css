@@ -1,3 +1,4 @@
+@value font from "../../index.module.css";
 
 .inputBlock {
     width: 100%;
@@ -18,4 +19,5 @@
     border: none;
     outline: none;
     padding: 0 5px;
+    background-color: #F4F4F4;
 }
