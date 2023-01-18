@@ -18,6 +18,7 @@ export const ROUTES = {
     COMMUNITY : "/community",
     UPCOMING_TASKS: "/upcoming",
     ALL_TASKS: "/tasks",
+    TASK_DETAILS: "/task-details",
 }
 
 export const HOME_NAV_LABELS = {

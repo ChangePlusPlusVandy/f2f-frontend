@@ -11,6 +11,7 @@ import { Profile } from "./pages/Profile";
 import { ForgotPassword } from "./pages/ForgetPassword";
 import { Roadmap } from "./pages/Roadmap";
 import { Community } from "./pages/Community";
+import { AllTasks } from "./pages/AllTasks";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="community" element={<Community />} />
         <Route path="login" element={<Login />} />
+        <Route path="tasks" element={<AllTasks />} />
       </Routes>
     </BrowserRouter>
   );
