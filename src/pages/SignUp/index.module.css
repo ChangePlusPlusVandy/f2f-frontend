@@ -1,0 +1,14 @@
+@value font from "../../index.module.css";
+
+.inputBlock {
+    margin-bottom: 12px;
+}
+
+.title {
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.register {
+    margin-top: 36px;
+}

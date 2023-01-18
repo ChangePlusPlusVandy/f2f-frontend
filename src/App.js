@@ -1,19 +1,24 @@
 import React from "react";
+import { ToastContainer, toast } from 'react-toastify';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./lib/AuthContext";
-
+import { AuthLayout } from "./pages/AuthLayout";
+// import { AuthProvider } from "./lib/AuthContext";
 // Routes
 import { Home } from "./pages/Home";
+import { Login } from "./pages/Login";
+import { SignUp } from "./pages/SignUp";
+import { Profile } from "./pages/Profile";
 import { ForgotPassword } from "./pages/ForgetPassword";
 import { Roadmap } from "./pages/Roadmap";
 import { Community } from "./pages/Community";
-import { Login } from "./pages/Login";
 
 const App = () => {
   return (
-    <AuthProvider>
     <BrowserRouter>
       <Routes>
+      <Route path='/' element={<AuthLayout/>}>
+          <Route path='sign-up' element={<SignUp toast={toast}/>}/>
+        </Route>
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="home" element={<Home />} />
         <Route path="roadmap" element={<Roadmap />} />
@@ -21,7 +26,6 @@ const App = () => {
         <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
-  </AuthProvider>
   );
 };
 
