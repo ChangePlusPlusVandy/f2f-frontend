@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import { WINDOW_TYPE } from "./constants";
+import { useLocation } from "react-router-dom";
+import { WINDOW_TYPE, CAPTIONS, ROUTES } from "./constants";
 
 /**
  * Get metadata about window
@@ -30,4 +31,16 @@ import { WINDOW_TYPE } from "./constants";
         ...windowSize,
         type: windowSize.width < 450 ? WINDOW_TYPE.MOBILE : WINDOW_TYPE.WEB
     };
+}
+
+/**
+ * Get caption for each home page
+ * @returns {String} caption text
+ */
+ export const useCaption = () => {
+    const { pathname } = useLocation();
+    switch(pathname) {
+        case(ROUTES.SIGN_UP): return CAPTIONS.SIGN_UP;
+        default: return CAPTIONS.HOME;
+    }
 }

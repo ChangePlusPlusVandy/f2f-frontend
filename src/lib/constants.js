@@ -10,6 +10,10 @@ export const STATUS_CODE = {
 
 export const ROUTES = {
     HOME: "/home",
+    SIGN_UP: "/sign-up",
+    PROFILE : "/home/profile",
+    RESOURCES : "/home/resources",
+    FAQ: "home/faq",
     ROADMAP : "/roadmap",
     COMMUNITY : "/community",
     UPCOMING_TASKS: "/upcoming",
@@ -18,6 +22,111 @@ export const ROUTES = {
 
 export const HOME_NAV_LABELS = {
     HOME: "Home",
-    ROADMAP : "Roadmap",
-    COMMUNITY : "Community"
+    PROFILE : "Profile",
+    RESOURCES : "Resources",
+    FAQ: "FAQ"
 }
+
+export const AUTH_INPUT_LABELS = {
+    NAME : "Name",
+    EMAIL : "Email",
+    PASSWORD : "Password",
+    CONFIRM_PASSWORD : "Confirm Password",
+    FIRST_NAME : "First Name",
+    LAST_NAME : "Last Name",
+    SCHOOL_DISTRICT: "School District",
+    DISABILITY: "Disability",
+    ZIP_CODE: "Zip Code",
+    PHONE_NUMBER : "Phone Number",
+    REGISTER: "Register!"
+}
+
+// page titles 
+export const CAPTIONS = {
+    SIGN_UP: 'Sign Up',
+    HOME: 'Home',
+}
+
+export const DISABILITY = [
+    {label: "ADHD/ADD"},
+    {label: "Anxiety"},
+
+    {label: "Auditory"},
+    {label: "Autism"},
+    {label: "Bipolar"},
+    {label: "Cerebral Palsy"},
+    {label: "Deaf Blind"},
+    {label: "Depression"},
+    {label: "Developmental"},
+    {label: "Down Syndrome"},
+    {label: "Dyslexia"},
+    {label: "Intellectual"},
+    {label: "Learning"},
+    {label: "Mental Health"},
+    {label: "Multiple"},
+    {label: "Other Health Impairment"},
+    {label: "Physical/Orthopedic"},
+    {label: "Sensory"},
+    {label: "Speech"},
+    {label: "Visual"},
+
+    {label: "Traumatic Brain Injury"},
+    {label: "Unknown"}
+]
+
+export const SCHOOL_DISTRICT = [
+    {label: "Adult"},
+    {label: "Not in School"},
+    {label: "Home School"},
+    {label: "Private School"},
+    {label: "Charter School"},
+    {label: "Aldine"},
+    {label: "Alief"},
+    {label: "Alvin ISD"},
+    {label: "Anahuac"},
+    {label: "Angleton"},
+    {label: "Barbers Hill"},
+    {label: "Brazosport"},
+    {label: "Channelview"},
+    {label: "Cleveland"},
+    {label: "Columbia-Brazoria"},
+    {label: "Columbus"},
+    {label: "Crosby"},
+    {label: "Cypress-Fairbanks"},
+    {label: "Damon"},
+    {label: "Danbury"},
+    {label: "Dayton"},
+    {label: "Deer Park"},
+    {label: "Devers"},
+    {label: "Dickinson"},
+    
+    {label: "Fort Bend"},
+    {label: "Friendswood"},
+    {label: "Galena Park"},
+    {label: "Galveston"},
+    {label: "Goose Creek"},
+    {label: "Hempstead"},
+    {label: "Hitchcock"},
+    {label: "Houston"},
+    {label: "Huffman"},
+    {label: "Katy"},
+    {label: "Klein"},
+    {label: "La Porte"},
+
+    {label: "Lamar Consolidated"},
+    {label: "Needville"},
+    {label: "Pasadenaa"},
+    {label: "Pearland"},
+    {label: "Royal"},
+    {label: "Santa Fe"},
+    {label: "Sheldon"},
+    {label: "Spring"},
+    {label: "Spring Branch"},
+    {label: "Stafford"},
+    {label: "Sweeny"},
+    {label: "Tarkington"},
+
+    {label: "Texas City"},
+    {label: "Tomball"},
+    {label: "Waller"},
+]
