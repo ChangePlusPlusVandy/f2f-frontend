@@ -31,7 +31,7 @@ export const TaskDetails = () => {
         setTaskName(data.name);
         setDescription(data.desc);
         setStatus(data.status);
-        setImage(data.svg);
+        setImage(data.img);
         setResources(data.resources);
       })
       .catch((error) => console.log(error));
