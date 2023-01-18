@@ -6,7 +6,7 @@ import { AuthSelectBlock } from '../../components/AuthSelectBlock';
 import { PageTitle } from '../../components/Caption';
 import { AuthButton } from '../../components/AuthButton';
 import { useState } from 'react';
-// import { signUp } from '../../lib/services';
+import { signUp } from '../../lib/services';
 import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
@@ -33,17 +33,17 @@ export const SignUp = ({ toast }) => {
         else if(!firstName) toast('Please provide your first name');
         else if(!lastName) toast('Please provide your last name');
         else if(!schoolDistrict) toast('Please provide your children\'s school district');
-        else if(!disability) toast('Please provide your children\'s disability');
+        else if(!disability) toast('Please provide your children\'s disabilities');
         else if(!zipCode) toast('Please provide your zip code');
         else if(!phoneNumber) toast('Please provide your phone number');
         else {
-            //send response to backend and create a record
-            // register({email, password, firstName, lastName, schoolDistrict, zipCode, phoneNumber})
-            //     .then(res => {
-            //         const { status } = res;
-            //         if(status === STATUS_CODE.SUCESS) navigate('/');
-            //     })
-            //     .catch(err => toast('Internal error'));
+            // send response to backend and create a record
+        //     signUp({email, password, firstName, lastName, schoolDistrict, zipCode, phoneNumber})
+        //         .then(res => {
+        //             const { status } = res;
+        //             if(status === STATUS_CODE.SUCESS) navigate('/home');
+        //         })
+        //         .catch(err => toast('Internal error'));
         }
     }
 
@@ -89,14 +89,16 @@ export const SignUp = ({ toast }) => {
             onChange={setSchoolDistrict}
             placeholder={"Select School District..."}
             isClearable={true}
+            isMulti={false}
         />
         <AuthSelectBlock
             label={AUTH_INPUT_LABELS.DISABILITY}
             containerClassName={cx(styles.selectBlock)}
             options={DISABILITY}
             onChange={setDisability}
-            placeholder={"Select Disability..."}
+            placeholder={"Select Disabilities..."}
             isClearable={true}
+            isMulti={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.ZIP_CODE}
