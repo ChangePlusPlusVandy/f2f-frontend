@@ -35,7 +35,7 @@ export const AUTH_INPUT_LABELS = {
     FIRST_NAME : "First Name",
     LAST_NAME : "Last Name",
     SCHOOL_DISTRICT: "School District",
-    DISABILITY: "Disability",
+    DISABILITY: "Disabilities",
     ZIP_CODE: "Zip Code",
     PHONE_NUMBER : "Phone Number",
     REGISTER: "Register!"
@@ -50,7 +50,6 @@ export const CAPTIONS = {
 export const DISABILITY = [
     {label: "ADHD/ADD"},
     {label: "Anxiety"},
-
     {label: "Auditory"},
     {label: "Autism"},
     {label: "Bipolar"},
@@ -69,7 +68,6 @@ export const DISABILITY = [
     {label: "Sensory"},
     {label: "Speech"},
     {label: "Visual"},
-
     {label: "Traumatic Brain Injury"},
     {label: "Unknown"}
 ]
@@ -99,7 +97,6 @@ export const SCHOOL_DISTRICT = [
     {label: "Deer Park"},
     {label: "Devers"},
     {label: "Dickinson"},
-    
     {label: "Fort Bend"},
     {label: "Friendswood"},
     {label: "Galena Park"},
@@ -112,7 +109,6 @@ export const SCHOOL_DISTRICT = [
     {label: "Katy"},
     {label: "Klein"},
     {label: "La Porte"},
-
     {label: "Lamar Consolidated"},
     {label: "Needville"},
     {label: "Pasadenaa"},
@@ -125,7 +121,6 @@ export const SCHOOL_DISTRICT = [
     {label: "Stafford"},
     {label: "Sweeny"},
     {label: "Tarkington"},
-
     {label: "Texas City"},
     {label: "Tomball"},
     {label: "Waller"},

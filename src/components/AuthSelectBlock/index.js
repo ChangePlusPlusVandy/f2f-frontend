@@ -16,6 +16,7 @@ export const AuthSelectBlock = React.forwardRef((props, ref) => {
         onChange,
         placeholder,
         isClearable,
+        isMulti
     } = props;
 
     const [selected, setSelected] = useState();
@@ -65,6 +66,7 @@ const filterSelectStyles = {
         styles={filterSelectStyles}
         menuPortalTarget={document.body}
         isClearable={isClearable}
+        isMulti={isMulti}
         placeholder={placeholder}
     />
 </div>
