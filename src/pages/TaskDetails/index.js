@@ -3,22 +3,11 @@ import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import { ReactComponent as BackArrow } from "../../svg/Vector.svg";
-import { ReactComponent as Clipboard } from "../../svg/Clipboard.svg";
-import { ReactComponent as Archer } from "../../svg/A.svg";
+import Clipboard from "../../images/Clipboard.png";
+import A from "../../images/A.png";
+import ResourceCard from "../../components/TaskResource";
 
 const cx = classNames.bind(styles);
-
-function ResourceCard(props) {
-  return (
-    <div className={cx(styles.card_content)}>
-      <div className={cx(styles.card_info)}>
-        <h3 className={cx(styles.card_title)}>{props.title}</h3>
-        <p className={cx(styles.card_desc)}>{props.desc}</p>
-      </div>
-      <div className={cx(styles.card_img)}>{props.icon}</div>
-    </div>
-  );
-}
 
 export const TaskDetails = () => {
   const [taskName, setTaskName] = useState("Medicaid Waitlist");
@@ -26,12 +15,12 @@ export const TaskDetails = () => {
     "Call 700-432-3456 and ask to be put on the Medicaid and associated waitlists."
   );
   const [status, setStatus] = useState(false);
-  const [Image, setImage] = useState(Clipboard);
+  const [image, setImage] = useState(Clipboard);
   const [resource, setResources] = useState([
     {
       title: "Medicaid Waitlist 101",
       desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: <Archer />,
+      img: A,
     },
   ]);
 
@@ -73,7 +62,7 @@ export const TaskDetails = () => {
         </div>
 
         <div className={cx(styles.image)}>
-          <Image />
+          <img src={image} alt="" />
         </div>
       </div>
       <div className={cx(styles.resources)}>
@@ -83,14 +72,7 @@ export const TaskDetails = () => {
 
         <div className={cx(styles.resources, "content")}>
           {resource.map((res) => {
-            return (
-              <ResourceCard
-                key={res.title}
-                title={res.title}
-                desc={res.desc}
-                icon={res.img}
-              />
-            );
+            return <ResourceCard key={res.title} resource={res} />;
           })}
         </div>
       </div>
