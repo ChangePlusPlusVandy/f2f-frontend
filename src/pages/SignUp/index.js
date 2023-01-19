@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import { AUTH_INPUT_LABELS, SCHOOL_DISTRICT, DISABILITY, STATUS_CODE } from '../../lib/constants';
 import { AuthInputBlock } from '../../components/AuthInputBlock';
 import { AuthSelectBlock } from '../../components/AuthSelectBlock';
-import { PageTitle } from '../../components/Caption';
 import { AuthButton } from '../../components/AuthButton';
 import { useState } from 'react';
 import { signUp } from '../../lib/services';
@@ -20,7 +19,7 @@ export const SignUp = ({ toast }) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [schoolDistrict, setSchoolDistrict] = useState("");
-    const [disability, setDisability] = useState("");
+    const [disability, setDisability] = useState([]);
     const [zipCode, setZipCode] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -38,12 +37,12 @@ export const SignUp = ({ toast }) => {
         else if(!phoneNumber) toast('Please provide your phone number');
         else {
             // send response to backend and create a record
-        //     signUp({email, password, firstName, lastName, schoolDistrict, zipCode, phoneNumber})
-        //         .then(res => {
-        //             const { status } = res;
-        //             if(status === STATUS_CODE.SUCESS) navigate('/home');
-        //         })
-        //         .catch(err => toast('Internal error'));
+            signUp({email, password, firstName, lastName, schoolDistrict, zipCode, phoneNumber})
+                .then(res => {
+                    const { status } = res;
+                    if(status === STATUS_CODE.SUCESS) navigate('/home');
+                })
+                .catch(err => toast('Internal error'));
         }
     }
 
@@ -59,28 +58,24 @@ export const SignUp = ({ toast }) => {
             containerClassName={cx(styles.inputBlock)}
             value={password}
             onChange={setPassword}
-            hide={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.CONFIRM_PASSWORD}
             containerClassName={cx(styles.inputBlock)}
             value={repeatPassword}
             onChange={setRepeatPassword}
-            hide={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.FIRST_NAME}
             containerClassName={cx(styles.inputBlock)}
             value={firstName}
             onChange={setFirstName}
-            hide={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.LAST_NAME}
             containerClassName={cx(styles.inputBlock)}
             value={lastName}
             onChange={setLastName}
-            hide={true}
         />
         <AuthSelectBlock
             label={AUTH_INPUT_LABELS.SCHOOL_DISTRICT}
@@ -105,14 +100,12 @@ export const SignUp = ({ toast }) => {
             containerClassName={cx(styles.inputBlock)}
             value={zipCode}
             onChange={setZipCode}
-            hide={true}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.PHONE_NUMBER}
             containerClassName={cx(styles.inputBlock)}
             value={phoneNumber}
             onChange={setPhoneNumber}
-            hide={true}
         />
         <AuthButton
             className={cx(styles.register)}

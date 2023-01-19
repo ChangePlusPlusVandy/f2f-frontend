@@ -19,7 +19,6 @@ export const NavBar = () => {
         navigate(route);
     }
 
-    console.log(isSmall)
     return <div
         className={cx(styles.page, {
             [styles.mobile]: isMobile
@@ -33,7 +32,7 @@ export const NavBar = () => {
             </div>  
             <div onClick={() => goTo(ROUTES.ROADMAP)} className={cx(styles.navItem)}>
                 <div className={cx(styles.icon_div)}>
-                    <RoadmapIcon filled={pathname === ROUTES.ROADMAP}/>
+                    <RoadmapIcon filled={pathname === ROUTES.ROADMAP || pathname === ROUTES.ALL_TASKS || pathname === ROUTES.UPCOMING_TASKS}/>
                 </div>
             </div>  
             <div onClick={() => goTo(ROUTES.COMMUNITY)} className={cx(styles.navItem)}>

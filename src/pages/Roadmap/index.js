@@ -36,8 +36,8 @@ export const Roadmap = () => {
     fetch("/taskData")
       .then((response) => response.json())
       .then((data) => {
-        setNumTasks = data.numTasks;
-        setNumAllTasks = data.numAllTasks;
+        setNumTasks(data.numTasks);
+        setNumAllTasks(data.numAllTasks);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -110,4 +110,4 @@ export const Roadmap = () => {
   );
 };
 
-//should i make each box into a compenent (lot of redundant code)
+//Make each box into a compenent (lot of redundant code)** (move to components folder)

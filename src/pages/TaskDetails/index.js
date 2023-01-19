@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import { ReactComponent as BackArrow } from "../../svg/Vector.svg";
 import Clipboard from "../../images/Clipboard.png";
 import A from "../../images/A.png";
 import ResourceCard from "../../components/TaskResource";
+import { ROUTES } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -24,8 +25,16 @@ export const TaskDetails = () => {
     },
   ]);
 
+  const navigate = useNavigate();
+  const loc = useLocation();
+  const goBack = () => {
+    navigate(ROUTES.ALL_TASKS);
+  };
+
+  console.log(loc.state.id);
+
   useEffect(() => {
-    fetch("/resources")
+    fetch("/resources") //add task id (loc.state.id)
       .then((response) => response.json())
       .then((data) => {
         setTaskName(data.name);
@@ -37,10 +46,7 @@ export const TaskDetails = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
+  
 
   return (
     <div className={cx(styles.content)}>
