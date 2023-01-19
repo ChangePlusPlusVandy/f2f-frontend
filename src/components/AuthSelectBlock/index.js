@@ -7,7 +7,7 @@ import { useState } from 'react';
 const cx = classNames.bind(styles);
 
 // Select field for authentication
-export const AuthSelectBlock = React.forwardRef((props, ref) => {
+export const AuthSelectBlock = (props) => {
     const {
         label,
         containerClassName,
@@ -47,6 +47,7 @@ const filterSelectStyles = {
         lineHeight: '25px'
     }),
 };
+
     return <div
         className={cx(styles.selectBlock, containerClassName)}
     >
@@ -70,14 +71,14 @@ const filterSelectStyles = {
         placeholder={placeholder}
     />
 </div>
-});
+};
 
 AuthSelectBlock.propTypes = {
     className: PropTypes.string,
     height: PropTypes.number,
     options: PropTypes.array.isRequired,
-    selected: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired, 
     placeholder: PropTypes.string,
-    isClearable: PropTypes.bool
+    isClearable: PropTypes.bool,
+    isMulti: PropTypes.bool
 }

@@ -1,0 +1,34 @@
+.upcomingWrapper {
+    position: relative;
+}
+
+.upcomingIcon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.upcomingHolder {
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    z-index: 1000;
+}
+
+.blocker {
+    position: fixed;
+    opacity: 0;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.blocker.show {
+    display: block;
+}
