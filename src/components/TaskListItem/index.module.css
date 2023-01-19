@@ -1,0 +1,21 @@
+.tasks_div {
+    border-bottom: 3px solid black;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    padding: 4vw;
+  }
+
+  .taskName {
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 5vw;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .taskDate {
+    font-weight:400;
+    font-size: 4vw;
+    color: #8B5674;
+    margin: 0;
+  }
