@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const cx = classNames.bind(styles);
 
 // Input field for authentication
-export const AuthInputBlock = React.forwardRef((props, ref) => {
+export const AuthInputBlock = (props) => {
     const {
         label,
         containerClassName,
@@ -29,7 +29,7 @@ export const AuthInputBlock = React.forwardRef((props, ref) => {
             onChange={(event) => onChange(event.target.value)}
         />
     </div>
-});
+};
 
 AuthInputBlock.propTypes = {
     label: PropTypes.string.isRequired,

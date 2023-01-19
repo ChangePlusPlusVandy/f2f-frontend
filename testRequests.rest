@@ -1,0 +1,17 @@
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+    "email" : "test1@test.com",
+    "password" : "123456789",
+    "firstName" : "test1", 
+    "lastName": "test2", 
+    "schoolDistrict": "Goose Creek", 
+    "zipCode" : 12345, 
+    "phoneNumber": 6156156156
+}
+
+###
+
+
+GET http://localhost:3001/users
