@@ -16,8 +16,10 @@ export const TaskListItem = React.forwardRef((props, ref) => {
         id,
     } = props;
 
+    console.log(id);
+
     return (
-      <div onClick={() => navigate(ROUTES.TASK_DETAILS)} className={cx(styles.tasks_div)}>
+      <div onClick={() => navigate(ROUTES.TASK_DETAILS, {state: {id: id}})} className={cx(styles.tasks_div)}>
           <p className={cx(styles.taskName)}>{name}</p>
           <p className={cx(styles.taskDate)}>{dueDate}, {dueTime}</p>
       </div>
