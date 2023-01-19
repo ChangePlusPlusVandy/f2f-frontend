@@ -27,11 +27,11 @@ export const Home = () => {
     fetch("/userData")
       .then((response) => response.json())
       .then((data) => {
-        setLastName = data.lastName;
-        setGoal = data.goal;
-        setPoints = data.points;
-        sethpList = data.hpList;
-        setElseList = data.elseList;
+        setLastName(data.lastName);
+        setGoal(data.goal);
+        setPoints(data.points);
+        sethpList(data.hpList);
+        setElseList(data.elseList);
       })
       .catch((error) => console.log(error));
   }, []);

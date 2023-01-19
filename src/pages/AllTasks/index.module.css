@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+.header {
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 8vw;
+    font-weight: 900;
+    display: inline-block;
+    color: black;
+    margin-bottom: 0;
+    margin-top: 12vw;
+  }
+
+  .header.small {
+    font-size: 4vw;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 4vw;
+  }
+
+  .back_arrow {
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    height: 10%;
+    fill: black;
+  }
