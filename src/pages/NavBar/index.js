@@ -19,7 +19,6 @@ export const NavBar = () => {
         navigate(route);
     }
 
-    console.log(isSmall)
     return <div
         className={cx(styles.page, {
             [styles.mobile]: isMobile

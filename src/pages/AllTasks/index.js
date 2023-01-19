@@ -5,6 +5,7 @@ import { NavBar } from "../NavBar";
 import { ROUTES } from "../../lib/constants";
 import { useNavigate } from "react-router-dom";
 import { TaskListItem } from "../../components/TaskListItem";
+import { ReactComponent as BackArrow } from "../../svg/Vector.svg";
 
 const cx = classNames.bind(styles);
 
@@ -48,6 +49,9 @@ export const AllTasks = () => {
     <div
       style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
     >
+      {/* <div className={cx(styles.back_arrow)} onClick={() => navigate(ROUTES.ROADMAP)}>
+          <BackArrow />
+        </div> */}
       <div style={{ textAlign: "center" }}>
         <p className={cx(styles.header)}>All Tasks</p>
         <p className={cx(styles.header, "small")}>

@@ -17,3 +17,11 @@
     margin-top: 0;
     margin-bottom: 4vw;
   }
+
+  .back_arrow {
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    height: 10%;
+    fill: black;
+  }
