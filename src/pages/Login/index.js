@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import { ReactComponent as ReactLogo } from "../../svg/F2F-logo.svg";
 import styles from "./index.module.css";
+import { ROUTES } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -130,7 +131,7 @@ export const Login = () => {
         <text className={cx(styles.signup, "desc")}>
           Don't have an account?&nbsp;
           <Link
-            to="/register"
+            to={ROUTES.SIGN_UP}
             style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
             <b>Sign up</b>
           </Link>
