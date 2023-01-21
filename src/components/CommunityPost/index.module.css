@@ -18,6 +18,18 @@
   margin: 0;
 }
 
+.post_pfp {
+  outline: 5px solid black;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin-right: 0.5em;
+}
+
+.post_user {
+  display: block;
+}
+
 .post_content {
   display: flex;
   justify-content: center;

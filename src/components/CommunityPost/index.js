@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import styles from "./index.module.css";
+import ProfilePicture from "../ProfilePicture";
 
 const cx = classNames.bind(styles);
 
@@ -8,11 +9,13 @@ const Post = (props) => {
   return (
     <div className={cx(styles.post_body)}>
       <div className={cx(styles.post_header)}>
-        <div>
-          <img src="" alt="" />
+        <div className={cx(styles.post_pfp)}>
+          <ProfilePicture image={props.img} />
         </div>
-        <div>
-          <p>{props.user}</p>
+        <div className={cx(styles.post_user)}>
+          <p>
+            <b>{props.user}</b>
+          </p>
           <p>{props.location}</p>
         </div>
       </div>
@@ -23,7 +26,7 @@ const Post = (props) => {
       <div className={cx(styles.post_info)}>
         <div className={cx(styles.post_caption)}>
           <span>
-            <b>{props.user}</b>&nbsp;&nbsp;
+            <b>{props.user}</b>&nbsp;
           </span>
           <span>{props.caption}</span>
         </div>
@@ -33,7 +36,12 @@ const Post = (props) => {
           </p>
         </div>
         <div>
-          <p className={cx(styles.first_comment)}>{props.comments[0]}</p>
+          <p className={cx(styles.first_comment)}>
+            <span>
+              <b>{props.comments[0].user}</b>&nbsp;
+            </span>
+            {props.comments[0].comment}
+          </p>
         </div>
       </div>
     </div>

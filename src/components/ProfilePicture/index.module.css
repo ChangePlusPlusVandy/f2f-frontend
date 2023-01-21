@@ -1,0 +1,10 @@
+.content {
+  border-color: black;
+  height: 100%;
+  overflow: hidden;
+  border-width: 100px;
+}
+
+.content img {
+  height: 100%;
+}
