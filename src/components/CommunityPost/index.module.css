@@ -5,6 +5,7 @@
   margin: 0 3vw 2vh 3vw;
   padding: 1vh;
   font-family: "Poppins";
+  box-shadow: 0 8px 16px 0 gray;
 }
 
 .post_header {

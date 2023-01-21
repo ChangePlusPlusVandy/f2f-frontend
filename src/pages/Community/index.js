@@ -10,6 +10,7 @@ import Post from "../../components/CommunityPost";
 
 //image imports
 import PFP from "../../images/PFP.png";
+import PlusSign from "../../images/PlusSign.png";
 
 const cx = classNames.bind(styles);
 
@@ -74,6 +75,9 @@ export const Community = () => {
             />
           );
         })}
+      </div>
+      <div className={cx(styles.create_post)}>
+        <img src={PlusSign} alt="" />
       </div>
       <NavBar />
     </div>
