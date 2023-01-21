@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
-import { ReactComponent as BackArrow } from "../../svg/Vector.svg";
+import BackArrow from "../../images/Vector.png";
 import Clipboard from "../../images/Clipboard.png";
 import A from "../../images/A.png";
 import ResourceCard from "../../components/TaskResource";
@@ -40,19 +40,17 @@ export const TaskDetails = () => {
         setTaskName(data.name);
         setDescription(data.desc);
         setStatus(data.status);
-        setImage(data.svg);
+        setImage(data.img);
         setResources(data.resources);
       })
       .catch((error) => console.log(error));
   }, []);
 
-  
-
   return (
     <div className={cx(styles.content)}>
       <header className={cx(styles.header)}>
         <div className={cx(styles.back_arrow)} onClick={goBack}>
-          <BackArrow />
+          <img src={BackArrow} alt="" />
         </div>
         <div className={cx(styles.header, "title")}>
           <h1>{taskName}</h1>
