@@ -7,9 +7,9 @@ import { Caption } from '../../components/Caption';
 const cx = classNames.bind(styles);
 
 // Layout of authentication page
-export const AuthLayout = () => {
+export const HomeLayout = () => {
     const { width, type } = useWindowSize();
-    const caption = useCaption();
+    const {mainTitle, subTitle }= useCaption();
 
     const isMobile = type === WINDOW_TYPE.MOBILE;
     const isSmall = isMobile || width < 600;
@@ -23,7 +23,8 @@ export const AuthLayout = () => {
             [styles.mobile]: isMobile
         })}>
             <Caption
-                text={caption}
+                mainTitle={mainTitle}
+                subTitle={subTitle}
                 className={cx(styles.caption)}
             />
             <div className={cx(styles.block)} id='mainBlock'>

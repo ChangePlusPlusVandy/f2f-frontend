@@ -44,7 +44,10 @@ export const AUTH_INPUT_LABELS = {
 
 // page titles 
 export const CAPTIONS = {
-    SIGN_UP: 'Sign Up',
+    SIGN_UP_MAIN: 'Sign Up',
+    SIGN_UP_SUB: 'Let’s get you started!',
+    UPCOMING_MAIN: 'Upcoming',
+    UPCOMING_SUB: 'Everything in the next 3 months',
     HOME: 'Home',
 }
 

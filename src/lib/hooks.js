@@ -40,7 +40,14 @@ import { WINDOW_TYPE, CAPTIONS, ROUTES } from "./constants";
  export const useCaption = () => {
     const { pathname } = useLocation();
     switch(pathname) {
-        case(ROUTES.SIGN_UP): return CAPTIONS.SIGN_UP;
+        case(ROUTES.SIGN_UP): return {
+            mainTitle: CAPTIONS.SIGN_UP_MAIN, 
+            subTitle: CAPTIONS.SIGN_UP_SUB
+        };
+        case(ROUTES.UPCOMING_TASKS): return {
+            mainTitle: CAPTIONS.UPCOMING_MAIN, 
+            subTitle: CAPTIONS.UPCOMING_SUB
+        };
         default: return CAPTIONS.HOME;
     }
 }

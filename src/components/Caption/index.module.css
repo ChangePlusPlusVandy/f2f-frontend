@@ -5,10 +5,27 @@
 }
 
 .caption {
+    height: fit-content;
+    border: 0;
+}
+
+.mainTitle {
     width: 100%;
     height: fit-content;
-    font-size: 36px;
-    font-weight: 700;
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 5vw;
+    font-weight: 500;
+}
+
+.subTitle {
+    width: 100%;
+    height: fit-content;
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 2vw;
+    font-weight: 300;
+    color: #818181;
 }
 
 .caption.mobile {
