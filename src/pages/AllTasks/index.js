@@ -14,14 +14,12 @@ export const AllTasks = () => {
   const [taskArray, setTaskArray] = useState([
     {
       name: "task1",
-      dueDate: "10/20/2024",
-      dueTime: "5:00 pm",
+      dueAt: "10/20/2024 5:00pm",
       id: "asdfdas",
     },
     {
       name: "task1",
-      dueDate: "10/20/2024",
-      dueTime: "5:00 pm",
+      dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
   ]);
@@ -29,8 +27,7 @@ export const AllTasks = () => {
   const taskElements = taskArray.map((item, index) => (
     <TaskListItem
       name={item.name}
-      dueDate={item.dueDate}
-      dueTime={item.dueTime}
+      dueAt={item.dueAt}
       id={item.id}
       key={index}
     />
