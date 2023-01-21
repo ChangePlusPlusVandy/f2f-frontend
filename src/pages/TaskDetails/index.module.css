@@ -1,25 +1,32 @@
 .content {
   display: block;
   height: 100%;
-  width: 100%;
+  width: 100vw;
   margin: 0;
   padding: 0;
   font-family: "Poppins";
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  background-color: #0198ba;
-  color: white;
+  display: block;
+  background-color: white;
+  color: black;
+  margin-right: auto;
+  margin-left: auto;
+  width: 90%;
 }
 
 .back_arrow {
   display: flex;
   justify-content: center;
-  width: 10%;
-  height: 100%;
+  width: 5%;
+  height: auto;
+  margin-top: 4vh;
+}
+
+.back_arrow img {
+  width: 100%;
 }
 
 .header.title {
@@ -33,19 +40,18 @@
   margin-right: auto;
   margin-left: auto;
   width: 90%;
+  font-size: 1.5em;
 }
 
 .info.desc {
   width: 100%;
   color: #555555;
   margin-top: 4%;
-  font-size: 1.7vh;
 }
 
 .info.status {
   width: 100%;
   margin-top: 4%;
-  font-size: 1.7vh;
 }
 
 .image {
@@ -67,7 +73,9 @@
   font-size: 2vh;
   font-weight: bolder;
   margin-bottom: 20px;
-  margin-left: 2vw;
+  margin-right: auto;
+  margin-left: auto;
+  width: 90%;
 }
 
 .resources.content {
