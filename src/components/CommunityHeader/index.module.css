@@ -1,13 +1,42 @@
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.dropdown_wrapper {
+  margin-left: 9vw;
+}
+
 .dropdown {
   width: auto;
+  margin-left: auto;
+  height: auto;
   font-size: 2.5vh;
   font-family: "Poppins";
   font-weight: 700;
   outline: none;
   border: none;
   appearance: none;
+  text-align: center;
 }
 
 .dropdown option {
-  font-size: small;
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 10%;
+}
+
+.arrow img {
+  width: 40%;
 }

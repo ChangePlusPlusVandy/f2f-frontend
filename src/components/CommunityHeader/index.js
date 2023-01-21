@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
 import classNames from "classnames";
+import Arrow from "../../images/DownArrow.png";
 
 const cx = classNames.bind(styles);
 
@@ -12,17 +13,24 @@ const Dropdown = ({ options }) => {
   };
 
   return (
-    <div>
-      <select
-        value={selectedOption}
-        onChange={handleChange}
-        className={cx(styles.dropdown)}>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+    <div className={cx(styles.content)}>
+      <div className={cx(styles.dropdown_wrapper)}>
+        <select
+          value={selectedOption}
+          onChange={handleChange}
+          className={cx(styles.dropdown)}
+          style={{ width: "auto", textAlign: "center" }}>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className={cx(styles.arrow)}>
+        <img src={Arrow} alt="" />
+      </div>
     </div>
   );
 };

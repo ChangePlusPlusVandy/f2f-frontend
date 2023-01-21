@@ -11,8 +11,7 @@ export const TaskListItem = React.forwardRef((props, ref) => {
 
     const {
         name,
-        dueDate,
-        dueTime,
+        dueAt,
         id,
     } = props;
 
@@ -21,7 +20,7 @@ export const TaskListItem = React.forwardRef((props, ref) => {
     return (
       <div onClick={() => navigate(ROUTES.TASK_DETAILS, {state: {id: id}})} className={cx(styles.tasks_div)}>
           <p className={cx(styles.taskName)}>{name}</p>
-          <p className={cx(styles.taskDate)}>{dueDate}, {dueTime}</p>
+          <p className={cx(styles.taskDate)}>{dueAt}</p>
       </div>
     );
 });
