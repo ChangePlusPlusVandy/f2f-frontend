@@ -6,21 +6,33 @@ import PropTypes from 'prop-types';
 import React from 'react';
 const cx = classNames.bind(styles);
 
-export const UpcomingComponent = React.forwardRef((props, ref) => {
+export const UpcomingComponent = (props) => {
+    const {
+        title,
+        time,
+        content,
+    } = props;
+
+    // randomize color for the display block 
+    const colors = ['#0198BA26', '#E3D15033', '#8B567478'];
+    const random_color = colors[Math.floor(Math.random() * colors.length)];
+
+
     return <>
         <div 
             className={cx(styles.upcomingWrapper)} 
-            // onClick={(event) => {
-            //     event.stopPropagation();
-            //     event.nativeEvent.stopImmediatePropagation();
-            // }}
-        > Upcoming component
+            style={{
+                backgroundColor: random_color,
+              }}
+        >
+            <p className={cx(styles.title)}>{title}</p>
             {/* <img
                 src={upcomingIcon}
                 className={cx(styles.upcomingIcon)}
-                onClick={onClickIcon}
                 ref={imageEle}
             /> */}
+            <p className={cx(styles.time)}>{time}</p>
+            <p className={cx(styles.content)}>{content}</p>
         </div>
     </>
-});
+};
