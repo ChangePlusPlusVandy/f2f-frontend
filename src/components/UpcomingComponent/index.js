@@ -13,11 +13,17 @@ export const UpcomingComponent = (props) => {
         content,
     } = props;
 
-    // TODO: randomize color
+    // randomize color for the display block 
+    const colors = ['#0198BA26', '#E3D15033', '#8B567478'];
+    const random_color = colors[Math.floor(Math.random() * colors.length)];
+
 
     return <>
         <div 
             className={cx(styles.upcomingWrapper)} 
+            style={{
+                backgroundColor: random_color,
+              }}
         >
             <p className={cx(styles.title)}>{title}</p>
             {/* <img

@@ -1,8 +1,7 @@
 .upcomingWrapper {
     margin: 4vw;
     padding: 4vw;
-    
-    background: rgba(1, 152, 186, 0.15);
+    background-color: rgba(1, 152, 186, 0.15);
     border-radius: 16px;
 }
 
