@@ -11,20 +11,26 @@ export const AuthInputBlock = (props) => {
         containerClassName,
         containerStyle,
         value,
-        onChange
+        onChange,
+        isMobile
     } = props;
     
+    console.log(isMobile)
     return <div
         className={cx(styles.inputBlock, containerClassName)}
         style={containerStyle}
     >
         <p
-            className={cx(styles.label)}
+            className={cx(styles.label, {
+                [styles.mobile]: isMobile
+            })}
         >
             {label || ""}
         </p>
         <input 
-            className={cx(styles.input)}
+            className={cx(styles.input, {
+                [styles.mobile]: isMobile
+            })}
             value={value}
             onChange={(event) => onChange(event.target.value)}
         />

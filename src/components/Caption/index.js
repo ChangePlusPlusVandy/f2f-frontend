@@ -24,10 +24,14 @@ export const Caption = (props) => {
         })}
         style={style}
     >
-        <div className={cx(styles.mainTitle)}>
+        <div className={cx(styles.mainTitle, {
+            [styles.mobile]: isMobile
+        })}>
             {mainTitle}
         </div>
-        <div className={cx(styles.subTitle)}>
+        <div className={cx(styles.subTitle, {
+            [styles.mobile]: isMobile
+        })}>
             {subTitle}
         </div>
     </div>

@@ -11,12 +11,12 @@ export const AuthSelectBlock = (props) => {
     const {
         label,
         containerClassName,
-        height = 25,
         options,
         onChange,
         placeholder,
         isClearable,
-        isMulti
+        isMulti,
+        isMobile
     } = props;
 
     const [selected, setSelected] = useState();
@@ -31,28 +31,65 @@ const filterSelectStyles = {
     }),
     control: (provided) => ({
         ...provided,
+        fontFamily: "Poppins",
         borderRadius: '10px',
         border: '1px solid rgba(221, 223, 226, 1)',
     }),
     option: (provided) => ({
         ...provided,
-        fontFamily: 'Open Sans, sans-serif',
+        fontFamily: 'Poppins',
         fontSize: '13.3px',
         letterSpacing: '0.6px',
     }),
     placeholder: (provided) => ({
         ...provided,
+        fontFamily: 'Poppins',
         fontSize: '13.3px',
-        color: 'rgba(186, 188, 193, 1)',
+        color: '#818181',
         lineHeight: '25px'
     }),
 };
 
+const mobileFilterSelectStyles = {
+    container: (provided) => ({
+        ...provided,
+        width: "100%",
+        height: '13vw',
+        lineHeight: '8vw',
+    }),
+    control: (provided) => ({
+        ...provided,
+        borderRadius: '2vw',
+        border: '1px solid rgba(221, 223, 226, 1)',
+        minHeight: '13vw',
+        height: '13vw',
+        fontSize: '4vw',
+        fontFamily: 'Poppins',
+    }),
+    option: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins',
+        fontSize: '4vw',
+        letterSpacing: '0.6px',
+    }),
+    placeholder: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins',
+        fontSize: '4vw',
+        color: '#818181',
+        lineHeight: '3vw'
+    }),
+};
+
     return <div
-        className={cx(styles.selectBlock, containerClassName)}
+        className={cx(styles.selectBlock, containerClassName, {
+            [styles.mobile]: isMobile
+        })}
     >
     <p
-        className={cx(styles.label)}
+        className={cx(styles.label, {
+            [styles.mobile]: isMobile
+        })}
     >
         {label || ""}
     </p>
@@ -64,7 +101,7 @@ const filterSelectStyles = {
         }}
         getOptionValue={option=>option.label}
         options={options}
-        styles={filterSelectStyles}
+        styles={isMobile? mobileFilterSelectStyles: filterSelectStyles}
         menuPortalTarget={document.body}
         isClearable={isClearable}
         isMulti={isMulti}

@@ -1,14 +1,16 @@
 import styles from './index.module.css';
 import classNames from 'classnames/bind';
 import { UpcomingComponent } from '../../components/UpcomingComponent';
-
+import { useWindowSize } from '../../lib/hooks';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { WINDOW_TYPE, STATUS_CODE } from '../../lib/constants';
 const cx = classNames.bind(styles);
 
 // Upcoming events
 export const Upcoming = ({ toast }) => {
     const navigate = useNavigate();
+    const isMobile = useWindowSize().type === WINDOW_TYPE.MOBILE;
     const [taskArray, setTaskArray] = useState([
         {
           id: 1,
@@ -44,9 +46,11 @@ export const Upcoming = ({ toast }) => {
     const upcomingList = taskArray.map((task) =>{
         return <UpcomingComponent
             key={task.id}
+            id={task.id}
             title={task.title}
             time={task.time}
             content={task.content}
+            isMobile={isMobile}
         />
     })
     return <>

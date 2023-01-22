@@ -39,7 +39,7 @@ export const AUTH_INPUT_LABELS = {
     DISABILITY: "Disabilities",
     ZIP_CODE: "Zip Code",
     PHONE_NUMBER : "Phone Number",
-    REGISTER: "Register!"
+    SIGN_UP: "Sign Up!"
 }
 
 // page titles 
