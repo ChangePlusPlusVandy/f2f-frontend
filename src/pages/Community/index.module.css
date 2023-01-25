@@ -7,7 +7,6 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 
 .header {
@@ -22,19 +21,27 @@ body {
 .create_post {
   width: 160px;
   height: 160px;
-  overflow: hidden;
   background-color: #0298ba;
-  margin-left: auto;
-  margin-right: 4vw;
-  margin-bottom: 2vh;
   box-shadow: 0 2px 16px 0 gray;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  position: absolute;
+  right: 4vw;
+  bottom: 10vh;
+  z-index: 2;
 }
 
 .create_post img {
   width: 70%;
+}
+
+.create_post:hover {
+  cursor: pointer;
+}
+
+.create_post {
+  cursor: pointer;
 }
