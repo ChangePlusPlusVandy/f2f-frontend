@@ -11,9 +11,12 @@ export const AuthButton = (props) => {
         style,
         label,
         onClick,
+        isMobile
     } = props;
     return <div
-        className={cx(styles.button, className)}
+        className={cx(styles.button, className,{
+            [styles.mobile]: isMobile
+        })}
         style={style}
         onClick={onClick}
     >

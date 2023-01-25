@@ -12,14 +12,8 @@ export const HomeLayout = () => {
     const {mainTitle, subTitle }= useCaption();
 
     const isMobile = type === WINDOW_TYPE.MOBILE;
-    const isSmall = isMobile || width < 600;
-    return <div
-        className={cx(styles.main, {
-            [styles.mobile]: isMobile
-        })}
-        style={isMobile ? { width: `${width - 68 - 17}px` } : {}}
-    >
-        <div className={cx(styles.container, {
+
+    return   <div className={cx(styles.container, {
             [styles.mobile]: isMobile
         })}>
             <Caption
@@ -31,5 +25,4 @@ export const HomeLayout = () => {
                 {<Outlet/>}
             </div>
         </div>
-    </div>
 }

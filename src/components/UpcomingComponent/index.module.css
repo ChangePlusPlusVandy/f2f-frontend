@@ -1,4 +1,7 @@
+@value font from "../../index.module.css";
+
 .upcomingWrapper {
+    composes: font;
     margin: 4vw;
     padding: 4vw;
     background-color: rgba(1, 152, 186, 0.15);
@@ -6,32 +9,57 @@
 }
 
 .title{
-    font-family: "Poppins";
     font-style: normal;
-    font-size: 5vw;
+    font-size: 4vw;
+    font-weight: 500;
+    margin: 0;
+    color: #000000;
+}
+
+.title.mobile {
+    font-style: normal;
+    font-size: 7vw;
     font-weight: 500;
     margin: 0;
     color: #000000;
 }
 
 .time{
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
-    font-size: 2vw;
+    font-size: 1.5vw;
     color: #8B5674;
     margin: 2;
     /* identical to box height */
 
+    color: #0198BA;
+}
+
+.time.mobile{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 3vw;
+    color: #8B5674;
+    margin: 2;
+    /* identical to box height */
 
     color: #0198BA;
 }
 
 .content{
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 300;
-    font-size: 1.7vw;
+    font-size: 2vw;
+    color: #8B5674;
+    margin: 2;
+
+    color: #818181;
+}
+
+.content.mobile {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 3vw;
     color: #8B5674;
     margin: 2;
 
