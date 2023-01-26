@@ -39,12 +39,15 @@ export const AUTH_INPUT_LABELS = {
     DISABILITY: "Disabilities",
     ZIP_CODE: "Zip Code",
     PHONE_NUMBER : "Phone Number",
-    REGISTER: "Register!"
+    SIGN_UP: "Sign Up!"
 }
 
 // page titles 
 export const CAPTIONS = {
-    SIGN_UP: 'Sign Up',
+    SIGN_UP_MAIN: 'Sign Up',
+    SIGN_UP_SUB: 'Let’s get you started!',
+    UPCOMING_MAIN: 'Upcoming',
+    UPCOMING_SUB: 'Everything in the next 3 months',
     HOME: 'Home',
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { AuthLayout } from "./pages/AuthLayout";
+import { HomeLayout } from "./pages/HomeLayout";
 
 // Routes
 import { Home } from "./pages/Home";
@@ -25,15 +25,15 @@ const App = () => {
       />
       <Routes>
         <Route path="/" element={<Navigate replace to="/login" />} />
-        <Route path="/" element={<AuthLayout />}>
+        <Route path="/" element={<HomeLayout />}>
           <Route path="sign-up" element={<SignUp toast={toast} />} />
+          <Route path="upcoming" element={<Upcoming toast={toast} />} />
         </Route>
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="home" element={<Home />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="community" element={<Community />} />
         <Route path="login" element={<Login />} />
-        <Route path="upcoming" element={<Upcoming toast={toast} />} />
         <Route path="task-details" element={<TaskDetails />} />
         <Route path="tasks" element={<AllTasks />} />
       </Routes>

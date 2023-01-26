@@ -5,12 +5,40 @@
 }
 
 .caption {
-    width: 100%;
     height: fit-content;
-    font-size: 36px;
-    font-weight: 700;
+    border: 0;
 }
 
-.caption.mobile {
-    font-size: 25px;
+.mainTitle.mobile {
+    height: fit-content;
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 8vw;
+    font-weight: 900;
+}
+
+.mainTitle {
+    height: fit-content;
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 4vw;
+    font-weight: 900;
+}
+
+.subTitle.mobile {
+    height: fit-content;
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 4vw;
+    font-weight: 500;
+    color: #818181;
+}
+
+.subTitle {
+    height: fit-content;
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 2vw;
+    font-weight: 500;
+    color: #818181;
 }

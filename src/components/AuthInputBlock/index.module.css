@@ -3,15 +3,40 @@
 .inputBlock {
     width: 100%;
     height: fit-content;
+    composes: font;
+}
+
+.label.mobile {
+    font-family: "Poppins";
+    font-size: 4vw;
+    box-sizing: border-box;
+    margin: 0;
+    color: #818181;
+}
+
+.input.mobile {
+    font-family: "Poppins";
+    box-sizing: border-box;
+    width: 100%;
+    height: 12vw;
+    font-size: 4vw;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    padding: 5px; 
+
+    background-color: #F4F4F4;
 }
 
 .label {
+    font-family: "Poppins";
     font-size: 15px;
     box-sizing: border-box;
     margin: 0;
 }
 
 .input {
+    font-family: "Poppins";
     box-sizing: border-box;
     width: 100%;
     height: 40px;

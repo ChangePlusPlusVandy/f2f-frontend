@@ -1,18 +1,19 @@
 import styles from './index.module.css';
 import classNames from 'classnames/bind';
-import { AUTH_INPUT_LABELS, SCHOOL_DISTRICT, DISABILITY, STATUS_CODE } from '../../lib/constants';
+import { AUTH_INPUT_LABELS, SCHOOL_DISTRICT, DISABILITY, WINDOW_TYPE, STATUS_CODE } from '../../lib/constants';
 import { AuthInputBlock } from '../../components/AuthInputBlock';
 import { AuthSelectBlock } from '../../components/AuthSelectBlock';
 import { AuthButton } from '../../components/AuthButton';
 import { useState } from 'react';
 import { signUp } from '../../lib/services';
 import { useNavigate } from 'react-router-dom';
+import { useWindowSize } from '../../lib/hooks';
 const cx = classNames.bind(styles);
 
-//{email, password, firstname, lastname, schooldistrict, zipcode, phonenumber}
 // Register page for authentication
 export const SignUp = ({ toast }) => {
     const navigate = useNavigate();
+    const isMobile = useWindowSize().type === WINDOW_TYPE.MOBILE;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -52,30 +53,35 @@ export const SignUp = ({ toast }) => {
             containerClassName={cx(styles.inputBlock)}
             value={email}
             onChange={setEmail}
+            isMobile={isMobile}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.PASSWORD}
             containerClassName={cx(styles.inputBlock)}
             value={password}
             onChange={setPassword}
+            isMobile={isMobile}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.CONFIRM_PASSWORD}
             containerClassName={cx(styles.inputBlock)}
             value={repeatPassword}
             onChange={setRepeatPassword}
+            isMobile={isMobile}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.FIRST_NAME}
             containerClassName={cx(styles.inputBlock)}
             value={firstName}
             onChange={setFirstName}
+            isMobile={isMobile}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.LAST_NAME}
             containerClassName={cx(styles.inputBlock)}
             value={lastName}
             onChange={setLastName}
+            isMobile={isMobile}
         />
         <AuthSelectBlock
             label={AUTH_INPUT_LABELS.SCHOOL_DISTRICT}
@@ -85,6 +91,7 @@ export const SignUp = ({ toast }) => {
             placeholder={"Select School District..."}
             isClearable={true}
             isMulti={false}
+            isMobile={isMobile}
         />
         <AuthSelectBlock
             label={AUTH_INPUT_LABELS.DISABILITY}
@@ -94,23 +101,27 @@ export const SignUp = ({ toast }) => {
             placeholder={"Select Disabilities..."}
             isClearable={true}
             isMulti={true}
+            isMobile={isMobile}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.ZIP_CODE}
             containerClassName={cx(styles.inputBlock)}
             value={zipCode}
             onChange={setZipCode}
+            isMobile={isMobile}
         />
         <AuthInputBlock
             label={AUTH_INPUT_LABELS.PHONE_NUMBER}
             containerClassName={cx(styles.inputBlock)}
             value={phoneNumber}
             onChange={setPhoneNumber}
+            isMobile={isMobile}
         />
         <AuthButton
             className={cx(styles.register)}
-            label={AUTH_INPUT_LABELS.REGISTER}
+            label={AUTH_INPUT_LABELS.SIGN_UP}
             onClick={onRegister}
+            isMobile={isMobile}
         />
     </>
 }

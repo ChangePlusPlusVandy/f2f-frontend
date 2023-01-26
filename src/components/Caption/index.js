@@ -9,7 +9,8 @@ const cx = classNames.bind(styles);
 // The caption of each home page
 export const Caption = (props) => {
     const {
-        text,
+        mainTitle,
+        subTitle,
         className,
         style,
     } = props;
@@ -23,12 +24,22 @@ export const Caption = (props) => {
         })}
         style={style}
     >
-        {text}
+        <div className={cx(styles.mainTitle, {
+            [styles.mobile]: isMobile
+        })}>
+            {mainTitle}
+        </div>
+        <div className={cx(styles.subTitle, {
+            [styles.mobile]: isMobile
+        })}>
+            {subTitle}
+        </div>
     </div>
 };
 
 Caption.propTypes = {
-    text: PropTypes.string.isRequired,
+    mainTitle: PropTypes.string.isRequired,
+    subTitle: PropTypes.string.isRequired,
     className: PropTypes.string,
     style: PropTypes.objectOf(PropTypes.string),
 }
