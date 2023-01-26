@@ -1,5 +1,10 @@
 .upcomingWrapper {
     align-items: center;
     justify-content: center;
+    height: fit-content;
     display: inline;
+    overflow: auto;
+    overscroll-behavior: none;
+    border: 0;
+    padding-bottom: 10vw;
 }

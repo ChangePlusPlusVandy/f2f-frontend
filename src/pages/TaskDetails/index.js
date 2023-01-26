@@ -28,7 +28,7 @@ export const TaskDetails = () => {
   const navigate = useNavigate();
   const loc = useLocation();
   const goBack = () => {
-    navigate(ROUTES.ALL_TASKS);
+    navigate(-1);
   };
 
   console.log(loc.state.id);
