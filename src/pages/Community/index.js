@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import styles from "./index.module.css";
-
+import { BackArrow } from "../../components/BackArrow";
 import { NavBar } from "../NavBar";
 
 // component imports
@@ -60,6 +60,7 @@ export const Community = () => {
   return (
     <div className={cx(styles.content)}>
       <header className={cx(styles.header)}>
+        <BackArrow />
         <Dropdown options={options} />
       </header>
       <div>

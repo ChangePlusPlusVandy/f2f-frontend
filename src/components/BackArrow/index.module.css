@@ -1,0 +1,8 @@
+.back_arrow {
+    display: flex;
+    justify-content: center;
+    width: 5%;
+    height: auto;
+    margin-top: 4vh;
+    margin-left: 5%;
+  }

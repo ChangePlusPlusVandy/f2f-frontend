@@ -2,10 +2,10 @@
 
 .upcomingWrapper {
     composes: font;
-    margin: 4vw;
+    margin: 4vw 0;
     padding: 4vw;
     background-color: rgba(1, 152, 186, 0.15);
-    border-radius: 16px;
+    border-radius: 50px;
 }
 
 .title{
@@ -30,7 +30,6 @@
     font-size: 1.5vw;
     color: #8B5674;
     margin: 2;
-    /* identical to box height */
 
     color: #0198BA;
 }
@@ -41,7 +40,6 @@
     font-size: 3vw;
     color: #8B5674;
     margin: 2;
-    /* identical to box height */
 
     color: #0198BA;
 }
