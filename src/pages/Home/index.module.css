@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
+.container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 70px 40px 80px 40px;
+}
+.container.mobile {
+    height: 100%;
+    width: 100%;
+    padding: 2vw 2vw 2vw 2vw;
+}
 .text_div {
     margin-left: auto;
     margin-right: auto;
@@ -75,6 +85,7 @@
     border-style: solid;
     border-radius: 50px;
     margin: 2vw;
+    margin-bottom: 4vw;
     padding: 3vw; 
 }
 
@@ -102,6 +113,7 @@
     font-family: 'Poppins';
     color: black;
     font-weight: 600;
+    font-size: 3vw;
 }
 
 .link_div {

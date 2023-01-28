@@ -48,7 +48,6 @@ export const CAPTIONS = {
     SIGN_UP_SUB: 'Let’s get you started!',
     UPCOMING_MAIN: 'Upcoming',
     UPCOMING_SUB: 'Everything in the next 3 months',
-    HOME: 'Home',
 }
 
 export const DISABILITY = [
