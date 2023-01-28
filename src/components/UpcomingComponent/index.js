@@ -63,6 +63,7 @@ export const UpcomingComponent = (props) => {
           className={cx(styles.time, {
             [styles.mobile]: isMobile,
           })}
+          onClick={() => navigate(ROUTES.TASK_DETAILS, { state: { id } })}
         >
           {time}
         </p>
