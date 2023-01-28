@@ -127,7 +127,7 @@ export const Community = () => {
       <header className={cx(styles.header)}>
         <Dropdown options={options} />
       </header>
-      <div>
+      <div className={cx(styles.posts)}>
         {posts.map((post) => {
           return (
             <Post
