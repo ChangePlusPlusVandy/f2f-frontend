@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { BackArrow } from "../../components/BackArrow";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
-import BackArrow from "../../images/Vector.png";
 import Clipboard from "../../images/Clipboard.png";
 import A from "../../images/A.png";
 import ResourceCard from "../../components/TaskResource";
-import { ROUTES } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -25,11 +24,7 @@ export const TaskDetails = () => {
     },
   ]);
 
-  const navigate = useNavigate();
   const loc = useLocation();
-  const goBack = () => {
-    navigate(-1);
-  };
 
   console.log(loc.state.id);
 
@@ -49,9 +44,7 @@ export const TaskDetails = () => {
   return (
     <div className={cx(styles.content)}>
       <header className={cx(styles.header)}>
-        <div className={cx(styles.back_arrow)} onClick={goBack}>
-          <img src={BackArrow} alt="" />
-        </div>
+        <BackArrow />
         <div className={cx(styles.header, "title")}>
           <h1>{taskName}</h1>
         </div>
