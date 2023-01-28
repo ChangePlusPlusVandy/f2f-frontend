@@ -55,10 +55,15 @@ export const useCaption = () => {
         mainTitle: CAPTIONS.ROADMAP_MAIN,
         subTitle: CAPTIONS.ROADMAP_SUB,
       };
-      case ROUTES.ALL_TASKS:
+    case ROUTES.ALL_TASKS:
       return {
         mainTitle: CAPTIONS.ALL_TASKS_MAIN,
         subTitle: CAPTIONS.ALL_TASKS_SUB,
+      };
+    case ROUTES.TASK_DETAILS:
+      return {
+        mainTitle: CAPTIONS.TASK_DETAILS_MAIN,
+        subTitle: CAPTIONS.TASK_DETAILS_SUB,
       };
     default:
       return CAPTIONS.ERROR;

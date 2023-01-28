@@ -16,6 +16,8 @@ body {
   height: 7vh;
   box-shadow: 0 8px 16px 0 gray;
   margin-bottom: 2vh;
+  position: absolute;
+  background-color: white;
 }
 
 .create_post {
@@ -32,6 +34,10 @@ body {
   right: 4vw;
   bottom: 10vh;
   z-index: 2;
+}
+
+.posts {
+  margin-top: 10vh;
 }
 
 .create_post img {
