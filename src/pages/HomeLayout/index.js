@@ -1,6 +1,11 @@
 import styles from "./index.module.css";
 import classNames from "classnames/bind";
-import { useWindowSize, useCaption } from "../../lib/hooks";
+import {
+  useWindowSize,
+  useCaption,
+  useBackArrow,
+  useNavBar,
+} from "../../lib/hooks";
 import { WINDOW_TYPE } from "../../lib/constants";
 import { Outlet } from "react-router-dom";
 import { Caption } from "../../components/Caption";
@@ -12,6 +17,8 @@ const cx = classNames.bind(styles);
 export const HomeLayout = () => {
   const { width, type } = useWindowSize();
   const { mainTitle, subTitle } = useCaption();
+  const { showBackArrow } = useBackArrow();
+  const { showNavBar } = useNavBar();
 
   const isMobile = type === WINDOW_TYPE.MOBILE;
 
@@ -21,7 +28,7 @@ export const HomeLayout = () => {
         [styles.mobile]: isMobile,
       })}
     >
-      <BackArrow />
+      <BackArrow showBackArrow={showBackArrow} />
       <Caption
         mainTitle={mainTitle}
         subTitle={subTitle}
@@ -34,7 +41,7 @@ export const HomeLayout = () => {
       >
         {<Outlet />}
       </div>
-      <NavBar />
+      <NavBar showNavBar={showNavBar} />
     </div>
   );
 };
