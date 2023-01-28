@@ -15,9 +15,15 @@ export const BackArrow = ({ showBackArrow = true }) => {
   return (
     <>
       {showBackArrow && (
-        <div className={cx(styles.backArrow)} onClick={goBack}>
-          <img src={backArrow} alt="" />
-        </div>
+        <img
+          className={cx(styles.backArrow)}
+          src={backArrow}
+          onClick={goBack}
+          alt=""
+        />
+        // <div >
+
+        // </div>
       )}
     </>
   );

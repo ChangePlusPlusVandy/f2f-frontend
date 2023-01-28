@@ -47,8 +47,12 @@
 }
 
 .header.mobile {
-    height: 1vh;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    margin-top: 4vh;
+    margin-left: 5%;
 }
 
 .block {
