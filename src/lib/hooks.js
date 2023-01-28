@@ -61,7 +61,7 @@ export const useCaption = () => {
  */
 export const useBackArrow = () => {
   const { pathname } = useLocation();
-  if (pathname == ROUTES.LOGIN || pathname == ROUTES.HOME) {
+  if (pathname == ROUTES.LOGIN || pathname == ROUTES.ROADMAP || pathname == ROUTES.COMMUNITY) {
     return { showBackArrow: false };
   }
   return { showBackArrow: true };
