@@ -28,7 +28,13 @@ export const HomeLayout = () => {
         [styles.mobile]: isMobile,
       })}
     >
-      <BackArrow showBackArrow={showBackArrow} />
+      <div
+        className={cx(styles.header, {
+          [styles.mobile]: isMobile,
+        })}
+      >
+        <BackArrow showBackArrow={showBackArrow} />
+      </div>
       <Caption
         mainTitle={mainTitle}
         subTitle={subTitle}
