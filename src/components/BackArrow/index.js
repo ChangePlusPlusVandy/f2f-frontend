@@ -6,7 +6,7 @@ import backArrow from "../../images/Vector.png";
 
 const cx = classNames.bind(styles);
 
-export const BackArrow = ({ showBackArrow }) => {
+export const BackArrow = ({ showBackArrow = true }) => {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -15,7 +15,7 @@ export const BackArrow = ({ showBackArrow }) => {
   return (
     <>
       {showBackArrow && (
-        <div className={cx(styles.back_arrow)} onClick={goBack}>
+        <div className={cx(styles.backArrow)} onClick={goBack}>
           <img src={backArrow} alt="" />
         </div>
       )}
