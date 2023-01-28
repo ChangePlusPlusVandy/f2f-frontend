@@ -28,14 +28,14 @@ const App = () => {
         <Route path="/" element={<HomeLayout />}>
           <Route path="sign-up" element={<SignUp toast={toast} />} />
           <Route path="upcoming" element={<Upcoming toast={toast} />} />
+          <Route path="tasks" element={<AllTasks />} />
+          <Route path="roadmap" element={<Roadmap />} />
         </Route>
-        <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="home" element={<Home />} />
-        <Route path="roadmap" element={<Roadmap />} />
-        <Route path="community" element={<Community />} />
-        <Route path="login" element={<Login />} />
         <Route path="task-details" element={<TaskDetails />} />
-        <Route path="tasks" element={<AllTasks />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="community" element={<Community />} />
+          <Route path="login" element={<Login />} />
+        <Route path="home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

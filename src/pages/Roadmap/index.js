@@ -44,38 +44,44 @@ export const Roadmap = () => {
 
   return (
     <div
-      style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
-    >
-      <div style={{ textAlign: "center" }}>
+      style={{
+        overflow: "scroll",
+        overscrollBehavior: "none",
+        height: "80vh",
+      }}>
+      {/* <div style={{ textAlign: "center" }}>
         <p className={cx(styles.header)}>Road Map</p>
         <p className={cx(styles.header, "small")}>
           Below are all the tasks needed to be completed
         </p>
-      </div>
-      <div onClick={() => navigate(ROUTES.UPCOMING_TASKS)} className={cx(styles.tasks_div)}>
-          <div style={{ display: "flex", margin: "10px" }}>
-            <div style={{ display: "inline-block" }}>
-              <div style={{ display: "flex" }}>
-                <Calender className={cx(styles.icon)} />
-                <div
-                  style={{
-                    position: "relative",
-                    display: "flex",
-                    margin: "10px",
-                  }}
-                >
-                  <p className={cx(styles.taskDesc)}>Upcoming</p>
-                </div>
+      </div> */}
+      <div
+        onClick={() => navigate(ROUTES.UPCOMING_TASKS)}
+        className={cx(styles.tasks_div)}>
+        <div style={{ display: "flex", margin: "10px" }}>
+          <div style={{ display: "inline-block" }}>
+            <div style={{ display: "flex" }}>
+              <Calender className={cx(styles.icon)} />
+              <div
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  margin: "10px",
+                }}>
+                <p className={cx(styles.taskDesc)}>Upcoming</p>
               </div>
-              <p className={cx(styles.header, "small")}>
-                Everything in the next three months
-              </p>
             </div>
-            <p className={cx(styles.taskNum)}>{numTasks}</p>
+            <p className={cx(styles.header, "small")}>
+              Everything in the next three months
+            </p>
           </div>
+          <p className={cx(styles.taskNum)}>{numTasks}</p>
+        </div>
       </div>
 
-      <div onClick={() => navigate(ROUTES.ALL_TASKS)} className={cx(styles.tasks_div, "all")}>
+      <div
+        onClick={() => navigate(ROUTES.ALL_TASKS)}
+        className={cx(styles.tasks_div, "all")}>
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
@@ -85,8 +91,7 @@ export const Roadmap = () => {
                   position: "relative",
                   display: "flex",
                   margin: "10px",
-                }}
-              >
+                }}>
                 <p className={cx(styles.taskDesc)}>All&nbsp;Tasks</p>
               </div>
             </div>
@@ -104,8 +109,6 @@ export const Roadmap = () => {
         <h2 className={cx(styles.priority, "else")}>Everything Else</h2>
         {elseElements}
       </div>
-
-      <NavBar />
     </div>
   );
 };

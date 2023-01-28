@@ -22,6 +22,56 @@ export const AllTasks = () => {
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
+    {
+      name: "task1",
+      dueAt: "10/20/2024 5:00 pm",
+      id: "asdcasdf",
+    },
   ]);
 
   const taskElements = taskArray.map((item, index) => (
@@ -44,17 +94,18 @@ export const AllTasks = () => {
 
   return (
     <div
-      style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
-    >
-      <BackArrow />
-      <div style={{ textAlign: "center" }}>
+      style={{
+        overflow: "scroll",
+        overscrollBehavior: "none",
+        height: "92vh",
+      }}>
+      {/* <div style={{ textAlign: "center" }}>
         <p className={cx(styles.header)}>All Tasks</p>
         <p className={cx(styles.header, "small")}>
           Everything you need to do for your child
         </p>
-      </div>
+      </div> */}
       {taskElements}
-      <NavBar />
     </div>
   );
 };

@@ -53,13 +53,7 @@ export const Home = () => {
   ));
 
   return (
-    <div
-      style={{
-        overflow: "scroll",
-        overscrollBehavior: "none",
-        height: "92vh",
-      }}
-    >
+    <div style={{overflow: "scroll", overscrollBehavior: "none", height: "92vh"}}>
       <div
         className={cx(styles.container, {
           [styles.mobile]: isMobile,
@@ -106,7 +100,7 @@ export const Home = () => {
         </div>
         <NavBar />
       </div>
-    </div>
+      </div>
   );
 };
 

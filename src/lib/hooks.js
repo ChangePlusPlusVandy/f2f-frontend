@@ -50,8 +50,18 @@ export const useCaption = () => {
         mainTitle: CAPTIONS.UPCOMING_MAIN,
         subTitle: CAPTIONS.UPCOMING_SUB,
       };
+    case ROUTES.ROADMAP:
+      return {
+        mainTitle: CAPTIONS.ROADMAP_MAIN,
+        subTitle: CAPTIONS.ROADMAP_SUB,
+      };
+      case ROUTES.ALL_TASKS:
+      return {
+        mainTitle: CAPTIONS.ALL_TASKS_MAIN,
+        subTitle: CAPTIONS.ALL_TASKS_SUB,
+      };
     default:
-      return CAPTIONS.HOME;
+      return CAPTIONS.ERROR;
   }
 };
 
@@ -61,7 +71,11 @@ export const useCaption = () => {
  */
 export const useBackArrow = () => {
   const { pathname } = useLocation();
-  if (pathname == ROUTES.LOGIN || pathname == ROUTES.ROADMAP || pathname == ROUTES.COMMUNITY) {
+  if (
+    pathname == ROUTES.LOGIN ||
+    pathname == ROUTES.ROADMAP ||
+    pathname == ROUTES.COMMUNITY
+  ) {
     return { showBackArrow: false };
   }
   return { showBackArrow: true };
