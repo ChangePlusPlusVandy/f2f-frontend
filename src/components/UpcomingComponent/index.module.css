@@ -8,6 +8,10 @@
     border-radius: 50px;
 }
 
+.header {
+    display: flex;
+}
+
 .header.mobile {
     display: flex;
 }
