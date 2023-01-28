@@ -49,8 +49,11 @@ export const Home = () => {
 
   return (
     <div
-      style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
-    >
+      style={{
+        overflow: "scroll",
+        overscrollBehavior: "none",
+        height: "92vh",
+      }}>
       <div className={cx(styles.text_div, "first")}>
         <p className={cx(styles.welcome)}>Welcome&nbsp;</p>
         <p className={cx(styles.welcome, "family")}>{lastName} Family!</p>
@@ -72,8 +75,7 @@ export const Home = () => {
           styles={buildStyles({
             pathColor: "#E3D150",
             trailColor: "#F9F6DC",
-          })}
-        >
+          })}>
           <div className={cx(styles.progress_circle_text)}>{points}</div>
           <div className={cx(styles.progress_circle_text)}>Points</div>
         </CircularProgressbarWithChildren>
@@ -90,7 +92,6 @@ export const Home = () => {
           </a>
         </div>
       </div>
-      <NavBar />
     </div>
   );
 };

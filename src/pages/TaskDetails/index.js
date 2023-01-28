@@ -44,7 +44,6 @@ export const TaskDetails = () => {
   return (
     <div className={cx(styles.content)}>
       <header className={cx(styles.header)}>
-        <BackArrow />
         <div className={cx(styles.header, "title")}>
           <h1>{taskName}</h1>
         </div>

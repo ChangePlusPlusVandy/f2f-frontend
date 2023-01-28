@@ -125,7 +125,6 @@ export const Community = () => {
         height: "92vh",
       }}>
       <header className={cx(styles.header)}>
-        <BackArrow />
         <Dropdown options={options} />
       </header>
       <div>
