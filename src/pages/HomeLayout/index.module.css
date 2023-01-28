@@ -46,6 +46,11 @@
     text-align: center;
 }
 
+.header.mobile {
+    height: 1vh;
+    width: 100%;
+}
+
 .block {
     box-sizing: border-box;
     display: flex;
