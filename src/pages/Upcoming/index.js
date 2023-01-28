@@ -5,7 +5,7 @@ import { useWindowSize } from "../../lib/hooks";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { WINDOW_TYPE, STATUS_CODE } from "../../lib/constants";
-import { NavBar } from "../NavBar";
+
 const cx = classNames.bind(styles);
 
 // Upcoming events
@@ -59,16 +59,7 @@ export const Upcoming = ({ toast }) => {
   });
   return (
     <>
-      <div
-        className={cx(styles.upcomingWrapper)}
-        style={{
-          overflow: "auto",
-          overscrollBehavior: "none",
-          // height: "92vh",
-        }}
-      >
-        {upcomingList}
-      </div>
+      <div className={cx(styles.upcomingWrapper)}>{upcomingList}</div>
     </>
   );
 };

@@ -76,19 +76,21 @@ export const useCaption = () => {
  */
 export const useBackArrow = () => {
   const { pathname } = useLocation();
-  if (
-    pathname == ROUTES.LOGIN ||
-    pathname == ROUTES.ROADMAP ||
-    pathname == ROUTES.COMMUNITY
-  ) {
-    return { showBackArrow: false };
+  switch (pathname) {
+    case ROUTES.LOGIN:
+      return { showBackArrow: false };
+    case ROUTES.ROADMAP:
+      return { showBackArrow: false };
+    case ROUTES.COMMUNITY:
+      return { showBackArrow: false };
+    default:
+      return { showBackArrow: true };
   }
-  return { showBackArrow: true };
 };
 
 /**
  * Determine whether to nav bar for each page
- * @returns {Boolean} caption text
+ * @returns {Boolean} whether to use Nav bar or not
  */
 export const useNavBar = () => {
   const { pathname } = useLocation();
