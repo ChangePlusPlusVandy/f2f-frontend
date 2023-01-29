@@ -2,7 +2,6 @@ import { useWindowSize } from "../../lib/hooks";
 import styles from "./index.module.css";
 import classNames from "classnames/bind";
 import React from "react";
-import { useState, useEffect } from "react";
 import { WINDOW_TYPE } from "../../lib/constants";
 const cx = classNames.bind(styles);
 
@@ -14,13 +13,11 @@ export const CheckBox = (props) => {
   const isMobile = type === WINDOW_TYPE.MOBILE;
 
   return (
-    // <label>
     <input
       className={cx(styles.checkBox)}
       type="checkbox"
       checked={value}
       onChange={onChange}
     />
-    // </label>
   );
 };

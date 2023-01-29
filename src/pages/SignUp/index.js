@@ -55,7 +55,7 @@ export const SignUp = ({ toast }) => {
       })
         .then((res) => {
           const { status } = res;
-          if (status === STATUS_CODE.SUCESS) navigate("/home");
+          if (status === STATUS_CODE.SUCESS) navigate("/login");
         })
         .catch((err) => toast("Internal error"));
     }
