@@ -22,6 +22,31 @@ export const TaskDetails = () => {
       desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
       img: A,
     },
+    {
+      title: "Medicaid Waitlist 101",
+      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
+      img: A,
+    },
+    {
+      title: "Medicaid Waitlist 101",
+      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
+      img: A,
+    },
+    {
+      title: "Medicaid Waitlist 101",
+      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
+      img: A,
+    },
+    {
+      title: "Medicaid Waitlist 101",
+      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
+      img: A,
+    },
+    {
+      title: "Medicaid Waitlist 101",
+      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
+      img: A,
+    },
   ]);
 
   const loc = useLocation();
@@ -43,16 +68,15 @@ export const TaskDetails = () => {
 
   return (
     <div className={cx(styles.content)}>
-      <header className={cx(styles.header)}>
-        <BackArrow />
+      {/* <header className={cx(styles.header)}>
         <div className={cx(styles.header, "title")}>
           <h1>{taskName}</h1>
         </div>
-      </header>
+      </header> */}
       <div className={cx(styles.info)}>
-        <div className={cx(styles.info, "desc")}>
+        {/* <div className={cx(styles.info, "desc")}>
           <p>{description}</p>
-        </div>
+        </div> */}
 
         <div className={cx(styles.info, "status")}>
           <p>Status: {status ? "Complete" : "Incomplete"}</p>

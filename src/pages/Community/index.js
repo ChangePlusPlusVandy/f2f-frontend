@@ -38,6 +38,61 @@ export const Community = () => {
         { user: "user2", comment: "okay comment" },
       ],
     },
+    {
+      user: "blah2",
+      location: "nash",
+      img: PFP,
+      content: "lorem",
+      caption: "lorem",
+      comments: [
+        { user: "user1", comment: "good comment" },
+        { user: "user2", comment: "okay comment" },
+      ],
+    },
+    {
+      user: "blah2",
+      location: "nash",
+      img: PFP,
+      content: "lorem",
+      caption: "lorem",
+      comments: [
+        { user: "user1", comment: "good comment" },
+        { user: "user2", comment: "okay comment" },
+      ],
+    },
+    {
+      user: "blah2",
+      location: "nash",
+      img: PFP,
+      content: "lorem",
+      caption: "lorem",
+      comments: [
+        { user: "user1", comment: "good comment" },
+        { user: "user2", comment: "okay comment" },
+      ],
+    },
+    {
+      user: "blah2",
+      location: "nash",
+      img: PFP,
+      content: "lorem",
+      caption: "lorem",
+      comments: [
+        { user: "user1", comment: "good comment" },
+        { user: "user2", comment: "okay comment" },
+      ],
+    },
+    {
+      user: "blah2",
+      location: "nash",
+      img: PFP,
+      content: "lorem",
+      caption: "lorem",
+      comments: [
+        { user: "user1", comment: "good comment" },
+        { user: "user2", comment: "okay comment" },
+      ],
+    },
   ]);
   const [options, setOptions] = useState([
     "All Disabilities",
@@ -57,13 +112,22 @@ export const Community = () => {
       });
   }, []);
 
+  const createPost = () => {
+    console.log("called");
+  };
+
   return (
-    <div className={cx(styles.content)}>
+    <div
+      className={cx(styles.content)}
+      style={{
+        overflow: "scroll",
+        overscrollBehavior: "none",
+        height: "92vh",
+      }}>
       <header className={cx(styles.header)}>
-        <BackArrow />
         <Dropdown options={options} />
       </header>
-      <div>
+      <div className={cx(styles.posts)}>
         {posts.map((post) => {
           return (
             <Post
@@ -77,7 +141,7 @@ export const Community = () => {
           );
         })}
       </div>
-      <div className={cx(styles.create_post)}>
+      <div className={cx(styles.create_post)} onClick={createPost}>
         <img src={PlusSign} alt="" />
       </div>
       <NavBar />

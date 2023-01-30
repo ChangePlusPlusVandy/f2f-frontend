@@ -8,6 +8,14 @@
     border-radius: 50px;
 }
 
+.header {
+    display: flex;
+}
+
+.header.mobile {
+    display: flex;
+}
+
 .title{
     font-style: normal;
     font-size: 4vw;
