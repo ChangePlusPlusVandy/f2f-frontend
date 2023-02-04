@@ -15,21 +15,21 @@ export const Upcoming = ({ toast }) => {
   const [taskArray, setTaskArray] = useState([
     {
       id: 1,
-      title: "task1",
+      title: "Medicaid",
       time: "10/20/2024 5:00 pm",
       content:
         "Call 700-432-3456 and ask to be put on the Medicaid and associated waitlists. ",
     },
     {
       id: 2,
-      title: "task2",
+      title: "IEP",
       time: "10/20/2024 5:00 pm",
       content:
         "Schedule your annual IEP Meeting to make sure your student’s needs are met. ",
     },
     {
       id: 3,
-      title: "task3",
+      title: "Letter of Intent",
       time: "10/20/2024 5:00 pm",
       content:
         "Write your child’s letter of intent to ensure your child’s support if you were to ever be ... ",
