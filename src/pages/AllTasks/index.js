@@ -13,37 +13,37 @@ export const AllTasks = () => {
   const navigate = useNavigate();
   const [taskArray, setTaskArray] = useState([
     {
-      name: "task1",
+      name: "Medicaid Waitlist",
       dueAt: "10/20/2024 5:00pm",
       id: "asdfdas",
     },
     {
-      name: "task1",
+      name: "IEP",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "Letter of Content",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "An important situation",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "Another important thing",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "this isn't important",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "this is though",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
@@ -98,7 +98,8 @@ export const AllTasks = () => {
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "92vh",
-      }}>
+      }}
+    >
       {/* <div style={{ textAlign: "center" }}>
         <p className={cx(styles.header)}>All Tasks</p>
         <p className={cx(styles.header, "small")}>
