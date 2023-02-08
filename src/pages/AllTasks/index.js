@@ -6,6 +6,7 @@ import { ROUTES } from "../../lib/constants";
 import { useNavigate } from "react-router-dom";
 import { TaskListItem } from "../../components/TaskListItem";
 import { BackArrow } from "../../components/BackArrow";
+import ReactSearchBox from "react-search-box";
 
 const cx = classNames.bind(styles);
 
@@ -18,70 +19,62 @@ export const AllTasks = () => {
       id: "asdfdas",
     },
     {
-      name: "IEP",
+      name: "Survey",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "Letter of Content",
+      name: "Government Form",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "An important situation",
+      name: "Cool Tasks",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "Another important thing",
+      name: "Crazy Tasks",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "this isn't important",
+      name: "More Tasks",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "this is though",
+      name: "Gabe",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "Gabriel",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "Gabe Dong",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "Gabe D",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "Abe D",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
     {
-      name: "task1",
+      name: "Rohan",
       dueAt: "10/20/2024 5:00 pm",
       id: "asdcasdf",
     },
   ]);
-
-  const taskElements = taskArray.map((item, index) => (
-    <TaskListItem
-      name={item.name}
-      dueAt={item.dueAt}
-      id={item.id}
-      key={index}
-    />
-  ));
+  const [taskElements, setTaskElements] = useState();
 
   useEffect(() => {
     fetch("/allTasks")
@@ -92,6 +85,36 @@ export const AllTasks = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  useEffect(() => {
+    setTaskElements(
+      taskArray.map((item, index) => (
+        <TaskListItem
+          name={item.name}
+          dueAt={item.dueAt}
+          id={item.id}
+          key={index}
+        />
+      ))
+    );
+  }, []);
+
+  let inputHandler = (text) => {
+    let searchText = text.toLowerCase();
+    const filteredData = taskArray.filter((task) => {
+      return task.name.toLowerCase().startsWith(searchText);
+    });
+    setTaskElements(
+      filteredData.map((item, index) => (
+        <TaskListItem
+          name={item.name}
+          dueAt={item.dueAt}
+          id={item.id}
+          key={index}
+        />
+      ))
+    );
+  };
+
   return (
     <div
       style={{
@@ -100,13 +123,21 @@ export const AllTasks = () => {
         height: "92vh",
       }}
     >
-      {/* <div style={{ textAlign: "center" }}>
-        <p className={cx(styles.header)}>All Tasks</p>
-        <p className={cx(styles.header, "small")}>
-          Everything you need to do for your child
-        </p>
-      </div> */}
-      {taskElements}
+      <ReactSearchBox
+        placeholder="Search"
+        onChange={inputHandler}
+        inputHeight="10vw"
+        inputFontSize="5vw"
+      />
+      <div
+        style={{
+          overflow: "scroll",
+          overscrollBehavior: "none",
+          height: "66vh",
+        }}
+      >
+        {taskElements}
+      </div>
     </div>
   );
 };
