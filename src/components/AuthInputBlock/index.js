@@ -15,7 +15,6 @@ export const AuthInputBlock = (props) => {
         isMobile
     } = props;
     
-    console.log(isMobile)
     return <div
         className={cx(styles.inputBlock, containerClassName)}
         style={containerStyle}
