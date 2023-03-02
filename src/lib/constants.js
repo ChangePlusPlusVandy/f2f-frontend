@@ -4,7 +4,7 @@ export const WINDOW_TYPE = {
 };
 
 export const STATUS_CODE = {
-  SUCESS: "SUCESS",
+  SUCESS: "SUCCESS",
   ERROR: "ERROR",
 };
 

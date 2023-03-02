@@ -54,8 +54,21 @@ export const SignUp = ({ toast }) => {
         phoneNumber,
       })
         .then((res) => {
-          const { status } = res;
-          if (status === STATUS_CODE.SUCESS) navigate("/login");
+          console.log(res);
+          let message = res.message;
+          //make constants later
+          console.log(message)
+          if (message === "toLogin") {
+            console.log("1");
+            navigate("/login");
+          }
+          if (message === "sendVerification") {
+            console.log("send email, to be completed");
+          }
+          if (message === "sendSFForm") {
+            console.log("3");
+            navigate("/createUser")
+          }
         })
         .catch((err) => toast("Internal error"));
     }
