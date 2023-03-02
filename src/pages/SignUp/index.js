@@ -54,10 +54,8 @@ export const SignUp = ({ toast }) => {
         phoneNumber,
       })
         .then((res) => {
-          console.log(res);
           let message = res.message;
           //make constants later
-          console.log(message)
           if (message === "toLogin") {
             console.log("1");
             navigate("/login");
@@ -67,7 +65,7 @@ export const SignUp = ({ toast }) => {
           }
           if (message === "sendSFForm") {
             console.log("3");
-            navigate("/createUser")
+            navigate("/createUser");
           }
         })
         .catch((err) => toast("Internal error"));
