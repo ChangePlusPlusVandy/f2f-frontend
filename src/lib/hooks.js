@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { WINDOW_TYPE, CAPTIONS, ROUTES } from "./constants";
 
