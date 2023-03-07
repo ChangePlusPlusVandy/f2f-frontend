@@ -8,7 +8,7 @@ import { ROUTES } from "../../lib/constants";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
 import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
 import { useNavigate } from "react-router-dom";
-import { importCSVToJSON } from "../../lib/utils";
+import { importCSVToJSON, formGetRequest } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
 
 const cx = classNames.bind(styles);
@@ -21,7 +21,7 @@ export const Roadmap = () => {
   const [importFile, setImportFile] = useState(null);
 
   //just for mvp
-  const [hpList, sethpList] = useState(["Medicaid Waitlist"]);
+  const [hpList, sethpList] = useState([]);
   const [elseList, setElseList] = useState([
     "Register for Autism Symposium",
     "Intensive IEP support & training",
@@ -37,7 +37,7 @@ export const Roadmap = () => {
     </p>
   ));
 
-  useEffect(() => {
+  const getStats = () => {
     const url = "/tasks/getStats";
     fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
@@ -47,6 +47,24 @@ export const Roadmap = () => {
         setNumAllTasks(data.numAll);
       })
       .catch((error) => console.log(error));
+  };
+
+  const getHighPriority = () => {
+    //TODO: fix the priority level
+    const url = formGetRequest("/tasks/byPriority/", { priority: { $gt: 2 } });
+    fetch(process.env.REACT_APP_HOST_URL + url)
+      .then((response) => response.json())
+      .then((tasks) => {
+        const taskNames = tasks.map((task) => task.title);
+        console.log(taskNames);
+        sethpList(taskNames);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getStats();
+    getHighPriority();
   }, []);
 
   // set the import csv file
