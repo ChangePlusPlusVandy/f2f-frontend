@@ -6,26 +6,32 @@ import styles from "./index.module.css";
 import Clipboard from "../../images/Clipboard.png";
 import A from "../../images/A.png";
 import ResourceCard from "../../components/TaskResource";
+import { useContext } from "react";
+import { AppContext } from "../../lib/AppContext";
 
 const cx = classNames.bind(styles);
 
 export const TaskDetails = () => {
-  const [taskName, setTaskName] = useState();
-  const [description, setDescription] = useState();
+  // const [taskName, setTaskName] = useState();
+  // const [description, setDescription] = useState();
   const [status, setStatus] = useState(false);
   const [image, setImage] = useState(Clipboard);
   const [resource, setResources] = useState([]);
   const location = useLocation();
   const taskId = location.state?.id;
+  const { taskTitle, setTaskTitle, taskDetail, setTaskDetail } =
+    useContext(AppContext);
 
   useEffect(() => {
     const url = "/tasks/" + taskId;
-    fetch(process.env.REACT_APP_HOST_URL + url) //add task id (loc.state.id)
+    fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setTaskName(data.title);
-        setDescription(data.details);
+        setTaskTitle(data.title);
+        setTaskDetail(data.details);
+        // setTaskName(data.title);
+        // setDescription(data.details);
         // setStatus(data.status);
         // setImage(data.img);
         // setResources(data.resources);
