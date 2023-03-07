@@ -10,58 +10,25 @@ import ResourceCard from "../../components/TaskResource";
 const cx = classNames.bind(styles);
 
 export const TaskDetails = () => {
-  const [taskName, setTaskName] = useState("Medicaid Waitlist");
-  const [description, setDescription] = useState(
-    "Call 700-432-3456 and ask to be put on the Medicaid and associated waitlists."
-  );
+  const [taskName, setTaskName] = useState();
+  const [description, setDescription] = useState();
   const [status, setStatus] = useState(false);
   const [image, setImage] = useState(Clipboard);
-  const [resource, setResources] = useState([
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-  ]);
-
-  const loc = useLocation();
-
-  console.log(loc.state.id);
+  const [resource, setResources] = useState([]);
+  const location = useLocation();
+  const taskId = location.state?.id;
 
   useEffect(() => {
-    fetch("/resources") //add task id (loc.state.id)
+    const url = "/tasks/" + taskId;
+    fetch(process.env.REACT_APP_HOST_URL + url) //add task id (loc.state.id)
       .then((response) => response.json())
       .then((data) => {
-        setTaskName(data.name);
-        setDescription(data.desc);
-        setStatus(data.status);
-        setImage(data.img);
-        setResources(data.resources);
+        console.log(data);
+        setTaskName(data.title);
+        setDescription(data.details);
+        // setStatus(data.status);
+        // setImage(data.img);
+        // setResources(data.resources);
       })
       .catch((error) => console.log(error));
   }, []);

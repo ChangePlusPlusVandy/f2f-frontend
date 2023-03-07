@@ -35,8 +35,8 @@ Content-Type: application/json
     "adult" : false
 }
 
+
 ###
 
-
-GET http://localhost:3001/tasks?disability=["disabillity1","disability2","disability3"]
+GET http://localhost:3001/tasks/getPriorityTasks
 Content-Type: application/json

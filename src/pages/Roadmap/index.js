@@ -15,8 +15,8 @@ const cx = classNames.bind(styles);
 
 export const Roadmap = () => {
   const navigate = useNavigate();
-  const [numTasks, setNumTasks] = useState(8);
-  const [numAllTasks, setNumAllTasks] = useState(23);
+  const [numTasks, setNumTasks] = useState(0);
+  const [numAllTasks, setNumAllTasks] = useState(0);
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
 
@@ -38,15 +38,18 @@ export const Roadmap = () => {
   ));
 
   useEffect(() => {
-    fetch("/taskData")
+    const url = "/tasks/getStats";
+    fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
-        setNumTasks(data.numTasks);
-        setNumAllTasks(data.numAllTasks);
+        //TODO: fix the data for upcoming vs priority
+        setNumTasks(data.numUpcoming);
+        setNumAllTasks(data.numAll);
       })
       .catch((error) => console.log(error));
   }, []);
 
+  // set the import csv file
   useEffect(() => {
     if (importFile) {
       Papa.parse(importFile, {
@@ -58,13 +61,16 @@ export const Roadmap = () => {
             setImportFile(null);
             return;
           }
-          const url = "/loadTaskCSV";
-          console.log(inputObj[0]);
+          const url = "/tasks/loadTaskCSV";
           fetch(process.env.REACT_APP_HOST_URL + url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(inputObj),
-          }).then((response) => console.log(response.json()));
+          })
+            .then((response) => console.log(response.json()))
+            .catch((error) => {
+              console.error(error);
+            });
 
           setImportFile(null);
         },
