@@ -8,7 +8,7 @@ const mongoCheck = (email) => {
   console.log("before fetch");
   return new Promise((resolve, reject) => {
     //make localhost call a constant
-    fetch(`http://localhost:3001/users/byEmail/?email=${email}`, {
+    fetch(`http://localhost:3001/verification/checkMongo/?email=${email}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -23,11 +23,21 @@ const mongoCheck = (email) => {
 const salesForceCheck = (email) => {
   return new Promise((resolve, reject) => {
     //make localhost call a constant
-    console.log(email);
-    fetch("http://localhost:3002/users", {
-      method: "POST",
+    fetch(`http://localhost:3001/verification/checkSF/?email=${email}`, {
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email }),
+    })
+      .then((response) => response.json())
+      .then((response) => resolve(response))
+      .catch((err) => reject(err));
+  });
+};
+
+export const sendVerificationEmail = (email) => {
+  return new Promise((resolve, reject) => {
+    fetch(`http://localhost:3001/verification/sendEmail/?email=${email}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
       .then((response) => resolve(response))
@@ -41,15 +51,15 @@ export const signUp = (inputs) => {
   return mongoCheck(inputs.email).then((res) => {
     console.log(res);
     if (res.status === "Found") {
-      console.log("here")
-      return {message: "toLogin"}
+      console.log("here");
+      return { message: "toLogin" };
     } else {
       return salesForceCheck(inputs.email).then((res) => {
-        if (res.status === STATUS_CODE.SUCESS) {
-          // send email verification
-          return {message: "sendVerification"}
+        console.log(res)
+        if (res === STATUS_CODE.SUCESS) {
+          return { message: "sendVerification" };
         } else {
-          return {message: "sendSFForm"}
+          return { message: "sendSFForm" };
         }
       });
     }
