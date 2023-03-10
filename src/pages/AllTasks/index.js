@@ -2,11 +2,13 @@ import React, { useState, useEffect, createContext } from "react";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
-import { ROUTES } from "../../lib/constants";
+import { getChildrenByIdBatch } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
 import { TaskListItem } from "../../components/TaskListItem";
 import { BackArrow } from "../../components/BackArrow";
 import ReactSearchBox from "react-search-box";
+import { formGetRequest } from "../../lib/utils";
+import { PRIORITY_LEVEL } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -14,10 +16,16 @@ export const AllTasks = () => {
   const navigate = useNavigate();
   const [taskArray, setTaskArray] = useState([]);
   const [taskElements, setTaskElements] = useState();
+  //TODO: get information using cache
+  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const disabilities = ["ADHD", "disability2"];
+  const age = "Adult";
 
   useEffect(() => {
-    //TODO: modify this to adjust to user
-    const url = "/tasks";
+    const url = formGetRequest("/tasks/byAttributes/", {
+      disabilities: JSON.stringify(disabilities),
+      age: JSON.stringify(age),
+    });
     fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
@@ -30,9 +38,10 @@ export const AllTasks = () => {
     setTaskElements(
       taskArray.map((item, index) => (
         <TaskListItem
-          name={item.title}
+          taskName={item.title}
           dueAt={item.timePeriod}
-          id={item._id}
+          taskId={item._id}
+          childrenId={childrenId}
           key={index}
         />
       ))
@@ -47,9 +56,10 @@ export const AllTasks = () => {
     setTaskElements(
       filteredData.map((item, index) => (
         <TaskListItem
-          name={item.title}
+          taskName={item.title}
           dueAt={item.timePeriod}
-          id={item._id}
+          taskId={item._id}
+          childrenId={childrenId}
           key={index}
         />
       ))

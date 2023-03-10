@@ -1,3 +1,8 @@
+//TODO: double check on the priority level standard
+export const PRIORITY_LEVEL = {
+  PRIORITY_LEVEL: 2,
+};
+
 export const WINDOW_TYPE = {
   WEB: "WEB",
   MOBILE: "MOBILE",

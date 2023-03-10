@@ -4,18 +4,25 @@ import { UpcomingComponent } from "../../components/UpcomingComponent";
 import { useWindowSize } from "../../lib/hooks";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { WINDOW_TYPE, STATUS_CODE } from "../../lib/constants";
+import { WINDOW_TYPE, STATUS_CODE, PRIORITY_LEVEL } from "../../lib/constants";
+import { formGetRequest } from "../../lib/utils";
 
 const cx = classNames.bind(styles);
 
 // Upcoming events
 export const Upcoming = ({ toast }) => {
-  const navigate = useNavigate();
   const isMobile = useWindowSize().type === WINDOW_TYPE.MOBILE;
   const [taskArray, setTaskArray] = useState([]);
+  //TODO: get information using cache
+  const disabilities = ["ADHD", "disability2"];
+  const age = "Adult";
 
   useEffect(() => {
-    const url = "/tasks/getPriorityTasks";
+    const url = formGetRequest("/tasks/byAttributes/", {
+      disabilities: JSON.stringify(disabilities),
+      age: JSON.stringify(age),
+      priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
+    });
     fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {

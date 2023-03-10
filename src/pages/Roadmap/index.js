@@ -4,12 +4,13 @@ import Papa from "papaparse";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
-import { ROUTES } from "../../lib/constants";
+import { ROUTES, PRIORITY_LEVEL, STATUS_CODE } from "../../lib/constants";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
 import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
 import { useNavigate } from "react-router-dom";
 import { importCSVToJSON, formGetRequest } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
+import { getChildrenByIdBatch } from "../../lib/services";
 
 const cx = classNames.bind(styles);
 
@@ -19,13 +20,13 @@ export const Roadmap = () => {
   const [numAllTasks, setNumAllTasks] = useState(0);
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
-
-  //just for mvp
   const [hpList, sethpList] = useState([]);
-  const [elseList, setElseList] = useState([
-    "Register for Autism Symposium",
-    "Intensive IEP support & training",
-  ]);
+  const [elseList, setElseList] = useState([]);
+  //TODO: get the information from cache
+  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const disabilities = ["ADHD", "disability2"];
+  const age = "Adult";
+
   const hpElements = hpList.map((thing, index) => (
     <p className={styles.list} key={index}>
       {index + 1 + ". " + thing}
@@ -37,8 +38,12 @@ export const Roadmap = () => {
     </p>
   ));
 
-  const getStats = () => {
-    const url = "/tasks/getStats";
+  const getStats = (disabilities, age) => {
+    const url = formGetRequest("/tasks/getStats/", {
+      disabilities: JSON.stringify(disabilities),
+      age: JSON.stringify(age),
+      priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
+    });
     fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
@@ -49,22 +54,24 @@ export const Roadmap = () => {
       .catch((error) => console.log(error));
   };
 
-  const getHighPriority = () => {
-    //TODO: fix the priority level
-    const url = formGetRequest("/tasks/byPriority/", { priority: { $gt: 2 } });
+  const getHighPriority = (disabilities, age) => {
+    const url = formGetRequest("/tasks/byAttributes/", {
+      disabilities: JSON.stringify(disabilities),
+      age: JSON.stringify(age),
+      priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
+    });
     fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((tasks) => {
         const taskNames = tasks.map((task) => task.title);
-        console.log(taskNames);
         sethpList(taskNames);
       })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
-    getStats();
-    getHighPriority();
+    getStats(disabilities, age);
+    getHighPriority(disabilities, age);
   }, []);
 
   // set the import csv file

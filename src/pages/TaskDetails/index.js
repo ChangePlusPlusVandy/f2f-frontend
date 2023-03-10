@@ -27,7 +27,6 @@ export const TaskDetails = () => {
     fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setTaskTitle(data.title);
         setTaskDetail(data.details);
         // setTaskName(data.title);
