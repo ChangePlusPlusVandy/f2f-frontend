@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.3.2",
+    "env-cmd": "^10.1.0",
     "firebase": "^8.10.1",
+    "papaparse": "^5.3.2",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^17.0.2",
@@ -15,7 +17,7 @@
     "react-toastify": "^8.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts   --openssl-legacy-provider  start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -2,85 +2,34 @@ import React, { useState, useEffect, createContext } from "react";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
-import { ROUTES } from "../../lib/constants";
+import { getChildrenByIdBatch } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
 import { TaskListItem } from "../../components/TaskListItem";
 import { BackArrow } from "../../components/BackArrow";
 import ReactSearchBox from "react-search-box";
+import { formGetRequest } from "../../lib/utils";
+import { PRIORITY_LEVEL } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
 export const AllTasks = () => {
   const navigate = useNavigate();
-  const [taskArray, setTaskArray] = useState([
-    {
-      name: "Medicaid Waitlist",
-      dueAt: "10/20/2024 5:00pm",
-      id: "asdfdas",
-    },
-    {
-      name: "Survey",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Government Form",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Cool Tasks",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Crazy Tasks",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "More Tasks",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Gabe",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Gabriel",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Gabe Dong",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Gabe D",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Abe D",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-    {
-      name: "Rohan",
-      dueAt: "10/20/2024 5:00 pm",
-      id: "asdcasdf",
-    },
-  ]);
+  const [taskArray, setTaskArray] = useState([]);
   const [taskElements, setTaskElements] = useState();
+  //TODO: get information using cache
+  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const disabilities = ["ADHD", "disability2"];
+  const age = "Adult";
 
   useEffect(() => {
-    fetch("/allTasks")
+    const url = formGetRequest("/tasks/byAttributes/", {
+      disabilities: JSON.stringify(disabilities),
+      age: JSON.stringify(age),
+    });
+    fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
-        setTaskArray(data.taskArray);
+        setTaskArray(data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -89,26 +38,28 @@ export const AllTasks = () => {
     setTaskElements(
       taskArray.map((item, index) => (
         <TaskListItem
-          name={item.name}
-          dueAt={item.dueAt}
-          id={item.id}
+          taskName={item.title}
+          dueAt={item.timePeriod}
+          taskId={item._id}
+          childrenId={childrenId}
           key={index}
         />
       ))
     );
-  }, []);
+  }, [taskArray]);
 
-  let inputHandler = (text) => {
+  const inputHandler = (text) => {
     let searchText = text.toLowerCase();
     const filteredData = taskArray.filter((task) => {
-      return task.name.toLowerCase().startsWith(searchText);
+      return task.title.toLowerCase().includes(searchText);
     });
     setTaskElements(
       filteredData.map((item, index) => (
         <TaskListItem
-          name={item.name}
-          dueAt={item.dueAt}
-          id={item.id}
+          taskName={item.title}
+          dueAt={item.timePeriod}
+          taskId={item._id}
+          childrenId={childrenId}
           key={index}
         />
       ))

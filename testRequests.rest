@@ -2,16 +2,46 @@ POST http://localhost:3001/users
 Content-Type: application/json
 
 {
-    "email" : "test1@test.com",
+    "email" : "testChildren@test.com",
     "password" : "123456789",
-    "firstName" : "test1", 
-    "lastName": "test2", 
+    "firstName" : "testChildren", 
+    "lastName": "test", 
     "schoolDistrict": "Goose Creek", 
     "zipCode" : 12345, 
-    "phoneNumber": 6156156156
+    "phoneNumber": 6156156156,
+    "children": ["63e5c4936d51fdbbbedb5503"]
 }
 
 ###
 
+PUT http://localhost:3001/children/63e5c4936d51fdbbbedb5503/completedTask
+Content-Type: application/json
 
-GET http://localhost:3001/users
+{ 
+    "taskId": "63d2bd432decae8fde782e1e"
+}
+
+###
+
+GET http://localhost:3001/children/63d58b72c2e0063e64001a1e
+Content-Type: application/json
+
+
+###
+
+
+GET http://localhost:3001/children/getChildrenByIdBatch/?id=["63e5c4936d51fdbbbedb5503"]
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:3001/tasks/byAttributes/?disabilities=["ADHD"]&priority=2
+Content-Type: application/json
+
+###
+
+GET http://localhost:3001/tasks/byAttributes/?priority=3
+Content-Type: application/json
+
+###

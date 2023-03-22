@@ -6,62 +6,34 @@ import styles from "./index.module.css";
 import Clipboard from "../../images/Clipboard.png";
 import A from "../../images/A.png";
 import ResourceCard from "../../components/TaskResource";
+import { useContext } from "react";
+import { AppContext } from "../../lib/AppContext";
 
 const cx = classNames.bind(styles);
 
 export const TaskDetails = () => {
-  const [taskName, setTaskName] = useState("Medicaid Waitlist");
-  const [description, setDescription] = useState(
-    "Call 700-432-3456 and ask to be put on the Medicaid and associated waitlists."
-  );
+  // const [taskName, setTaskName] = useState();
+  // const [description, setDescription] = useState();
   const [status, setStatus] = useState(false);
   const [image, setImage] = useState(Clipboard);
-  const [resource, setResources] = useState([
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-  ]);
-
-  const loc = useLocation();
-
-  console.log(loc.state.id);
+  const [resource, setResources] = useState([]);
+  const location = useLocation();
+  const taskId = location.state?.id;
+  const { taskTitle, setTaskTitle, taskDetail, setTaskDetail } =
+    useContext(AppContext);
 
   useEffect(() => {
-    fetch("/resources") //add task id (loc.state.id)
+    const url = "/tasks/" + taskId;
+    fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
-        setTaskName(data.name);
-        setDescription(data.desc);
-        setStatus(data.status);
-        setImage(data.img);
-        setResources(data.resources);
+        setTaskTitle(data.title);
+        setTaskDetail(data.details);
+        // setTaskName(data.title);
+        // setDescription(data.details);
+        // setStatus(data.status);
+        // setImage(data.img);
+        // setResources(data.resources);
       })
       .catch((error) => console.log(error));
   }, []);
