@@ -10,11 +10,10 @@ import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
 import { useNavigate } from "react-router-dom";
 import { importCSVToJSON, formGetRequest } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
-import { getChildrenByIdBatch } from "../../lib/services";
 
 const cx = classNames.bind(styles);
 
-export const Roadmap = () => {
+export const Roadmap = ({ toast }) => {
   const navigate = useNavigate();
   const [numTasks, setNumTasks] = useState(0);
   const [numAllTasks, setNumAllTasks] = useState(0);
@@ -82,7 +81,7 @@ export const Roadmap = () => {
           const { data } = res;
           const inputObj = importCSVToJSON(data);
           if (inputObj === "error") {
-            // toast("Please provide a valid csv file");
+            toast("Please provide a valid csv file");
             setImportFile(null);
             return;
           }

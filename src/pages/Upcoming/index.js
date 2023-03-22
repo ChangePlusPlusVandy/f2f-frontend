@@ -14,6 +14,7 @@ export const Upcoming = ({ toast }) => {
   const isMobile = useWindowSize().type === WINDOW_TYPE.MOBILE;
   const [taskArray, setTaskArray] = useState([]);
   //TODO: get information using cache
+  const childrenId = ["63e5c4936d51fdbbbedb5503"];
   const disabilities = ["ADHD", "disability2"];
   const age = "Adult";
 
@@ -39,6 +40,7 @@ export const Upcoming = ({ toast }) => {
         title={task.title}
         time={task.timePeriod}
         content={task.details}
+        childrenId={childrenId}
         isMobile={isMobile}
       />
     );

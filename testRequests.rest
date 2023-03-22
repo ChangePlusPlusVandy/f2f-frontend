@@ -41,7 +41,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/tasks/byAttributes/?priority=3
+GET http://localhost:3001/tasks/byAttributes/?disabilities=["ADHD","disability2"]&age=30
 Content-Type: application/json
 
 ###

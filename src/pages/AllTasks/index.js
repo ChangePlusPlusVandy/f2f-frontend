@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { TaskListItem } from "../../components/TaskListItem";
 import { BackArrow } from "../../components/BackArrow";
 import ReactSearchBox from "react-search-box";
-import { formGetRequest } from "../../lib/utils";
+import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
 import { PRIORITY_LEVEL } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
@@ -18,20 +18,38 @@ export const AllTasks = () => {
   const [taskElements, setTaskElements] = useState();
   //TODO: get information using cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
-  const disabilities = ["ADHD", "disability2"];
-  const age = "Adult";
 
   useEffect(() => {
-    const url = formGetRequest("/tasks/byAttributes/", {
-      disabilities: JSON.stringify(disabilities),
-      age: JSON.stringify(age),
+    childrenId.forEach((id) => {
+      // get child's name and disabilities
+      const childUrl = "/children/" + id;
+      fetch(process.env.REACT_APP_HOST_URL + childUrl)
+        .then((response) => response.json())
+        .then((childrenData) => {
+          const childName = childrenData.firstName;
+          const disabilities = childrenData.disabilities;
+          const age = getAgeGivenBirthday(childrenData.birthDate);
+
+          // get tasks based on children's attributes
+          const url = formGetRequest("/tasks/byAttributes/", {
+            disabilities: JSON.stringify(disabilities),
+            age: JSON.stringify(age),
+          });
+          fetch(process.env.REACT_APP_HOST_URL + url)
+            .then((response) => response.json())
+            .then((taskData) => {
+              const namedTasks = taskData.map((item) => {
+                return {
+                  ...item,
+                  childName: childName,
+                  childId: id,
+                };
+              });
+              setTaskArray(namedTasks);
+            })
+            .catch((error) => console.log(error));
+        });
     });
-    fetch(process.env.REACT_APP_HOST_URL + url)
-      .then((response) => response.json())
-      .then((data) => {
-        setTaskArray(data);
-      })
-      .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
@@ -41,7 +59,8 @@ export const AllTasks = () => {
           taskName={item.title}
           dueAt={item.timePeriod}
           taskId={item._id}
-          childrenId={childrenId}
+          childName={item.childName}
+          childId={item.childId}
           key={index}
         />
       ))
@@ -59,7 +78,8 @@ export const AllTasks = () => {
           taskName={item.title}
           dueAt={item.timePeriod}
           taskId={item._id}
-          childrenId={childrenId}
+          childName={item.childName}
+          childId={item.childId}
           key={index}
         />
       ))

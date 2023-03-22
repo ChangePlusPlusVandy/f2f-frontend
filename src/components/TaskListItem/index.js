@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 export const TaskListItem = React.forwardRef((props, ref) => {
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
-  const { taskName, dueAt, taskId, childrenId } = props;
+  const { taskName, dueAt, taskId, childName, childId } = props;
 
   const handleChecked = ({}) => {
     setChecked(!checked);
@@ -34,6 +34,7 @@ export const TaskListItem = React.forwardRef((props, ref) => {
     >
       <p className={cx(styles.taskName)}>{taskName}</p>
       <p className={cx(styles.taskDate)}>{dueAt}</p>
+      <p className={cx(styles.childName)}>{childName}</p>
       <CheckBox value={checked} onChange={handleChecked} />
     </div>
   );

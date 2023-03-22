@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 export const UpcomingComponent = (props) => {
   const navigate = useNavigate();
-  const { id, title, time, content, isMobile } = props;
+  const { id, title, time, content, childrenId, isMobile } = props;
   const [checked, setChecked] = useState(false);
   const [color, setColor] = useState("#0198BA26");
 
@@ -23,13 +23,16 @@ export const UpcomingComponent = (props) => {
   const handleChecked = () => {
     setChecked(!checked);
     // send response to backend and set a task checked
-    // checkEvent({
-    //   //give user id and task id
-    // }
-    //   .then((res) => {
-    //     const { status } = res;
-    //   })
-    //   .catch((err) => toast("Internal error")));
+    const url = "/children/";
+    fetch(process.env.REACT_APP_HOST_URL + url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // body: JSON.stringify(inputObj),
+    })
+      .then((response) => console.log(response.json()))
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
