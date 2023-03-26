@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import { AllTasksSection } from "../../components/AllTasksSection";
 import ReactSearchBox from "react-search-box";
 import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
+import { getChildrenTasksArray } from "../../lib/services";
 
 const cx = classNames.bind(styles);
 
@@ -14,44 +15,11 @@ export const AllTasks = () => {
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
 
   useEffect(() => {
-    childrenId.forEach((id) => {
-      // get child's name and disabilities
-      const childUrl = "/children/" + id;
-      fetch(process.env.REACT_APP_HOST_URL + childUrl)
-        .then((response) => response.json())
-        .then((childrenData) => {
-          const childName = childrenData.firstName;
-          const disabilities = childrenData.disabilities;
-          const age = getAgeGivenBirthday(childrenData.birthDate);
-          const completedTasks = childrenData.completedTasks;
-
-          // get tasks based on children's attributes
-          const url = formGetRequest("/tasks/byAttributes/", {
-            disabilities: JSON.stringify(disabilities),
-            age: JSON.stringify(age),
-          });
-          fetch(process.env.REACT_APP_HOST_URL + url)
-            .then((response) => response.json())
-            .then((taskData) => {
-              const namedTasks = taskData.map((item) => {
-                return {
-                  ...item,
-                  childName: childName,
-                  childId: id,
-                  completed: completedTasks.includes(item._id),
-                };
-              });
-              const newTaskArray = [...allTaskArray, namedTasks];
-              setAllTaskArray(newTaskArray);
-            })
-            .catch((error) => console.log(error));
-        });
-    });
+    getChildrenTasksArray(childrenId, false, allTaskArray, setAllTaskArray);
   }, []);
 
   // handler for search box
   const handleSearch = (text) => {
-    console.log(searchQuery);
     setSearchQuery(text);
   };
 

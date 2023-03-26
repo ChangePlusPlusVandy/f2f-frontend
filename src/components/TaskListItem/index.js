@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ROUTES } from "../../lib/constants";
 import { CheckBox } from "../CheckBox";
-import { checkEvent, uncheckEvent } from "../../lib/utils";
+import { checkEvent, uncheckEvent } from "../../lib/services";
 
 const cx = classNames.bind(styles);
 

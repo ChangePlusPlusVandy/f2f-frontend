@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { WINDOW_TYPE, STATUS_CODE, PRIORITY_LEVEL } from "../../lib/constants";
 import { formGetRequest } from "../../lib/utils";
+import { getChildrenTasksArray } from "../../lib/services";
 
 const cx = classNames.bind(styles);
 
@@ -15,39 +16,32 @@ export const Upcoming = ({ toast }) => {
   const [taskArray, setTaskArray] = useState([]);
   //TODO: get information using cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
-  const disabilities = ["ADHD", "disability2"];
-  const age = "Adult";
 
   useEffect(() => {
-    const url = formGetRequest("/tasks/byAttributes/", {
-      disabilities: JSON.stringify(disabilities),
-      age: JSON.stringify(age),
-      priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
-    });
-    fetch(process.env.REACT_APP_HOST_URL + url)
-      .then((response) => response.json())
-      .then((data) => {
-        setTaskArray(data);
-      })
-      .catch((error) => console.log(error));
+    getChildrenTasksArray(childrenId, true, taskArray, setTaskArray);
   }, []);
 
-  const upcomingList = taskArray.map((task) => {
-    return (
-      <UpcomingComponent
-        key={task._id}
-        id={task._id}
-        title={task.title}
-        time={task.timePeriod}
-        content={task.details}
-        childrenId={childrenId}
-        isMobile={isMobile}
-      />
-    );
+  const deduplicatedList = taskArray.flat().filter((obj, index, self) => {
+    return index === self.findIndex((o) => o._id === obj._id);
   });
+
   return (
     <>
-      <div className={cx(styles.upcomingWrapper)}>{upcomingList}</div>
+      <div className={cx(styles.upcomingWrapper)}>
+        {deduplicatedList.map((task) => (
+          <UpcomingComponent
+            key={task._id}
+            taskId={task._id}
+            title={task.title}
+            time={task.timePeriod}
+            content={task.details}
+            completed={task.completed}
+            priority={task.priority}
+            childId={task.childId}
+            isMobile={isMobile}
+          />
+        ))}
+      </div>
     </>
   );
 };
