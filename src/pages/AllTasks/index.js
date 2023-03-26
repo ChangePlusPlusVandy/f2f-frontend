@@ -29,6 +29,7 @@ export const AllTasks = () => {
           const childName = childrenData.firstName;
           const disabilities = childrenData.disabilities;
           const age = getAgeGivenBirthday(childrenData.birthDate);
+          const completedTasks = childrenData.completedTasks;
 
           // get tasks based on children's attributes
           const url = formGetRequest("/tasks/byAttributes/", {
@@ -43,6 +44,7 @@ export const AllTasks = () => {
                   ...item,
                   childName: childName,
                   childId: id,
+                  completed: completedTasks.includes(item._id),
                 };
               });
               setTaskArray(namedTasks);
@@ -61,12 +63,14 @@ export const AllTasks = () => {
           taskId={item._id}
           childName={item.childName}
           childId={item.childId}
+          completed={item.completed}
           key={index}
         />
       ))
     );
   }, [taskArray]);
 
+  // handler for search box
   const inputHandler = (text) => {
     let searchText = text.toLowerCase();
     const filteredData = taskArray.filter((task) => {
@@ -80,6 +84,7 @@ export const AllTasks = () => {
           taskId={item._id}
           childName={item.childName}
           childId={item.childId}
+          completed={item.completed}
           key={index}
         />
       ))

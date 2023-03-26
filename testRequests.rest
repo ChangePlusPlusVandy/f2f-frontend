@@ -23,6 +23,11 @@ Content-Type: application/json
 
 ###
 
+GET http://localhost:3001/children/63e5c4936d51fdbbbedb5503
+Content-Type: application/json
+
+###
+
 GET http://localhost:3001/children/63d58b72c2e0063e64001a1e
 Content-Type: application/json
 
@@ -43,5 +48,3 @@ Content-Type: application/json
 
 GET http://localhost:3001/tasks/byAttributes/?disabilities=["ADHD","disability2"]&age=30
 Content-Type: application/json
-
-###
