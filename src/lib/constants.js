@@ -25,6 +25,7 @@ export const ROUTES = {
   UPCOMING_TASKS: "/upcoming",
   ALL_TASKS: "/tasks",
   TASK_DETAILS: "/task-details",
+  VERIFICATION: "/verifyEmail",
 };
 
 export const HOME_NAV_LABELS = {
