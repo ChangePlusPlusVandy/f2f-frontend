@@ -1,21 +1,15 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
-import { NavBar } from "../NavBar";
-import { getChildrenByIdBatch } from "../../lib/services";
-import { useNavigate } from "react-router-dom";
-import { TaskListItem } from "../../components/TaskListItem";
-import { BackArrow } from "../../components/BackArrow";
+import { AllTasksSection } from "../../components/AllTasksSection";
 import ReactSearchBox from "react-search-box";
 import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
-import { PRIORITY_LEVEL } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
 export const AllTasks = () => {
-  const navigate = useNavigate();
-  const [taskArray, setTaskArray] = useState([]);
-  const [taskElements, setTaskElements] = useState();
+  const [allTaskArray, setAllTaskArray] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   //TODO: get information using cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
 
@@ -47,49 +41,25 @@ export const AllTasks = () => {
                   completed: completedTasks.includes(item._id),
                 };
               });
-              setTaskArray(namedTasks);
+              const newTaskArray = [...allTaskArray, namedTasks];
+              setAllTaskArray(newTaskArray);
             })
             .catch((error) => console.log(error));
         });
     });
   }, []);
 
-  useEffect(() => {
-    setTaskElements(
-      taskArray.map((item, index) => (
-        <TaskListItem
-          taskName={item.title}
-          dueAt={item.timePeriod}
-          taskId={item._id}
-          childName={item.childName}
-          childId={item.childId}
-          completed={item.completed}
-          key={index}
-        />
-      ))
-    );
-  }, [taskArray]);
-
   // handler for search box
-  const inputHandler = (text) => {
-    let searchText = text.toLowerCase();
-    const filteredData = taskArray.filter((task) => {
-      return task.title.toLowerCase().includes(searchText);
-    });
-    setTaskElements(
-      filteredData.map((item, index) => (
-        <TaskListItem
-          taskName={item.title}
-          dueAt={item.timePeriod}
-          taskId={item._id}
-          childName={item.childName}
-          childId={item.childId}
-          completed={item.completed}
-          key={index}
-        />
-      ))
-    );
+  const handleSearch = (text) => {
+    console.log(searchQuery);
+    setSearchQuery(text);
   };
+
+  const filteredSections = allTaskArray.map((taskList, index) =>
+    taskList.filter((task) => {
+      return task.title.toLowerCase().includes(searchQuery.toLowerCase());
+    })
+  );
 
   return (
     <div
@@ -101,7 +71,7 @@ export const AllTasks = () => {
     >
       <ReactSearchBox
         placeholder="Search"
-        onChange={inputHandler}
+        onChange={handleSearch}
         inputHeight="10vw"
         inputFontSize="5vw"
       />
@@ -112,7 +82,9 @@ export const AllTasks = () => {
           height: "66vh",
         }}
       >
-        {taskElements}
+        {filteredSections.map((childTasks, childTasksIndex) => (
+          <AllTasksSection taskList={childTasks} key={childTasksIndex} />
+        ))}
       </div>
     </div>
   );

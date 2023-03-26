@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+.tasksSection {
+    border-bottom: 3px solid black;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    padding: 4vw;
+  }
+
+.childName {
+  font-family: "Poppins";
+  font-weight:400;
+  font-size: 3vw;
+  color: #8B5674;
+  margin: 0;
+  margin-right: auto;
+}

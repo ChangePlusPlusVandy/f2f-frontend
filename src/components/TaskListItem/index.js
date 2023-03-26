@@ -2,7 +2,7 @@ import styles from "./index.module.css";
 import classNames from "classnames/bind";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ROUTES } from "../../lib/constants";
 import { CheckBox } from "../CheckBox";
 import { checkEvent, uncheckEvent } from "../../lib/utils";
