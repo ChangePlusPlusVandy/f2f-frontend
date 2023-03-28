@@ -14,11 +14,17 @@ export const Login = () => {
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [userID, setUserID] = useState(-1);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/home");
+      navigate("/home", {
+        state: {
+          email: email,
+          userID: userID,
+        },
+      });
     }
   }, [isLoggedIn, navigate]);
 
@@ -36,22 +42,21 @@ export const Login = () => {
     setIsLoading(true);
     setError("");
 
-    fetch("/login", {
+    fetch("http://localhost:3001/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email, password: password }),
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
         return response.json();
       })
-      .then((data) => {
-        if (data.status === "success") {
+      .then((res) => {
+        console.log(res);
+        if (res.message === "SUCCESS") {
           setIsLoggedIn(true);
+          setUserID(res.userID);
         } else {
-          setIsLoggedIn(false);
+          setError(res.message);
         }
       })
       .catch((error) => {
@@ -111,8 +116,7 @@ export const Login = () => {
           <text className={cx(styles.form_extras, "desc")}>
             <Link
               to="/forgot-password"
-              style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}
-            >
+              style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
               <b>Forgot Password</b>
             </Link>
           </text>
@@ -130,8 +134,7 @@ export const Login = () => {
           Don't have an account?&nbsp;
           <Link
             to={ROUTES.SIGN_UP}
-            style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}
-          >
+            style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
             <b>Sign up</b>
           </Link>
         </text>

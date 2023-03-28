@@ -2,7 +2,10 @@
  * Each function corresponds to an API
  * Refer to API file for details of each API
  */
-import { STATUS_CODE } from "./constants";
+
+import { PRIORITY_LEVEL, STATUS_CODE } from "./constants";
+import { formGetRequest, getAgeGivenBirthday } from "./utils";
+import { toast } from "react-toastify";
 
 export const mongoCheck = (email) => {
   console.log("email " + email);
@@ -45,10 +48,6 @@ export const sendVerificationEmail = (email) => {
   });
 };
 
-import { PRIORITY_LEVEL, STATUS_CODE } from "./constants";
-import { formGetRequest, getAgeGivenBirthday } from "./utils";
-import { toast } from "react-toastify";
-
 export const signUp = (inputs) => {
   // need to fix process.env later
   // fetch(process.env.HOST_URL + '/users', {
@@ -84,19 +83,19 @@ export const signUp = (inputs) => {
     });
 };
 
-export const checkEvent = (inputs) => {
-  return new Promise((resolve, reject) => {
-    // need to fix process.env later
-    fetch("http://localhost:3001/tasks/checkEvent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(inputs),
-    })
-      .then((response) => response.json())
-      .then((response) => resolve(response))
-      .catch((err) => reject(err));
-  });
-};
+// export const checkEvent = (inputs) => {
+//   return new Promise((resolve, reject) => {
+//     // need to fix process.env later
+//     fetch("http://localhost:3001/tasks/checkEvent", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(inputs),
+//     })
+//       .then((response) => response.json())
+//       .then((response) => resolve(response))
+//       .catch((err) => reject(err));
+//   });
+// };
 
 export const getChildrenByIdBatch = (childrenId) => {
   const url = formGetRequest("/children/getChildrenByIdBatch/", {
