@@ -1,3 +1,8 @@
+//TODO: double check on the priority level standard
+export const PRIORITY_LEVEL = {
+  PRIORITY_LEVEL: 2,
+};
+
 export const WINDOW_TYPE = {
   WEB: "WEB",
   MOBILE: "MOBILE",
@@ -20,6 +25,7 @@ export const ROUTES = {
   UPCOMING_TASKS: "/upcoming",
   ALL_TASKS: "/tasks",
   TASK_DETAILS: "/task-details",
+  VERIFICATION: "/verifyEmail",
 };
 
 export const HOME_NAV_LABELS = {

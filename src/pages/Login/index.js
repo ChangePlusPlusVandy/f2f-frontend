@@ -35,14 +35,11 @@ export const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    const textFile = new File(
-      [`username: ${email}\npassword: ${password}`],
-      "login.txt",
-      { type: "text/plain" }
-    );
+
     fetch("/login", {
       method: "POST",
-      body: textFile,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -114,7 +111,8 @@ export const Login = () => {
           <text className={cx(styles.form_extras, "desc")}>
             <Link
               to="/forgot-password"
-              style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
+              style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}
+            >
               <b>Forgot Password</b>
             </Link>
           </text>
@@ -132,7 +130,8 @@ export const Login = () => {
           Don't have an account?&nbsp;
           <Link
             to={ROUTES.SIGN_UP}
-            style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
+            style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}
+          >
             <b>Sign up</b>
           </Link>
         </text>

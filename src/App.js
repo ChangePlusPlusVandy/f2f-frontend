@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { HomeLayout } from "./pages/HomeLayout";
+import { AppContextProvider } from "./lib/AppContext";
 
 // Routes
 import { Home } from "./pages/Home";
@@ -14,33 +15,34 @@ import { Roadmap } from "./pages/Roadmap";
 import { Community } from "./pages/Community";
 import { TaskDetails } from "./pages/TaskDetails";
 import { AllTasks } from "./pages/AllTasks";
-import { CreateUser } from "./pages/CreateUser";
+import { EmailVerification } from "./pages/Verification";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={true}
-      />
-      <Routes>
-        <Route path="/" element={<Navigate replace to="/login" />} />
-        <Route path="/" element={<HomeLayout />}>
-          <Route path="sign-up" element={<SignUp toast={toast} />} />
-          <Route path="upcoming" element={<Upcoming toast={toast} />} />
-          <Route path="tasks" element={<AllTasks />} />
-          <Route path="task-details" element={<TaskDetails />} />
-
-          <Route path="roadmap" element={<Roadmap />} />
-        </Route>
-        <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="community" element={<Community />} />
-        <Route path="login" element={<Login />} />
-        <Route path="home" element={<Home />} />
-        <Route path="createUser" element = {<CreateUser />} />
-      </Routes>
-    </BrowserRouter>
+    <AppContextProvider>
+      <BrowserRouter>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={true}
+        />
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/login" />} />
+          <Route path="/" element={<HomeLayout />}>
+            <Route path="sign-up" element={<SignUp toast={toast} />} />
+            <Route path="upcoming" element={<Upcoming toast={toast} />} />
+            <Route path="tasks" element={<AllTasks />} />
+            <Route path="task-details" element={<TaskDetails />} />
+            <Route path="roadmap" element={<Roadmap />} />
+          </Route>
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="community" element={<Community />} />
+          <Route path="login" element={<Login />} />
+          <Route path="home" element={<Home />} />
+          <Route path="verifyEmail" element={<EmailVerification />} />
+        </Routes>
+      </BrowserRouter>
+    </AppContextProvider>
   );
 };
 
