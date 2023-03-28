@@ -10,8 +10,8 @@ import {
 import { AuthInputBlock } from "../../components/AuthInputBlock";
 import { AuthSelectBlock } from "../../components/AuthSelectBlock";
 import { AuthButton } from "../../components/AuthButton";
-import { useState } from "react";
-import { signUp } from "../../lib/services";
+import { useEffect, useState } from "react";
+import { signUp, sendVerificationEmail } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
 import { useWindowSize } from "../../lib/hooks";
 const cx = classNames.bind(styles);
@@ -29,6 +29,12 @@ export const SignUp = ({ toast }) => {
   const [disability, setDisability] = useState([]);
   const [zipCode, setZipCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [verifCode, setVerifCode] = useState(-1);
+
+  useEffect(() => {
+    console.log(verifCode);
+    //navigate or make visibl
+  }, [verifCode]);
 
   const onRegister = () => {
     if (!email) toast("Please provide your email");
@@ -56,16 +62,20 @@ export const SignUp = ({ toast }) => {
         .then((res) => {
           let message = res.message;
           //make constants later
+          console.log(message);
           if (message === "toLogin") {
             console.log("1");
             navigate("/login");
           }
           if (message === "sendVerification") {
-            console.log("send email, to be completed");
+            sendVerificationEmail(email).then((code) => {
+              setVerifCode(code);
+            });
+            //if input code === code , we continue
           }
           if (message === "sendSFForm") {
             console.log("3");
-            navigate("/createUser");
+            // navigate("/createUser")
           }
         })
         .catch((err) => toast("Internal error"));

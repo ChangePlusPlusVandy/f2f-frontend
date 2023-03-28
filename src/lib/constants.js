@@ -5,7 +5,7 @@ export const WINDOW_TYPE = {
 
 export const STATUS_CODE = {
   SUCESS: "SUCCESS",
-  ERROR: "ERROR",
+  ERROR: "FAILURE",
 };
 
 export const ROUTES = {
