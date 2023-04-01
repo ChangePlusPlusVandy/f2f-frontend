@@ -6,3 +6,19 @@
     margin-left: auto; 
     margin-right: 0;
 }
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #818181;
+    border-color: #818181;
+  }

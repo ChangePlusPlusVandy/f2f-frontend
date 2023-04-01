@@ -3,7 +3,6 @@ import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import { AllTasksSection } from "../../components/AllTasksSection";
 import ReactSearchBox from "react-search-box";
-import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
 import { getChildrenTasksArray } from "../../lib/services";
 
 const cx = classNames.bind(styles);

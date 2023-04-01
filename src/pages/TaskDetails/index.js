@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { BackArrow } from "../../components/BackArrow";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
-import Clipboard from "../../images/Clipboard.png";
-import A from "../../images/A.png";
 import ResourceCard from "../../components/TaskResource";
+import clipboardImage from "../../images/Clipboard.png";
 import { useContext } from "react";
 import { AppContext } from "../../lib/AppContext";
+import { checkEvent, uncheckEvent } from "../../lib/services";
+import { separateWebsiteLink } from "../../lib/utils";
+import { CheckBox } from "../../components/CheckBox";
 
 const cx = classNames.bind(styles);
 
 export const TaskDetails = () => {
-  // const [taskName, setTaskName] = useState();
-  // const [description, setDescription] = useState();
-  const [status, setStatus] = useState(false);
-  const [image, setImage] = useState(Clipboard);
-  const [resource, setResources] = useState([]);
   const location = useLocation();
-  const taskId = location.state?.id;
-  const { taskTitle, setTaskTitle, taskDetail, setTaskDetail } =
-    useContext(AppContext);
+  const taskId = location.state?.taskId;
+  const completed = location.state?.completed;
+  const childId = location.state?.childId;
+
+  const { setTaskTitle, setTaskDetail } = useContext(AppContext);
+
+  const [resources, setResources] = useState([]);
+  const [checked, setChecked] = useState(completed);
 
   useEffect(() => {
     const url = "/tasks/" + taskId;
@@ -28,47 +29,43 @@ export const TaskDetails = () => {
       .then((response) => response.json())
       .then((data) => {
         setTaskTitle(data.title);
-        setTaskDetail(data.details);
-        // setTaskName(data.title);
-        // setDescription(data.details);
-        // setStatus(data.status);
-        // setImage(data.img);
-        // setResources(data.resources);
+        const details = data.details;
+        const links = separateWebsiteLink(details);
+        setResources(links.links);
+        setTaskDetail(links.otherStrings);
       })
       .catch((error) => console.log(error));
   }, []);
 
+  const handleChecked = ({}) => {
+    if (checked) uncheckEvent(childId, taskId);
+    else checkEvent(childId, taskId);
+    setChecked(!checked);
+  };
+
   return (
     <div className={cx(styles.content)}>
-      {/* <header className={cx(styles.header)}>
-        <div className={cx(styles.header, "title")}>
-          <h1>{taskName}</h1>
-        </div>
-      </header> */}
       <div className={cx(styles.info)}>
-        {/* <div className={cx(styles.info, "desc")}>
-          <p>{description}</p>
-        </div> */}
-
         <div className={cx(styles.info, "status")}>
-          <p>Status: {status ? "Complete" : "Incomplete"}</p>
+          <p> Status: </p>
+          <CheckBox value={checked} onChange={handleChecked} />
         </div>
-
         <div className={cx(styles.image)}>
-          <img src={image} alt="" />
+          <img src={clipboardImage} alt="" />
         </div>
       </div>
-      <div className={cx(styles.resources)}>
-        <div className={cx(styles.resources, "title")}>
-          <p>Resources:</p>
+      {resources.length !== 0 && (
+        <div className={cx(styles.resources)}>
+          <div className={cx(styles.resources, "title")}>
+            <p>Resources:</p>
+          </div>
+          <div className={cx(styles.resources, "content")}>
+            {resources.map((resource) => {
+              return <ResourceCard key={resource} resource={resource} />;
+            })}
+          </div>
         </div>
-
-        <div className={cx(styles.resources, "content")}>
-          {resource.map((res) => {
-            return <ResourceCard key={res.title} resource={res} />;
-          })}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

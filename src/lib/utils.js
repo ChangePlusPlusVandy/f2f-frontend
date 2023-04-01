@@ -1,4 +1,42 @@
 /**
+ * @param {String} string the string to be assessed
+ * @return {Array} an array of split strings
+ */
+export const separateWebsiteLink = (string) => {
+  const parts = string.split("|");
+
+  // Regular expression to match website links
+  const regex = /((?:https?:\/\/)(?:www\.)?[^\s]+)/gi;
+  let links = [];
+
+  // Loop through each string in the array
+  const otherStrings = parts.filter((str) => {
+    // Find the website links in the string
+    const linkMatches = str.match(regex);
+
+    if (linkMatches) {
+      // Extract the links from the matched strings
+      const extractedLinks = linkMatches.map((match) => match.trim());
+
+      // Add the links to the array of links
+      links.push(...extractedLinks);
+
+      // Return false to exclude the string from otherStrings
+      return false;
+    } else {
+      // No links found in the string, include in otherStrings
+      return true;
+    }
+  });
+  const result = {
+    links: links,
+    otherStrings: otherStrings,
+  };
+
+  return result;
+};
+
+/**
  * Parse csv file into JSON object
  * @param {Array} data csv file
  * @returns {Object} JSON version of the file

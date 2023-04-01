@@ -30,7 +30,6 @@ export const UpcomingComponent = (props) => {
   }, []);
 
   const handleChecked = () => {
-    console.log(childId);
     if (checked) uncheckEvent(childId, taskId);
     else checkEvent(childId, taskId);
     setChecked(!checked);
@@ -67,7 +66,11 @@ export const UpcomingComponent = (props) => {
           className={cx(styles.time, {
             [styles.mobile]: isMobile,
           })}
-          onClick={() => navigate(ROUTES.TASK_DETAILS, { state: { taskId } })}
+          onClick={() =>
+            navigate(ROUTES.TASK_DETAILS, {
+              state: { taskId, completed, childId },
+            })
+          }
         >
           {time}
         </p>
@@ -75,7 +78,9 @@ export const UpcomingComponent = (props) => {
           className={cx(styles.content, {
             [styles.mobile]: isMobile,
           })}
-          onClick={() => navigate(ROUTES.TASK_DETAILS, { state: { taskId } })}
+          onClick={() =>
+            navigate(ROUTES.TASK_DETAILS, { state: { taskId, completed } })
+          }
         >
           {content}
         </p>
@@ -83,7 +88,9 @@ export const UpcomingComponent = (props) => {
           className={cx(styles.content, {
             [styles.mobile]: isMobile,
           })}
-          onClick={() => navigate(ROUTES.TASK_DETAILS, { state: { taskId } })}
+          onClick={() =>
+            navigate(ROUTES.TASK_DETAILS, { state: { taskId, completed } })
+          }
         >
           {priority}
         </p>

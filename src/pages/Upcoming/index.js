@@ -3,9 +3,7 @@ import classNames from "classnames/bind";
 import { UpcomingComponent } from "../../components/UpcomingComponent";
 import { useWindowSize } from "../../lib/hooks";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { WINDOW_TYPE, STATUS_CODE, PRIORITY_LEVEL } from "../../lib/constants";
-import { formGetRequest } from "../../lib/utils";
+import { WINDOW_TYPE } from "../../lib/constants";
 import { getChildrenTasksArray } from "../../lib/services";
 
 const cx = classNames.bind(styles);
