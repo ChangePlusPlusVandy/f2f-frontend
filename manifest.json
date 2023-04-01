@@ -1,0 +1,21 @@
+{
+  "background_color": "#ffffff",
+  "description": "This app aims to help you navigate disability resources easier and more efficient by generating a specfiic tasks list just for you",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Family to Family Network",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "F2Fn",
+  "start_url": "/",
+  "theme_color": "#0198ba",
+  "categories": [],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": []
+}
