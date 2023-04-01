@@ -1,6 +1,6 @@
 /**
  * @param {String} string the string to be assessed
- * @return {Array} an array of split strings
+ * @return {Object} a json object containing the website links and text descriptions
  */
 export const separateWebsiteLink = (string) => {
   const parts = string.split("|");
