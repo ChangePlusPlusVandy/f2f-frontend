@@ -108,6 +108,21 @@ export const Roadmap = ({ toast }) => {
     uploadRef.current.click();
   };
 
+  const onExport = async () => {
+    fetch("http://localhost:3001/users/exportCSV")
+      .then((response) => response.arrayBuffer())
+      .then((arrayBuffer) => {
+        const blob = new Blob([arrayBuffer], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "users.csv");
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div
       style={{
@@ -135,6 +150,14 @@ export const Roadmap = ({ toast }) => {
           ref={uploadRef}
           style={{ display: "none" }}
           onChange={(e) => setImportFile(e.target.files[0])}
+        />
+      </div>
+      <div>
+        <AuthButton
+          className={cx(styles.csvButton)}
+          label="Export Task CSV"
+          onClick={onExport}
+          isMobile={true}
         />
       </div>
 
