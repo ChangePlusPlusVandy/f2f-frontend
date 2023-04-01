@@ -156,11 +156,11 @@ export const Roadmap = ({ toast }) => {
                   margin: "10px",
                 }}
               >
-                <p className={cx(styles.taskDesc)}>Upcoming</p>
+                <p className={cx(styles.taskDesc)}>High&nbsp;Priority</p>
               </div>
             </div>
             <p className={cx(styles.header, "small")}>
-              Everything in the next three months
+              All tasks with priority level 2
             </p>
           </div>
           <p className={cx(styles.taskNum)}>{numTasks}</p>
