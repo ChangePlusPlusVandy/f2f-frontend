@@ -3,63 +3,43 @@ import classNames from "classnames/bind";
 import { UpcomingComponent } from "../../components/UpcomingComponent";
 import { useWindowSize } from "../../lib/hooks";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { WINDOW_TYPE, STATUS_CODE } from "../../lib/constants";
+import { WINDOW_TYPE } from "../../lib/constants";
+import { getChildrenTasksArray } from "../../lib/services";
 
 const cx = classNames.bind(styles);
 
 // Upcoming events
 export const Upcoming = ({ toast }) => {
-  const navigate = useNavigate();
   const isMobile = useWindowSize().type === WINDOW_TYPE.MOBILE;
-  const [taskArray, setTaskArray] = useState([
-    {
-      id: 1,
-      title: "Medicaid",
-      time: "10/20/2024 5:00 pm",
-      content:
-        "Call 700-432-3456 and ask to be put on the Medicaid and associated waitlists. ",
-    },
-    {
-      id: 2,
-      title: "IEP",
-      time: "10/20/2024 5:00 pm",
-      content:
-        "Schedule your annual IEP Meeting to make sure your student’s needs are met. ",
-    },
-    {
-      id: 3,
-      title: "Letter of Intent",
-      time: "10/20/2024 5:00 pm",
-      content:
-        "Write your child’s letter of intent to ensure your child’s support if you were to ever be ... ",
-    },
-  ]);
+  const [taskArray, setTaskArray] = useState([]);
+  //TODO: get information using cache
+  const childrenId = ["63e5c4936d51fdbbbedb5503"];
 
-  // useEffect(() => {
-  //     fetch("/upcomingTasks")
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setTaskArray(data.taskArray);
-  //       })
-  //       .catch((error) => console.log(error));
-  //   }, []);
+  useEffect(() => {
+    getChildrenTasksArray(childrenId, true, taskArray, setTaskArray);
+  }, []);
 
-  const upcomingList = taskArray.map((task) => {
-    return (
-      <UpcomingComponent
-        key={task.id}
-        id={task.id}
-        title={task.title}
-        time={task.time}
-        content={task.content}
-        isMobile={isMobile}
-      />
-    );
+  const deduplicatedList = taskArray.flat().filter((obj, index, self) => {
+    return index === self.findIndex((o) => o._id === obj._id);
   });
+
   return (
     <>
-      <div className={cx(styles.upcomingWrapper)}>{upcomingList}</div>
+      <div className={cx(styles.upcomingWrapper)}>
+        {deduplicatedList.map((task) => (
+          <UpcomingComponent
+            key={task._id}
+            taskId={task._id}
+            title={task.title}
+            time={task.timePeriod}
+            content={task.details}
+            completed={task.completed}
+            priority={task.priority}
+            childId={task.childId}
+            isMobile={isMobile}
+          />
+        ))}
+      </div>
     </>
   );
 };

@@ -1,26 +1,39 @@
-import styles from './index.module.css';
-import classNames from 'classnames/bind';
-import React from 'react';
+import styles from "./index.module.css";
+import classNames from "classnames/bind";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { ROUTES } from "../../lib/constants";
+import { CheckBox } from "../CheckBox";
+import { checkEvent, uncheckEvent } from "../../lib/services";
 
 const cx = classNames.bind(styles);
 
 export const TaskListItem = React.forwardRef((props, ref) => {
-    const navigate = useNavigate();
+  const { taskName, dueAt, taskId, childName, childId, completed } = props;
+  const navigate = useNavigate();
+  const [checked, setChecked] = useState(completed);
 
-    const {
-        name,
-        dueAt,
-        id,
-    } = props;
+  const handleChecked = ({}) => {
+    if (checked) uncheckEvent(childId, taskId);
+    else checkEvent(childId, taskId);
+    setChecked(!checked);
+  };
 
-    console.log(id);
-
-    return (
-      <div onClick={() => navigate(ROUTES.TASK_DETAILS, {state: {id: id}})} className={cx(styles.tasks_div)}>
-          <p className={cx(styles.taskName)}>{name}</p>
-          <p className={cx(styles.taskDate)}>{dueAt}</p>
+  return (
+    <div className={cx(styles.tasks_div)}>
+      <div
+        onClick={() =>
+          navigate(ROUTES.TASK_DETAILS, {
+            state: { taskId, completed, childId },
+          })
+        }
+      >
+        <p className={cx(styles.taskName)}>{taskName}</p>
+        <p className={cx(styles.taskDate)}>{dueAt}</p>
+        <p className={cx(styles.childName)}>{childName}</p>
       </div>
-    );
+      <CheckBox value={checked} onChange={handleChecked} />
+    </div>
+  );
 });

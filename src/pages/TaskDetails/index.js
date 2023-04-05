@@ -1,102 +1,71 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { BackArrow } from "../../components/BackArrow";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
-import Clipboard from "../../images/Clipboard.png";
-import A from "../../images/A.png";
 import ResourceCard from "../../components/TaskResource";
+import clipboardImage from "../../images/Clipboard.png";
+import { useContext } from "react";
+import { AppContext } from "../../lib/AppContext";
+import { checkEvent, uncheckEvent } from "../../lib/services";
+import { separateWebsiteLink } from "../../lib/utils";
+import { CheckBox } from "../../components/CheckBox";
 
 const cx = classNames.bind(styles);
 
 export const TaskDetails = () => {
-  const [taskName, setTaskName] = useState("Medicaid Waitlist");
-  const [description, setDescription] = useState(
-    "Call 700-432-3456 and ask to be put on the Medicaid and associated waitlists."
-  );
-  const [status, setStatus] = useState(false);
-  const [image, setImage] = useState(Clipboard);
-  const [resource, setResources] = useState([
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-    {
-      title: "Medicaid Waitlist 101",
-      desc: "Archer Consulting: Provides eligibility requirements, service companions, etc.",
-      img: A,
-    },
-  ]);
+  const location = useLocation();
+  const taskId = location.state?.taskId;
+  const completed = location.state?.completed;
+  const childId = location.state?.childId;
 
-  const loc = useLocation();
+  const { setTaskTitle, setTaskDetail } = useContext(AppContext);
 
-  console.log(loc.state.id);
+  const [resources, setResources] = useState([]);
+  const [checked, setChecked] = useState(completed);
 
   useEffect(() => {
-    fetch("/resources") //add task id (loc.state.id)
+    const url = "/tasks/" + taskId;
+    fetch(process.env.REACT_APP_HOST_URL + url)
       .then((response) => response.json())
       .then((data) => {
-        setTaskName(data.name);
-        setDescription(data.desc);
-        setStatus(data.status);
-        setImage(data.img);
-        setResources(data.resources);
+        setTaskTitle(data.title);
+        const details = data.details;
+        const links = separateWebsiteLink(details);
+        setResources(links.links);
+        setTaskDetail(links.otherStrings);
       })
       .catch((error) => console.log(error));
   }, []);
 
+  const handleChecked = ({}) => {
+    if (checked) uncheckEvent(childId, taskId);
+    else checkEvent(childId, taskId);
+    setChecked(!checked);
+  };
+
   return (
     <div className={cx(styles.content)}>
-      {/* <header className={cx(styles.header)}>
-        <div className={cx(styles.header, "title")}>
-          <h1>{taskName}</h1>
-        </div>
-      </header> */}
       <div className={cx(styles.info)}>
-        {/* <div className={cx(styles.info, "desc")}>
-          <p>{description}</p>
-        </div> */}
-
         <div className={cx(styles.info, "status")}>
-          <p>Status: {status ? "Complete" : "Incomplete"}</p>
+          <p> Status: </p>
+          <CheckBox value={checked} onChange={handleChecked} />
         </div>
-
         <div className={cx(styles.image)}>
-          <img src={image} alt="" />
+          <img src={clipboardImage} alt="" />
         </div>
       </div>
-      <div className={cx(styles.resources)}>
-        <div className={cx(styles.resources, "title")}>
-          <p>Resources:</p>
+      {resources.length !== 0 && (
+        <div className={cx(styles.resources)}>
+          <div className={cx(styles.resources, "title")}>
+            <p>Resources:</p>
+          </div>
+          <div className={cx(styles.resources, "content")}>
+            {resources.map((resource) => {
+              return <ResourceCard key={resource} resource={resource} />;
+            })}
+          </div>
         </div>
-
-        <div className={cx(styles.resources, "content")}>
-          {resource.map((res) => {
-            return <ResourceCard key={res.title} resource={res} />;
-          })}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { WINDOW_TYPE, CAPTIONS, ROUTES } from "./constants";
+import { useContext } from "react";
+import { AppContext } from "./AppContext";
 
 /**
  * Get metadata about window
@@ -39,6 +41,8 @@ export const useWindowSize = () => {
  */
 export const useCaption = () => {
   const { pathname } = useLocation();
+  const { taskTitle, setTaskTitle, taskDetail, setTaskDetail } =
+    useContext(AppContext);
   switch (pathname) {
     case ROUTES.SIGN_UP:
       return {
@@ -62,8 +66,8 @@ export const useCaption = () => {
       };
     case ROUTES.TASK_DETAILS:
       return {
-        mainTitle: CAPTIONS.TASK_DETAILS_MAIN,
-        subTitle: CAPTIONS.TASK_DETAILS_SUB,
+        mainTitle: taskTitle,
+        subTitle: taskDetail,
       };
     default:
       return CAPTIONS.ERROR;

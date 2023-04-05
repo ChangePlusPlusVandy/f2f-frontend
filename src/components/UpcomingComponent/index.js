@@ -4,14 +4,23 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../lib/constants";
 import { CheckBox } from "../CheckBox";
-import { checkEvent } from "../../lib/services";
+import { checkEvent, uncheckEvent } from "../../lib/services";
 import React from "react";
 const cx = classNames.bind(styles);
 
 export const UpcomingComponent = (props) => {
   const navigate = useNavigate();
-  const { id, title, time, content, isMobile } = props;
-  const [checked, setChecked] = useState(false);
+  const {
+    taskId,
+    title,
+    time,
+    content,
+    completed,
+    priority,
+    childId,
+    isMobile,
+  } = props;
+  const [checked, setChecked] = useState(completed);
   const [color, setColor] = useState("#0198BA26");
 
   useEffect(() => {
@@ -21,15 +30,9 @@ export const UpcomingComponent = (props) => {
   }, []);
 
   const handleChecked = () => {
+    if (checked) uncheckEvent(childId, taskId);
+    else checkEvent(childId, taskId);
     setChecked(!checked);
-    // send response to backend and set a task checked
-    // checkEvent({
-    //   //give user id and task id
-    // }
-    //   .then((res) => {
-    //     const { status } = res;
-    //   })
-    //   .catch((err) => toast("Internal error")));
   };
 
   return (
@@ -63,7 +66,11 @@ export const UpcomingComponent = (props) => {
           className={cx(styles.time, {
             [styles.mobile]: isMobile,
           })}
-          onClick={() => navigate(ROUTES.TASK_DETAILS, { state: { id } })}
+          onClick={() =>
+            navigate(ROUTES.TASK_DETAILS, {
+              state: { taskId, completed, childId },
+            })
+          }
         >
           {time}
         </p>
@@ -71,9 +78,21 @@ export const UpcomingComponent = (props) => {
           className={cx(styles.content, {
             [styles.mobile]: isMobile,
           })}
-          onClick={() => navigate(ROUTES.TASK_DETAILS, { state: { id } })}
+          onClick={() =>
+            navigate(ROUTES.TASK_DETAILS, { state: { taskId, completed } })
+          }
         >
           {content}
+        </p>
+        <p
+          className={cx(styles.content, {
+            [styles.mobile]: isMobile,
+          })}
+          onClick={() =>
+            navigate(ROUTES.TASK_DETAILS, { state: { taskId, completed } })
+          }
+        >
+          {priority}
         </p>
       </div>
     </>
