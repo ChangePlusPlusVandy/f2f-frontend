@@ -36,18 +36,17 @@ body {
   z-index: 2;
 }
 
+.create_post:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  transition: 0.2s;
+  box-shadow: 0 6px 4px darkgray;
+}
+
 .posts {
   margin-top: 10vh;
 }
 
 .create_post img {
   width: 70%;
-}
-
-.create_post:hover {
-  cursor: pointer;
-}
-
-.create_post {
-  cursor: pointer;
 }
