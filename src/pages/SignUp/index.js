@@ -6,14 +6,17 @@ import {
   DISABILITY,
   WINDOW_TYPE,
   STATUS_CODE,
+  ROUTES,
 } from "../../lib/constants";
 import { AuthInputBlock } from "../../components/AuthInputBlock";
 import { AuthSelectBlock } from "../../components/AuthSelectBlock";
 import { AuthButton } from "../../components/AuthButton";
-import { useState } from "react";
-import { signUp } from "../../lib/services";
+import { useEffect, useState } from "react";
+import { signUp, sendVerificationEmail } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
 import { useWindowSize } from "../../lib/hooks";
+import { mongoCheck } from "../../lib/services";
+
 const cx = classNames.bind(styles);
 
 // Register page for authentication
@@ -29,6 +32,13 @@ export const SignUp = ({ toast }) => {
   const [disability, setDisability] = useState([]);
   const [zipCode, setZipCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [verifCode, setVerifCode] = useState(-1);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    console.log(verifCode);
+    //navigate or make visibl
+  }, [verifCode]);
 
   const onRegister = () => {
     if (!email) toast("Please provide your email");
@@ -43,21 +53,56 @@ export const SignUp = ({ toast }) => {
     else if (!zipCode) toast("Please provide your zip code");
     else if (!phoneNumber) toast("Please provide your phone number");
     else {
+      mongoCheck(email).then((res) => {
+        console.log(res);
+        if (res.status === "Found") {
+          setError("Email already exists");
+        } else {
+          navigate(ROUTES.VERIFICATION, {
+            state: {
+              email: email,
+              password: password,
+              firstName: firstName,
+              lastName: lastName,
+              schoolDistrict: schoolDistrict,
+              zipCode: zipCode,
+              phoneNumber: phoneNumber,
+            },
+          });
+        }
+      });
       // send response to backend and create a record
-      signUp({
-        email,
-        password,
-        firstName,
-        lastName,
-        schoolDistrict,
-        zipCode,
-        phoneNumber,
-      })
-        .then((res) => {
-          const { status } = res;
-          if (status === STATUS_CODE.SUCESS) navigate("/login");
-        })
-        .catch((err) => toast("Internal error"));
+      // signUp({
+      //   email,
+      //   password,
+      //   firstName,
+      //   lastName,
+      //   schoolDistrict,
+      //   zipCode,
+      //   phoneNumber,
+      // })
+      //   .then((res) => {
+      //     // console.log(res);
+      //     // navigate("/login")
+      //     //   let message = res.message;
+      //     //   //make constants later
+      //     //   console.log(message);
+      //     //   if (message === "toLogin") {
+      //     //     console.log("1");
+      //     //     navigate("/login");
+      //     //   }
+      //     //   if (message === "sendVerification") {
+      //     //     sendVerificationEmail(email).then((code) => {
+      //     //       setVerifCode(code);
+      //     //     });
+      //     //     //if input code === code , we continue
+      //     //   }
+      //     //   if (message === "sendSFForm") {
+      //     //     console.log("3");
+      //     //     // navigate("/createUser")
+      //     //   }
+      //   })
+      //   .catch((err) => toast("Internal error"));
     }
   };
 
@@ -132,6 +177,7 @@ export const SignUp = ({ toast }) => {
         onChange={setPhoneNumber}
         isMobile={isMobile}
       />
+      {error && <div>{error}</div>}
       <AuthButton
         className={cx(styles.register)}
         label={AUTH_INPUT_LABELS.SIGN_UP}

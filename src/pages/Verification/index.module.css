@@ -1,0 +1,25 @@
+.container {
+  font-family: "Poppins";
+  display: flex;
+  align-items: center; /* aligns items vertically */
+  justify-content: center; /* aligns items horizontally */
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 70px 40px 80px 40px;
+}
+
+.error {
+  color: red;
+  font-size: 4vw;
+}
+
+.button {
+  padding-top: 2vh;
+}
+
+.header {
+  background-color: #fff;
+  font-size: 5rem;
+  font-weight: bold;
+}
