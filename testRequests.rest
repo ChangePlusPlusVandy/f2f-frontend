@@ -48,3 +48,19 @@ Content-Type: application/json
 
 GET http://localhost:3001/tasks/byAttributes/?disabilities=["ADHD","disability2"]&age=30
 Content-Type: application/json
+
+###
+POST http://localhost:3001/tasks
+Content-Type: application/json
+
+{
+    "title": "Task 3",
+    "details": "Call LIDDA based on county|https://resources.hhs.texas.gov/pages/find-services|https://resources.hhs.texas.gov/pages",
+    "disabilities": ["ADHD", "disability1", "disability2"],
+    "timePeriod": "monthly",
+    "age": "Adult"
+}
+
+###
+GET http://localhost:3001/tasks
+Content-Type: application/json

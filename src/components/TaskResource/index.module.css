@@ -19,6 +19,7 @@
   width: 100%;
   padding: 40px 0 40px 40px;
   margin: 0;
+  word-wrap: break-word;
 }
 
 .card_desc {

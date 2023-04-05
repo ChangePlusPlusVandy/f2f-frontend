@@ -162,9 +162,10 @@ export const uncheckEvent = (childId, taskId) => {
 
 /**
  * @param {Array} childrenId an array of children Id's
- * @param {boolean} priority (Optional) the priority level queried for Upcoming tasks
- * @return {Array} a 2D array where each child possesses their respective
+ * @param {boolean} priority the priority level queried for Upcoming tasks
+ * @param {Array} taskArray the task array to be set: a 2D array where each child possesses their respective
  * tasks based on age and disabilities
+ * @param {Function} setTaskArray the function to set task array
  */
 export const getChildrenTasksArray = (
   childrenId,
