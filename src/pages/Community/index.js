@@ -3,7 +3,6 @@ import classNames from "classnames";
 import styles from "./index.module.css";
 import { BackArrow } from "../../components/BackArrow";
 import { NavBar } from "../NavBar";
-import { CreatePost } from "../../components/CreatePost";
 
 // component imports
 import Dropdown from "../../components/CommunityHeader";
@@ -97,10 +96,9 @@ export const Community = () => {
   ]);
   const [options, setOptions] = useState([
     "All Disabilities",
-    "ADHD",
     "Autism",
+    "Cant be ",
   ]);
-  const [showCreatePost, setShowCreatePost] = useState(false);
 
   useEffect(() => {
     fetch("/community")
@@ -115,7 +113,7 @@ export const Community = () => {
   }, []);
 
   const createPost = () => {
-    setShowCreatePost(!showCreatePost);
+    console.log("called");
   };
 
   return (
@@ -146,7 +144,6 @@ export const Community = () => {
       <div className={cx(styles.create_post)} onClick={createPost}>
         <img src={PlusSign} alt="" />
       </div>
-      {showCreatePost && <CreatePost />}
       <NavBar />
     </div>
   );

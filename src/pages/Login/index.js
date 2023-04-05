@@ -14,17 +14,11 @@ export const Login = () => {
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [userID, setUserID] = useState(-1);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/home", {
-        state: {
-          email: email,
-          userID: userID,
-        },
-      });
+      navigate("/home");
     }
   }, [isLoggedIn, navigate]);
 
@@ -41,22 +35,26 @@ export const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-
-    fetch("http://localhost:3001/users/login", {
+    const textFile = new File(
+      [`username: ${email}\npassword: ${password}`],
+      "login.txt",
+      { type: "text/plain" }
+    );
+    fetch("/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, password: password }),
+      body: textFile,
     })
       .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
         return response.json();
       })
-      .then((res) => {
-        console.log(res);
-        if (res.message === "SUCCESS") {
+      .then((data) => {
+        if (data.status === "success") {
           setIsLoggedIn(true);
-          setUserID(res.userID);
         } else {
-          setError(res.message);
+          setIsLoggedIn(false);
         }
       })
       .catch((error) => {
