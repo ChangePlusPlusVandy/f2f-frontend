@@ -3,12 +3,16 @@ import classNames from "classnames/bind";
 import Papa from "papaparse";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
-import { NavBar } from "../NavBar";
-import { ROUTES, PRIORITY_LEVEL, STATUS_CODE } from "../../lib/constants";
+import { ROUTES, PRIORITY_LEVEL } from "../../lib/constants";
+import { getChildrenTasksArray } from "../../lib/services";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
 import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
 import { useNavigate } from "react-router-dom";
-import { importCSVToJSON, formGetRequest } from "../../lib/utils";
+import {
+  importCSVToJSON,
+  formGetRequest,
+  getAgeGivenBirthday,
+} from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
 
 const cx = classNames.bind(styles);
@@ -23,54 +27,41 @@ export const Roadmap = ({ toast }) => {
   const [elseList, setElseList] = useState([]);
   //TODO: get the information from cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
-  const disabilities = ["ADHD", "disability2"];
-  const age = "Adult";
 
-  const hpElements = hpList.map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing}
-    </p>
-  ));
-  const elseElements = elseList.map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing}
-    </p>
-  ));
+  const getStats = (childrenId) => {
+    childrenId.forEach((childId) => {
+      // get child's name and disabilities
+      const childUrl = "/children/" + childId;
+      fetch(process.env.REACT_APP_HOST_URL + childUrl)
+        .then((response) => response.json())
+        .then((childrenData) => {
+          const childName = childrenData.firstName;
+          const age = getAgeGivenBirthday(childrenData.birthDate);
+          const completedTasks = childrenData.completedTasks;
+          const params = {
+            disabilities: JSON.stringify(childrenData.disabilities),
+            age: JSON.stringify(age),
+            //TODO: fix the data for upcoming vs priority
+            priority: JSON.stringify(2),
+          };
 
-  const getStats = (disabilities, age) => {
-    const url = formGetRequest("/tasks/getStats/", {
-      disabilities: JSON.stringify(disabilities),
-      age: JSON.stringify(age),
-      priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
+          // get tasks based on children's attributes
+          const url = formGetRequest("/tasks/getStats/", params);
+          fetch(process.env.REACT_APP_HOST_URL + url)
+            .then((response) => response.json())
+            .then((data) => {
+              setNumTasks(data.numUpcoming);
+              setNumAllTasks(data.numAll);
+            })
+            .catch((error) => console.log(error));
+        });
     });
-    fetch(process.env.REACT_APP_HOST_URL + url)
-      .then((response) => response.json())
-      .then((data) => {
-        //TODO: fix the data for upcoming vs priority
-        setNumTasks(data.numUpcoming);
-        setNumAllTasks(data.numAll);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const getHighPriority = (disabilities, age) => {
-    const url = formGetRequest("/tasks/byAttributes/", {
-      disabilities: JSON.stringify(disabilities),
-      age: JSON.stringify(age),
-      priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
-    });
-    fetch(process.env.REACT_APP_HOST_URL + url)
-      .then((response) => response.json())
-      .then((tasks) => {
-        const taskNames = tasks.map((task) => task.title);
-        sethpList(taskNames);
-      })
-      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
-    getStats(disabilities, age);
-    getHighPriority(disabilities, age);
+    getStats(childrenId);
+    getChildrenTasksArray(childrenId, true, hpList, sethpList);
+    getChildrenTasksArray(childrenId, false, elseList, setElseList);
   }, []);
 
   // set the import csv file
@@ -178,7 +169,7 @@ export const Roadmap = ({ toast }) => {
               </div>
             </div>
             <p className={cx(styles.header, "small")}>
-              Everything in the next three months
+              All tasks with priority level 2
             </p>
           </div>
           <p className={cx(styles.taskNum)}>{numTasks}</p>
@@ -212,7 +203,7 @@ export const Roadmap = ({ toast }) => {
         <h1 className={cx(styles.radar)}>On Your Radar</h1>
         <h2 className={cx(styles.priority)}>High Priority</h2>
         {hpElements}
-        <h2 className={cx(styles.priority, "else")}>Everything Else</h2>
+        <h2 className={cx(styles.priority, "else")}>All Tasks</h2>
         {elseElements}
       </div>
     </div>

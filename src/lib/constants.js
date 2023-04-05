@@ -54,15 +54,12 @@ export const CAPTIONS = {
   ERROR: "Error",
   SIGN_UP_MAIN: "Sign Up",
   SIGN_UP_SUB: "Let’s get you started!",
-  UPCOMING_MAIN: "Upcoming",
-  UPCOMING_SUB: "Everything in the next 3 months",
+  UPCOMING_MAIN: "High Priority",
+  UPCOMING_SUB: "All tasks with priority level 2",
   ROADMAP_MAIN: "Road Map",
   ROADMAP_SUB: "Below are all the tasks needed to be completed",
   ALL_TASKS_MAIN: "All Tasks",
   ALL_TASKS_SUB: "Everything you need to do for your child",
-  TASK_DETAILS_MAIN: "Medicaid Waitlist",
-  TASK_DETAILS_SUB:
-    "Call 700-432-3456 and ask to be put on the Medicaid and associated waitlists",
 };
 
 export const DISABILITY = [
