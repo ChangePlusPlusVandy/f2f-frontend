@@ -99,20 +99,16 @@ export const Roadmap = ({ toast }) => {
     uploadRef.current.click();
   };
 
-  const onExport = async () => {
-    fetch("http://localhost:3001/users/exportCSV")
-      .then((response) => response.arrayBuffer())
-      .then((arrayBuffer) => {
-        const blob = new Blob([arrayBuffer], { type: "text/csv" });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "users.csv");
-        document.body.appendChild(link);
-        link.click();
-      })
-      .catch((error) => console.error(error));
-  };
+  const hpElements = hpList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
+  const elseElements = elseList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
 
   return (
     <div
@@ -120,7 +116,8 @@ export const Roadmap = ({ toast }) => {
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "80vh",
-      }}>
+      }}
+    >
       {/* <div style={{ textAlign: "center" }}>
         <p className={cx(styles.header)}>Road Map</p>
         <p className={cx(styles.header, "small")}>
@@ -143,18 +140,11 @@ export const Roadmap = ({ toast }) => {
           onChange={(e) => setImportFile(e.target.files[0])}
         />
       </div>
-      <div>
-        <AuthButton
-          className={cx(styles.csvButton)}
-          label="Export Task CSV"
-          onClick={onExport}
-          isMobile={true}
-        />
-      </div>
 
       <div
         onClick={() => navigate(ROUTES.UPCOMING_TASKS)}
-        className={cx(styles.tasks_div)}>
+        className={cx(styles.tasks_div)}
+      >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
@@ -164,8 +154,9 @@ export const Roadmap = ({ toast }) => {
                   position: "relative",
                   display: "flex",
                   margin: "10px",
-                }}>
-                <p className={cx(styles.taskDesc)}>Upcoming</p>
+                }}
+              >
+                <p className={cx(styles.taskDesc)}>High&nbsp;Priority</p>
               </div>
             </div>
             <p className={cx(styles.header, "small")}>
@@ -178,7 +169,8 @@ export const Roadmap = ({ toast }) => {
 
       <div
         onClick={() => navigate(ROUTES.ALL_TASKS)}
-        className={cx(styles.tasks_div, "all")}>
+        className={cx(styles.tasks_div, "all")}
+      >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
@@ -188,7 +180,8 @@ export const Roadmap = ({ toast }) => {
                   position: "relative",
                   display: "flex",
                   margin: "10px",
-                }}>
+                }}
+              >
                 <p className={cx(styles.taskDesc)}>All&nbsp;Tasks</p>
               </div>
             </div>
