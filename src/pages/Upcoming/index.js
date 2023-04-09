@@ -3,8 +3,9 @@ import classNames from "classnames/bind";
 import { UpcomingComponent } from "../../components/UpcomingComponent";
 import { useWindowSize } from "../../lib/hooks";
 import { useState, useEffect } from "react";
-import { WINDOW_TYPE } from "../../lib/constants";
+import { WINDOW_TYPE, TIMEOUT } from "../../lib/constants";
 import { getChildrenTasksArray } from "../../lib/services";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +15,9 @@ export const Upcoming = ({ toast }) => {
   const [taskArray, setTaskArray] = useState([]);
   //TODO: get information using cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const [timer, setTimer] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getChildrenTasksArray(childrenId, true, taskArray, setTaskArray);
@@ -22,6 +26,23 @@ export const Upcoming = ({ toast }) => {
   const deduplicatedList = taskArray.flat().filter((obj, index, self) => {
     return index === self.findIndex((o) => o._id === obj._id);
   });
+
+  useEffect(() => {
+    console.log(localStorage);
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
 
   return (
     <>

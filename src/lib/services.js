@@ -210,3 +210,11 @@ export const getChildrenTasksArray = (
       });
   });
 };
+
+export const logoutTimer = () => {
+  setTimeout(() => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("userID");
+    return;
+  }, 15000);
+};

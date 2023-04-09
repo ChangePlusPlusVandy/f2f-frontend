@@ -140,3 +140,5 @@ export const SCHOOL_DISTRICT = [
   { label: "Tomball" },
   { label: "Waller" },
 ];
+
+export const TIMEOUT = 7200000;

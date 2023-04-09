@@ -4,7 +4,8 @@ import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
 import { ROUTES } from "../../lib/constants";
 import { useWindowSize } from "../../lib/hooks";
-import { WINDOW_TYPE } from "../../lib/constants";
+import { WINDOW_TYPE, TIMEOUT } from "../../lib/constants";
+import { useNavigate } from "react-router-dom";
 
 import {
   CircularProgressbarWithChildren,
@@ -27,6 +28,8 @@ export const Home = () => {
     "Register for Autism Symposium",
     "Intensive IEP support & training",
   ]);
+  const [timer, setTimer] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/userData")
@@ -41,6 +44,23 @@ export const Home = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  useEffect(() => {
+    console.log(localStorage);
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
   const hpElements = hpList.map((thing, index) => (
     <p className={styles.list} key={index}>
       {index + 1 + ". " + thing}
@@ -53,12 +73,16 @@ export const Home = () => {
   ));
 
   return (
-    <div style={{overflow: "scroll", overscrollBehavior: "none", height: "92vh"}}>
+    <div
+      style={{
+        overflow: "scroll",
+        overscrollBehavior: "none",
+        height: "92vh",
+      }}>
       <div
         className={cx(styles.container, {
           [styles.mobile]: isMobile,
-        })}
-      >
+        })}>
         <div className={cx(styles.text_div, "first")}>
           <p className={cx(styles.welcome)}>Welcome&nbsp;</p>
           <p className={cx(styles.welcome, "family")}>{lastName} Family!</p>
@@ -80,8 +104,7 @@ export const Home = () => {
             styles={buildStyles({
               pathColor: "#E3D150",
               trailColor: "#F9F6DC",
-            })}
-          >
+            })}>
             <div className={cx(styles.progress_circle_text)}>{points}</div>
             <div className={cx(styles.progress_circle_text)}>Points</div>
           </CircularProgressbarWithChildren>
@@ -100,7 +123,7 @@ export const Home = () => {
         </div>
         <NavBar />
       </div>
-      </div>
+    </div>
   );
 };
 

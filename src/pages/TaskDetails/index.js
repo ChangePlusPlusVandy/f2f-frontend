@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import ResourceCard from "../../components/TaskResource";
@@ -9,6 +9,7 @@ import { AppContext } from "../../lib/AppContext";
 import { checkEvent, uncheckEvent } from "../../lib/services";
 import { separateWebsiteLink } from "../../lib/utils";
 import { CheckBox } from "../../components/CheckBox";
+import { TIMEOUT } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +23,26 @@ export const TaskDetails = () => {
 
   const [resources, setResources] = useState([]);
   const [checked, setChecked] = useState(completed);
+  const [timer, setTimer] = useState();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(localStorage);
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
 
   useEffect(() => {
     const url = "/tasks/" + taskId;
