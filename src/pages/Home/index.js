@@ -1,11 +1,10 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
-import { ROUTES } from "../../lib/constants";
 import { useWindowSize } from "../../lib/hooks";
 import { WINDOW_TYPE } from "../../lib/constants";
-
+import { OnYourRadar } from "../../components/OnYourRadar";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
@@ -18,42 +17,18 @@ export const Home = () => {
   const { width, type } = useWindowSize();
 
   const isMobile = type === WINDOW_TYPE.MOBILE;
-
+  // use Cache to store the user
   const [lastName, setLastName] = useState("Adam's");
   const [goal, setGoal] = useState(100);
   const [points, setPoints] = useState(71);
-  const [hpList, sethpList] = useState(["Medicaid Waitlist"]);
-  const [elseList, setElseList] = useState([
-    "Register for Autism Symposium",
-    "Intensive IEP support & training",
-  ]);
 
-  useEffect(() => {
-    fetch("/userData")
-      .then((response) => response.json())
-      .then((data) => {
-        setLastName(data.lastName);
-        setGoal(data.goal);
-        setPoints(data.points);
-        sethpList(data.hpList);
-        setElseList(data.elseList);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
-  const hpElements = hpList.map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing}
-    </p>
-  ));
-  const elseElements = elseList.map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing}
-    </p>
-  ));
+  // TODO: cache
+  const childrenId = ["63e5c4936d51fdbbbedb5503"];
 
   return (
-    <div style={{overflow: "scroll", overscrollBehavior: "none", height: "92vh"}}>
+    <div
+      style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
+    >
       <div
         className={cx(styles.container, {
           [styles.mobile]: isMobile,
@@ -86,21 +61,10 @@ export const Home = () => {
             <div className={cx(styles.progress_circle_text)}>Points</div>
           </CircularProgressbarWithChildren>
         </div>
-        <div className={cx(styles.todo_div)}>
-          <h1 className={cx(styles.radar)}>On Your Radar</h1>
-          <h2 className={cx(styles.priority)}>High Priority</h2>
-          {hpElements}
-          <h2 className={cx(styles.priority, "else")}>Everything Else</h2>
-          {elseElements}
-          <div className={cx(styles.link_div)}>
-            <a href={ROUTES.ROADMAP} className={cx(styles.link)}>
-              See in Roadmap
-            </a>
-          </div>
-        </div>
+        <OnYourRadar childrenId={childrenId} />
         <NavBar />
       </div>
-      </div>
+    </div>
   );
 };
 

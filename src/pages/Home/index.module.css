@@ -79,42 +79,6 @@
     font-size: 6vw;
 }
 
-.todo_div {
-    border: 6px #0198BA;
-    border-style: solid;
-    border-radius: 50px;
-    margin: 2vw;
-    margin-bottom: 4vw;
-    padding: 3vw; 
-}
-
-.radar {
-    font-family: 'Poppins';
-    font-weight: 900;
-    color: black;
-    font-size: 7vw;
-    margin-top: 3vw;
-}
-
-.priority {
-    font-family: 'Poppins';
-    font-weight: bolder;
-    color: #8B5674;
-    font-size: 5vw;
-    margin-top: 6vw;
-}
-
-.priority.else {
-    color: #E3D150;
-}
-
-.list {
-    font-family: 'Poppins';
-    color: black;
-    font-weight: 600;
-    font-size: 3vw;
-}
-
 .link_div {
     text-align: center;
     margin-top: 8vw;

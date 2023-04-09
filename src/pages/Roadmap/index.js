@@ -24,8 +24,6 @@ export const Roadmap = ({ toast }) => {
   const [numAllTasks, setNumAllTasks] = useState(0);
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
-  const [hpList, sethpList] = useState([]);
-  const [elseList, setElseList] = useState([]);
   //TODO: get the information from cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
 
@@ -36,9 +34,7 @@ export const Roadmap = ({ toast }) => {
       fetch(process.env.REACT_APP_HOST_URL + childUrl)
         .then((response) => response.json())
         .then((childrenData) => {
-          const childName = childrenData.firstName;
           const age = getAgeGivenBirthday(childrenData.birthDate);
-          const completedTasks = childrenData.completedTasks;
           const params = {
             disabilities: JSON.stringify(childrenData.disabilities),
             age: JSON.stringify(age),
@@ -61,8 +57,6 @@ export const Roadmap = ({ toast }) => {
 
   useEffect(() => {
     getStats(childrenId);
-    getChildrenTasksArray(childrenId, true, hpList, sethpList);
-    getChildrenTasksArray(childrenId, false, elseList, setElseList);
   }, []);
 
   // set the import csv file
@@ -116,31 +110,14 @@ export const Roadmap = ({ toast }) => {
       .catch((error) => console.error(error));
   };
 
-  const hpElements = hpList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-  const elseElements = elseList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-
   return (
     <div
       style={{
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "80vh",
-      }}>
-      {/* <div style={{ textAlign: "center" }}>
-        <p className={cx(styles.header)}>Road Map</p>
-        <p className={cx(styles.header, "small")}>
-          Below are all the tasks needed to be completed
-        </p>
-      </div> */}
-
+      }}
+    >
       <div>
         <AuthButton
           className={cx(styles.csvButton)}
@@ -167,7 +144,8 @@ export const Roadmap = ({ toast }) => {
 
       <div
         onClick={() => navigate(ROUTES.UPCOMING_TASKS)}
-        className={cx(styles.tasks_div)}>
+        className={cx(styles.tasks_div)}
+      >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
@@ -177,7 +155,8 @@ export const Roadmap = ({ toast }) => {
                   position: "relative",
                   display: "flex",
                   margin: "10px",
-                }}>
+                }}
+              >
                 <p className={cx(styles.taskDesc)}>Upcoming</p>
               </div>
             </div>
@@ -191,7 +170,8 @@ export const Roadmap = ({ toast }) => {
 
       <div
         onClick={() => navigate(ROUTES.ALL_TASKS)}
-        className={cx(styles.tasks_div, "all")}>
+        className={cx(styles.tasks_div, "all")}
+      >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
@@ -201,7 +181,8 @@ export const Roadmap = ({ toast }) => {
                   position: "relative",
                   display: "flex",
                   margin: "10px",
-                }}>
+                }}
+              >
                 <p className={cx(styles.taskDesc)}>All&nbsp;Tasks</p>
               </div>
             </div>
@@ -209,15 +190,6 @@ export const Roadmap = ({ toast }) => {
           </div>
           <p className={cx(styles.taskNum)}>{numAllTasks}</p>
         </div>
-      </div>
-
-      {/* just for mvp */}
-      <div className={cx(styles.todo_div)}>
-        <h1 className={cx(styles.radar)}>On Your Radar</h1>
-        <h2 className={cx(styles.priority)}>High Priority</h2>
-        {hpElements}
-        <h2 className={cx(styles.priority, "else")}>All Tasks</h2>
-        {elseElements}
       </div>
     </div>
   );
