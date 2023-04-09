@@ -14,6 +14,7 @@ import {
   getAgeGivenBirthday,
 } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -82,7 +83,8 @@ export const Roadmap = ({ toast }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(inputObj),
           })
-            .then((response) => console.log(response.json()))
+            .then((response) => response.json())
+            .then((data) => toast("Successfully uploaded the csv!"))
             .catch((error) => {
               console.error(error);
             });

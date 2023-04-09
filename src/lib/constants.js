@@ -3,6 +3,8 @@ export const PRIORITY_LEVEL = {
   PRIORITY_LEVEL: 2,
 };
 
+export const COLORS_ARR = ["#0198BA26", "#E3D15033", "#8B567478"];
+
 export const WINDOW_TYPE = {
   WEB: "WEB",
   MOBILE: "MOBILE",

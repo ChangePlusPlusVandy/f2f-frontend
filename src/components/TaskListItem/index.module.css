@@ -2,8 +2,8 @@
 
 .tasks_div {
     border-bottom: 3px solid black;
-    margin-left: 3vw;
-    margin-right: 3vw;
+    /* margin-left: 2vw;
+    margin-right: 2vw; */
     padding: 4vw;
     display: flex;
     justify-content: flex-end;
@@ -32,4 +32,5 @@
   color: #8B5674;
   margin: 0;
   margin-right: auto;
+  float: right;
 }
