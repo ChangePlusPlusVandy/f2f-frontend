@@ -5,10 +5,7 @@ import { NavBar } from "../NavBar";
 import { useWindowSize } from "../../lib/hooks";
 import { WINDOW_TYPE } from "../../lib/constants";
 import { OnYourRadar } from "../../components/OnYourRadar";
-import {
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from "react-circular-progressbar";
+import { PointsDisplay } from "../../components/PointsDisplay";
 import "react-circular-progressbar/dist/styles.css";
 
 const cx = classNames.bind(styles);
@@ -17,10 +14,8 @@ export const Home = () => {
   const { width, type } = useWindowSize();
 
   const isMobile = type === WINDOW_TYPE.MOBILE;
-  // use Cache to store the user
+  // TODO: use Cache to store the user
   const [lastName, setLastName] = useState("Adam's");
-  const [goal, setGoal] = useState(100);
-  const [points, setPoints] = useState(71);
 
   // TODO: cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
@@ -42,25 +37,7 @@ export const Home = () => {
           <p className={cx(styles.cruising)}>You're&nbsp;</p>
           <p className={cx(styles.cruising, "color")}>Cruising it!</p>
         </div>
-        <div className={cx(styles.text_div)}>
-          <p className={cx(styles.points)}>{goal - points}</p>
-          <p className={cx(styles.points, "text")}>
-            &nbsp;points away from your weekly goal
-          </p>
-        </div>
-        <div className={cx(styles.progress_circle)}>
-          <CircularProgressbarWithChildren
-            value={(100 * points) / goal}
-            strokeWidth={16}
-            styles={buildStyles({
-              pathColor: "#E3D150",
-              trailColor: "#F9F6DC",
-            })}
-          >
-            <div className={cx(styles.progress_circle_text)}>{points}</div>
-            <div className={cx(styles.progress_circle_text)}>Points</div>
-          </CircularProgressbarWithChildren>
-        </div>
+        <PointsDisplay childrenId={childrenId} />
         <OnYourRadar childrenId={childrenId} />
         <NavBar />
       </div>
