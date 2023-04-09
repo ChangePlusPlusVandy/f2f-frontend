@@ -110,6 +110,17 @@ export const Roadmap = ({ toast }) => {
     </p>
   ));
 
+  const hpElements = hpList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
+  const elseElements = elseList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
+
   return (
     <div
       style={{
