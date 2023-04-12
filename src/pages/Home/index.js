@@ -12,11 +12,9 @@ const cx = classNames.bind(styles);
 
 export const Home = () => {
   const { width, type } = useWindowSize();
-
   const isMobile = type === WINDOW_TYPE.MOBILE;
   // TODO: use Cache to store the user
   const [lastName, setLastName] = useState("Adam's");
-
   // TODO: cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
 

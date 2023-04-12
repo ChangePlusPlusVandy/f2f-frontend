@@ -4,6 +4,8 @@ import styles from "./index.module.css";
 import { AllTasksSection } from "../../components/AllTasksSection";
 import ReactSearchBox from "react-search-box";
 import { getChildrenTasksArray } from "../../lib/services";
+import { useNavigate } from "react-router-dom";
+import { TIMEOUT } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +14,9 @@ export const AllTasks = () => {
   const [searchQuery, setSearchQuery] = useState("");
   //TODO: get information using cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const [timer, setTimer] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getChildrenTasksArray(childrenId, false, allTaskArray, setAllTaskArray);
@@ -27,6 +32,22 @@ export const AllTasks = () => {
       return task.title.toLowerCase().includes(searchQuery.toLowerCase());
     })
   );
+  useEffect(() => {
+    console.log(localStorage);
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
 
   return (
     <div
@@ -34,8 +55,7 @@ export const AllTasks = () => {
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "92vh",
-      }}
-    >
+      }}>
       <ReactSearchBox
         placeholder="Search"
         onChange={handleSearch}
@@ -47,8 +67,7 @@ export const AllTasks = () => {
           overflow: "scroll",
           overscrollBehavior: "none",
           height: "66vh",
-        }}
-      >
+        }}>
         {filteredSections.map((childTasks, childTasksIndex) => (
           <AllTasksSection taskList={childTasks} key={childTasksIndex} />
         ))}

@@ -3,7 +3,8 @@ import classNames from "classnames";
 import styles from "./index.module.css";
 import { BackArrow } from "../../components/BackArrow";
 import { NavBar } from "../NavBar";
-import { CreatePost } from "../../components/CreatePost";
+import { useNavigate } from "react-router-dom";
+import { TIMEOUT } from "../../lib/constants";
 
 // component imports
 import Dropdown from "../../components/CommunityHeader";
@@ -97,10 +98,13 @@ export const Community = () => {
   ]);
   const [options, setOptions] = useState([
     "All Disabilities",
-    "ADHD",
     "Autism",
+    "Cant be ",
   ]);
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [timer, setTimer] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/community")
@@ -114,8 +118,24 @@ export const Community = () => {
       });
   }, []);
 
+  useEffect(() => {
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
   const createPost = () => {
-    setShowCreatePost(!showCreatePost);
+    console.log("called");
   };
 
   return (
@@ -146,7 +166,6 @@ export const Community = () => {
       <div className={cx(styles.create_post)} onClick={createPost}>
         <img src={PlusSign} alt="" />
       </div>
-      {showCreatePost && <CreatePost />}
       <NavBar />
     </div>
   );

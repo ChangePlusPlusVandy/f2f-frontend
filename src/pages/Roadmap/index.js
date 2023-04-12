@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import Papa from "papaparse";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
-import { ROUTES, PRIORITY_LEVEL } from "../../lib/constants";
+import { ROUTES, PRIORITY_LEVEL, TIMEOUT } from "../../lib/constants";
 import { getChildrenTasksArray } from "../../lib/services";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
 import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
@@ -26,6 +26,7 @@ export const Roadmap = ({ toast }) => {
   const [importFile, setImportFile] = useState(null);
   //TODO: get the information from cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const [timer, setTimer] = useState();
 
   const getStats = (childrenId) => {
     childrenId.forEach((childId) => {
@@ -110,6 +111,36 @@ export const Roadmap = ({ toast }) => {
       .catch((error) => console.error(error));
   };
 
+<<<<<<< HEAD
+=======
+  const hpElements = hpList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
+  const elseElements = elseList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
+
+  useEffect(() => {
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
+>>>>>>> 47ec3f1b3ab3887d0f72a5988ba3be465fd88b53
   return (
     <div
       style={{

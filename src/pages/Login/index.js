@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import { ReactComponent as ReactLogo } from "../../svg/F2F-logo.svg";
 import styles from "./index.module.css";
 import { ROUTES } from "../../lib/constants";
+import { STATUS_CODE } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -14,21 +15,21 @@ export const Login = () => {
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [userID, setUserID] = useState(-1);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/home", {
-        state: {
-          email: email,
-          userID: userID,
-        },
-      });
+      navigate("/home");
     }
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
+    const userID = checkIfLoggedIn();
+    console.log(userID);
+    if (userID) {
+      navigate("/home");
+    }
+
     // Check if there is a rememberMeToken in the localStorage
     const rememberMeToken = JSON.parse(localStorage.getItem("rememberMeToken"));
     if (rememberMeToken) {
@@ -42,7 +43,7 @@ export const Login = () => {
     setIsLoading(true);
     setError("");
 
-    fetch("http://localhost:3001/users/login", {
+    fetch(process.env.REACT_APP_HOST_URL + "/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email, password: password }),
@@ -52,9 +53,17 @@ export const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        if (res.message === "SUCCESS") {
+        if (res.message === STATUS_CODE.SUCESS) {
+          localStorage.setItem("userID", res.id);
+          localStorage.setItem("jwtToken", res.token);
+          fetch(process.env.REACT_APP_HOST_URL + "/users/getChildren")
+            .then((response) => {
+              response.json();
+            })
+            .then((data) => {
+              localStorage.setItem("children", data);
+            });
           setIsLoggedIn(true);
-          setUserID(res.userID);
         } else {
           setError(res.message);
         }
@@ -71,6 +80,19 @@ export const Login = () => {
       localStorage.removeItem("rememberMeToken");
     }
     setIsLoading(false);
+  };
+
+  const checkIfLoggedIn = () => {
+    // console.log(localStorage.getItem("jwtToken"));
+    const rememberMeToken = localStorage.getItem("jwtToken");
+    console.log(rememberMeToken);
+    if (rememberMeToken) {
+      // User is logged in
+      return rememberMeToken;
+    } else {
+      // User is not logged in
+      return null;
+    }
   };
 
   return (
