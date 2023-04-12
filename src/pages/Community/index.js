@@ -13,6 +13,7 @@ import Post from "../../components/CommunityPost";
 //image imports
 import PFP from "../../images/PFP.png";
 import PlusSign from "../../images/PlusSign.png";
+import { CreatePost } from "../../components/CreatePost";
 
 const cx = classNames.bind(styles);
 
@@ -102,6 +103,7 @@ export const Community = () => {
     "Cant be ",
   ]);
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [rotate, setRotate] = useState(false);
   const [timer, setTimer] = useState();
 
   const navigate = useNavigate();
@@ -135,7 +137,8 @@ export const Community = () => {
   }, [timer]);
 
   const createPost = () => {
-    console.log("called");
+    setShowCreatePost(!showCreatePost);
+    setRotate(!rotate);
   };
 
   return (
@@ -145,10 +148,12 @@ export const Community = () => {
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "92vh",
-      }}>
+      }}
+    >
       <header className={cx(styles.header)}>
         <Dropdown options={options} />
       </header>
+      {showCreatePost && <CreatePost />}
       <div className={cx(styles.posts)}>
         {posts.map((post) => {
           return (
@@ -163,7 +168,7 @@ export const Community = () => {
           );
         })}
       </div>
-      <div className={cx(styles.create_post)} onClick={createPost}>
+      <div className={rotate ? cx(styles.create_post_rotate) : cx(styles.create_post)} onClick={createPost}>
         <img src={PlusSign} alt="" />
       </div>
       <NavBar />
