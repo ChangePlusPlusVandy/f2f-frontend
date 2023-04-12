@@ -35,7 +35,7 @@ export const Home = () => {
           <p className={cx(styles.cruising)}>You're&nbsp;</p>
           <p className={cx(styles.cruising, "color")}>Cruising it!</p>
         </div>
-        <PointsDisplay childrenId={childrenId} />
+        <PointsDisplay childId={childrenId[0]} />
         <OnYourRadar childrenId={childrenId} />
         <NavBar />
       </div>

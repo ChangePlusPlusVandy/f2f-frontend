@@ -5,6 +5,14 @@
     position: relative;
 }
 
+.name {
+    font-family: 'Poppins';
+    font-weight: 800;
+    font-size: 3vw;
+    margin: auto;
+    color: #000000;
+}
+
 .points {
     font-family: 'Poppins';
     font-weight: 800;

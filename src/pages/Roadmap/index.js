@@ -111,36 +111,6 @@ export const Roadmap = ({ toast }) => {
       .catch((error) => console.error(error));
   };
 
-<<<<<<< HEAD
-=======
-  const hpElements = hpList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-  const elseElements = elseList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-
-  useEffect(() => {
-    setTimer(
-      setTimeout(() => {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("userID");
-        navigate("/login");
-      }, TIMEOUT)
-    );
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [timer]);
-
->>>>>>> 47ec3f1b3ab3887d0f72a5988ba3be465fd88b53
   return (
     <div
       style={{
