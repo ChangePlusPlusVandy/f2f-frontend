@@ -3,7 +3,6 @@ import classNames from "classnames";
 import styles from "./index.module.css";
 import { BackArrow } from "../../components/BackArrow";
 import { NavBar } from "../NavBar";
-import { CreatePost } from "../../components/CreatePost";
 import { useNavigate } from "react-router-dom";
 import { TIMEOUT } from "../../lib/constants";
 
@@ -14,6 +13,7 @@ import Post from "../../components/CommunityPost";
 //image imports
 import PFP from "../../images/PFP.png";
 import PlusSign from "../../images/PlusSign.png";
+import { CreatePost } from "../../components/CreatePost";
 
 const cx = classNames.bind(styles);
 
@@ -99,10 +99,11 @@ export const Community = () => {
   ]);
   const [options, setOptions] = useState([
     "All Disabilities",
-    "ADHD",
     "Autism",
+    "Cant be ",
   ]);
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [rotate, setRotate] = useState(false);
   const [timer, setTimer] = useState();
 
   const navigate = useNavigate();
@@ -137,6 +138,7 @@ export const Community = () => {
 
   const createPost = () => {
     setShowCreatePost(!showCreatePost);
+    setRotate(!rotate);
   };
 
   return (
@@ -150,6 +152,7 @@ export const Community = () => {
       <header className={cx(styles.header)}>
         <Dropdown options={options} />
       </header>
+      {showCreatePost && <CreatePost />}
       <div className={cx(styles.posts)}>
         {posts.map((post) => {
           return (
@@ -164,10 +167,13 @@ export const Community = () => {
           );
         })}
       </div>
-      <div className={cx(styles.create_post)} onClick={createPost}>
+      <div
+        className={
+          rotate ? cx(styles.create_post_rotate) : cx(styles.create_post)
+        }
+        onClick={createPost}>
         <img src={PlusSign} alt="" />
       </div>
-      {showCreatePost && <CreatePost />}
       <NavBar />
     </div>
   );

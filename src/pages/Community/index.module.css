@@ -50,3 +50,34 @@ body {
 .create_post img {
   width: 70%;
 }
+
+.create_post:hover {
+  cursor: pointer;
+}
+
+.create_post_rotate {
+  width: 160px;
+  height: 160px;
+  background-color: #0298ba;
+  box-shadow: 0 2px 16px 0 gray;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: absolute;
+  cursor: pointer;
+  right: 4vw;
+  bottom: 10vh;
+  z-index: 2;
+  transform: rotate(45deg);
+  transition: transform 0.1s ease-in-out;
+}
+
+.create_post_rotate img {
+  width: 70%;
+}
+
+.create_post_rotate:hover {
+  cursor: pointer;
+}
