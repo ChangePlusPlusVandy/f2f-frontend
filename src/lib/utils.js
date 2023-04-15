@@ -1,3 +1,12 @@
+import { COLORS_ARR } from "./constants";
+
+/**
+ * @return a random color from the array
+ */
+export const getRandomColor = () => {
+  return COLORS_ARR[Math.floor(Math.random() * COLORS_ARR.length)];
+};
+
 /**
  * @param {String} string the string to be assessed
  * @return {Object} a json object containing the website links and text descriptions

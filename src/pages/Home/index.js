@@ -6,7 +6,8 @@ import { useWindowSize } from "../../lib/hooks";
 import { WINDOW_TYPE } from "../../lib/constants";
 import { OnYourRadar } from "../../components/OnYourRadar";
 import { Slider } from "../../components/Slider";
-import "react-circular-progressbar/dist/styles.css";
+import ProgressBar from "@ramonak/react-progress-bar";
+import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
 
 const cx = classNames.bind(styles);
 
@@ -15,8 +16,59 @@ export const Home = () => {
   const isMobile = type === WINDOW_TYPE.MOBILE;
   // TODO: use Cache to store the user
   const [lastName, setLastName] = useState("Adam's");
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [totalGoal, setTotalGoal] = useState(0);
+  const [childrenStats, setChildrenStats] = useState([]);
   // TODO: cache
   const childrenId = ["63e5c4936d51fdbbbedb5503", "63e5c4296d51fdbbbedb5500"];
+
+  const getChildrenPointsStats = async () => {
+    let totalPoints = 0;
+    let totalGoal = 0;
+    let childrenStats = [];
+    const childPromises = childrenId.map(async (childId) => {
+      // get child's name and disabilities
+      const childUrl = "/children/" + childId;
+      const response = await fetch(process.env.REACT_APP_HOST_URL + childUrl);
+      const childData = await response.json();
+      const childName = childData.firstName;
+      const age = getAgeGivenBirthday(childData.birthDate);
+      totalPoints += childData.completedTasks.length;
+      const params = {
+        disabilities: JSON.stringify(childData.disabilities),
+        age: JSON.stringify(age),
+      };
+
+      // get tasks based on children's attributes
+      const url = formGetRequest("/tasks/byAttributes/", params);
+      const taskResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
+      const taskData = await taskResponse.json();
+      totalGoal += taskData.length;
+      const childStats = {
+        childId,
+        childName,
+        points: childData.completedTasks.length,
+        goal: taskData.length,
+      };
+      childrenStats.push(childStats);
+    });
+
+    await Promise.all(childPromises); // wait for all child promises to complete
+
+    return { totalPoints, totalGoal, childrenStats };
+  };
+
+  useEffect(async () => {
+    const { totalPoints, totalGoal, childrenStats } =
+      await getChildrenPointsStats();
+    setTotalPoints(totalPoints);
+    setTotalGoal(totalGoal);
+    setChildrenStats(childrenStats);
+  }, []);
+
+  if (childrenStats.length !== childrenId.length) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -35,7 +87,16 @@ export const Home = () => {
           <p className={cx(styles.cruising)}>You're&nbsp;</p>
           <p className={cx(styles.cruising, "color")}>Cruising it!</p>
         </div>
-        <Slider childrenId={childrenId} />
+        <ProgressBar
+          completed={Math.round((totalPoints / totalGoal) * 100)}
+          height="4vh"
+          width="95%"
+          margin="1.5vh"
+          bgColor="#569DAA"
+          isLabelVisible={false}
+          animateOnRender={true}
+        />
+        <Slider childrenStats={childrenStats} />
         <OnYourRadar childrenId={childrenId} />
         <NavBar />
       </div>

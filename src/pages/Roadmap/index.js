@@ -96,7 +96,8 @@ export const Roadmap = ({ toast }) => {
   };
 
   const onExport = async () => {
-    fetch("http://localhost:3001/users/exportCSV")
+    const exportUrl = "/users/exportCSV";
+    fetch(process.env.REACT_APP_HOST_URL + exportUrl)
       .then((response) => response.arrayBuffer())
       .then((arrayBuffer) => {
         const blob = new Blob([arrayBuffer], { type: "text/csv" });
