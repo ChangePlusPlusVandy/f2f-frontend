@@ -7,7 +7,7 @@ import { getChildrenTasksArray } from "../../lib/services";
 const cx = classNames.bind(styles);
 
 export const OnYourRadar = React.forwardRef((props, ref) => {
-  const { childrenId } = props;
+  const { childrenId, isMobile } = props;
   const [hpList, sethpList] = useState([]);
   const [elseList, setElseList] = useState([]);
 
@@ -32,12 +32,64 @@ export const OnYourRadar = React.forwardRef((props, ref) => {
   }
 
   return (
-    <div className={cx(styles.todo_div)}>
-      <h1 className={cx(styles.radar)}>On Your Radar</h1>
-      <h2 className={cx(styles.priority)}>High Priority</h2>
-      <p className={cx(styles.list)}>{hpElements}</p>
-      <h2 className={cx(styles.priority, "else")}>All Tasks</h2>
-      <p className={cx(styles.list)}>{elseElements}</p>
+    <div
+      className={cx(styles.todo_div, {
+        [styles.mobile]: isMobile,
+      })}
+    >
+      <h1
+        className={cx(styles.radar, {
+          [styles.mobile]: isMobile,
+        })}
+      >
+        On Your Radar
+      </h1>
+      <div
+        className={cx(styles.priorityParent, {
+          [styles.mobile]: isMobile,
+        })}
+      >
+        <div
+          className={cx(styles.priorityBlock, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          <h2
+            className={cx(styles.priority, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            High Priority
+          </h2>
+          <p
+            className={cx(styles.list, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {hpElements}
+          </p>
+        </div>
+        <div
+          className={cx(styles.priorityBlock, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          <h2
+            className={cx(styles.priority, "else", {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            All Tasks
+          </h2>
+          <p
+            className={cx(styles.list, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {elseElements}
+          </p>
+        </div>
+      </div>
     </div>
   );
 });

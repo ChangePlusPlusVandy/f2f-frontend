@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 // build a page slider component
 export const Slider = (props) => {
-  const { childrenStats } = props;
+  const { childrenStats, isMobile } = props;
 
   return (
     <ReactSlidy infiniteLoop>
@@ -21,6 +21,7 @@ export const Slider = (props) => {
           childName={childStats.childName}
           points={childStats.points}
           goal={childStats.goal}
+          isMobile={isMobile}
         />
       ))}
     </ReactSlidy>

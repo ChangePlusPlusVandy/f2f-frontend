@@ -9,18 +9,38 @@ import {
 const cx = classNames.bind(styles);
 
 export const PointsDisplay = React.forwardRef((props, ref) => {
-  const { childName, points, goal } = props;
+  const { childName, points, goal, isMobile } = props;
 
   return (
     <div className={cx(styles.pointsBlock)}>
       <div className={cx(styles.text_div)}>
-        <p className={cx(styles.name)}>{childName}</p>
-        <p className={cx(styles.points)}>{goal - points}</p>
-        <p className={cx(styles.points, "text")}>
+        <p
+          className={cx(styles.name, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          {childName}
+        </p>
+        <p
+          className={cx(styles.points, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          {goal - points}
+        </p>
+        <p
+          className={cx(styles.points, "text", {
+            [styles.mobile]: isMobile,
+          })}
+        >
           &nbsp;points away from weekly goal
         </p>
       </div>
-      <div className={cx(styles.progress_circle)}>
+      <div
+        className={cx(styles.progress_circle, {
+          [styles.mobile]: isMobile,
+        })}
+      >
         <CircularProgressbarWithChildren
           value={(100 * points) / goal}
           strokeWidth={16}
@@ -29,8 +49,20 @@ export const PointsDisplay = React.forwardRef((props, ref) => {
             trailColor: "#F9F6DC",
           })}
         >
-          <div className={cx(styles.progress_circle_text)}>{points}</div>
-          <div className={cx(styles.progress_circle_text)}>Points</div>
+          <div
+            className={cx(styles.progress_circle_text, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {points}
+          </div>
+          <div
+            className={cx(styles.progress_circle_text, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            Points
+          </div>
         </CircularProgressbarWithChildren>
       </div>
     </div>

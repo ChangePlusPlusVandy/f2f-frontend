@@ -1,37 +1,86 @@
-.todo_div {
-    border: 6px #0198ba;
-    border-style: solid;
-    border-radius: 50px;
-    margin-top: 10vw;
-    margin-left: 2vw;
-    margin-right: 2vw;
-    padding-left: 3vw;
-    padding-bottom: 10vw;
-  }
-  
-  .radar {
-    font-family: "Poppins";
-    font-weight: 900;
-    color: black;
-    font-size: 7vw;
-    margin-top: 3vw;
-  }
-  
-  .priority {
-    font-family: "Poppins";
-    font-weight: bolder;
-    color: #8b5674;
-    font-size: 5vw;
-    margin-top: 6vw;
-  }
-  
-  .priority.else {
-    color: #e3d150;
-  }
+.todo_div.mobile {
+  border: 6px #0198ba;
+  border-style: solid;
+  border-radius: 50px;
+  margin-top: 10vw;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  padding-left: 3vw;
+  padding-bottom: 10vw;
+}
 
-  .list {
-    font-family: 'Poppins';
-    color: black;
-    font-weight: 600;
-    font-size: 3vw;
+.todo_div {
+  border: 6px #0198ba;
+  border-style: solid;
+  border-radius: 50px;
+  margin-top: 5vw;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  padding-left: 3vw;
+  padding-bottom: 10vw;
+}
+
+.priorityParent{
+  display: flex;
+  justify-content: space-between;
+}
+
+.priorityParent.mobile{
+  display: block;
+}
+
+.priorityBlock{
+  flex: 1;
+  display: inline-block;
+}
+
+.priorityBlock.mobile{
+  display: block;
+}
+
+.radar.mobile {
+  font-family: "Poppins";
+  font-weight: 900;
+  color: black;
+  font-size: 3vw;
+  margin-top: 3vw;
+}
+  
+.radar {
+  font-family: "Poppins";
+  font-weight: 900;
+  color: black;
+  font-size: 3vw;
+}
+
+.priority.mobile {
+  font-family: "Poppins";
+  font-weight: bolder;
+  color: #8b5674;
+  font-size: 3vw;
+}
+
+.priority {
+  font-family: "Poppins";
+  font-weight: bolder;
+  color: #8b5674;
+  font-size: 3vw;
+}
+
+.priority.else {
+  color: #e3d150;
+}
+
+.list {
+  font-family: 'Poppins';
+  color: black;
+  font-weight: 600;
+  font-size: 3vw;
+}
+
+.list.mobile {
+  font-family: 'Poppins';
+  color: black;
+  font-weight: 600;
+  font-size: 6vw;
 }

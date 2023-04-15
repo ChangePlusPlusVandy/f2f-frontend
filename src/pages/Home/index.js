@@ -20,7 +20,12 @@ export const Home = () => {
   const [totalGoal, setTotalGoal] = useState(0);
   const [childrenStats, setChildrenStats] = useState([]);
   // TODO: cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503", "63e5c4296d51fdbbbedb5500"];
+  const childrenId = [
+    "63e5c4936d51fdbbbedb5503",
+    "63e5c4296d51fdbbbedb5500",
+    "63e5c4176d51fdbbbedb54fd",
+    "63e5c40a6d51fdbbbedb54fa",
+  ];
 
   const getChildrenPointsStats = async () => {
     let totalPoints = 0;
@@ -79,13 +84,41 @@ export const Home = () => {
           [styles.mobile]: isMobile,
         })}
       >
-        <div className={cx(styles.text_div, "first")}>
-          <p className={cx(styles.welcome)}>Welcome&nbsp;</p>
-          <p className={cx(styles.welcome, "family")}>{lastName} Family!</p>
+        <div
+          className={cx(styles.text_div, "first", {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          <p
+            className={cx(styles.welcome, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            Welcome&nbsp;
+          </p>
+          <p
+            className={cx(styles.welcome, "family", {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {lastName} Family!
+          </p>
         </div>
         <div className={cx(styles.text_div, "second")}>
-          <p className={cx(styles.cruising)}>You're&nbsp;</p>
-          <p className={cx(styles.cruising, "color")}>Cruising it!</p>
+          <p
+            className={cx(styles.cruising, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            You're&nbsp;
+          </p>
+          <p
+            className={cx(styles.cruising, "color", {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            Cruising it!
+          </p>
         </div>
         <ProgressBar
           completed={Math.round((totalPoints / totalGoal) * 100)}
@@ -96,8 +129,8 @@ export const Home = () => {
           isLabelVisible={false}
           animateOnRender={true}
         />
-        <Slider childrenStats={childrenStats} />
-        <OnYourRadar childrenId={childrenId} />
+        <Slider childrenStats={childrenStats} isMobile={isMobile} />
+        <OnYourRadar childrenId={childrenId} isMobile={isMobile} />
         <NavBar />
       </div>
     </div>
