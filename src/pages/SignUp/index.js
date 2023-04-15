@@ -1,3 +1,4 @@
+
 import styles from "./index.module.css";
 import classNames from "classnames/bind";
 import {
@@ -10,11 +11,17 @@ import {
 import { AuthInputBlock } from "../../components/AuthInputBlock";
 import { AuthSelectBlock } from "../../components/AuthSelectBlock";
 import { AuthButton } from "../../components/AuthButton";
-import { useState } from "react";
-import { signUp } from "../../lib/services";
+import { useState, useEffect } from "react";
+import { signUp, signUpChildren } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
 import { useWindowSize } from "../../lib/hooks";
+import { AddChild } from "../../components/AddChild";
 const cx = classNames.bind(styles);
+
+//CHANGE THE BOXES FOR EMPTY CHILD
+// WHERE IS OUR VERIFICATION
+// ADD CHECKS FOR CHILD INFORMATION/HAS ALL CHILD INFORMATION
+// DELETE CHILD/EDIT CHILD/VIEW CHILD
 
 // Register page for authentication
 export const SignUp = ({ toast }) => {
@@ -29,29 +36,50 @@ export const SignUp = ({ toast }) => {
   const [disability, setDisability] = useState([]);
   const [zipCode, setZipCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [children, setChildren] = useState([]);
 
-  const onRegister = () => {
-    if (!email) toast("Please provide your email");
-    else if (!password) toast("Please provide your password");
-    else if (password.length < 8) toast("Password length must be at least 8");
-    else if (password !== repeatPassword) toast("Passwords mismatch");
-    else if (!firstName) toast("Please provide your first name");
-    else if (!lastName) toast("Please provide your last name");
-    else if (!schoolDistrict)
-      toast("Please provide your children's school district");
-    else if (!disability) toast("Please provide your children's disabilities");
-    else if (!zipCode) toast("Please provide your zip code");
-    else if (!phoneNumber) toast("Please provide your phone number");
-    else {
-      // send response to backend and create a record
+  const [addChildPopUp, setAddChildPopUp] = useState(false);
+  const [childIDArray, setChildIDArray] = useState([]);
+  const [registered, setRegistered] = useState(false);
+
+  const [test, setTest] = useState("gabe");
+
+  async function addChildren() {
+    await children.forEach(async (child) => {
+      try {
+        let disArray = []
+        for (let i = 0; i < child.disabilities.length; i++) {
+          disArray.push(child.disabilities[i].label);
+        }
+        let fn = child.firstName
+        let bd = child.birthDate
+        let sd = child.schoolDistrict
+        const result = await signUpChildren({
+          firstName: fn,
+          birthDate: bd,
+          disabilities: disArray,
+          schoolDistrict: sd
+        })
+        console.log("returned child id")
+        console.log(result);
+        setChildIDArray([...childIDArray, result]);
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  }
+
+  useEffect(() => {
+    if(childIDArray.length == children.length && registered) {
+      console.log(childIDArray)
       signUp({
         email,
         password,
         firstName,
         lastName,
-        schoolDistrict,
         zipCode,
         phoneNumber,
+        children: childIDArray
       })
         .then((res) => {
           const { status } = res;
@@ -59,7 +87,59 @@ export const SignUp = ({ toast }) => {
         })
         .catch((err) => toast("Internal error"));
     }
+  }, [childIDArray])
+  
+
+  const onRegister = async () => {
+    if (!email) toast("Please provide your email");
+    else if (!password) toast("Please provide your password");
+    else if (password.length < 8) toast("Password length must be at least 8");
+    else if (password !== repeatPassword) toast("Passwords mismatch");
+    else if (!firstName) toast("Please provide your first name");
+    else if (!lastName) toast("Please provide your last name");
+    else if (!zipCode) toast("Please provide your zip code");
+    else if (!phoneNumber) toast("Please provide your phone number");
+    else {
+      // send response to backend and create a record
+      addChildren();
+      setRegistered(true);
+    }
   };
+
+
+  function renderChildren() {
+    const inputs = [];
+    if (children.length >= 1) {
+
+
+      for (let j = 0; j < children.length / 3; j++) {
+        const array = [];
+        for (let i = j * 3; i < children.length && i < j * 3 + 3; i++) {
+          const child = children[i];
+          array.push(
+            <div key={i} style={{
+              backgroundColor: '#dbf0f5',
+              borderRadius: '5px',
+              padding: '20px',
+              margin: '10px',
+              fontSize: '30px',
+              fontFamily: 'Poppins'
+            }}>
+              <p style={{ color: 'black', fontWeight: 'bold', margin: '0 10px' }}>{child.firstName}</p>
+            </div>
+          );
+        }
+        inputs.push(
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {array[0]}
+            {array.length >= 1 && array[1]}
+            {array.length >= 2 && array[2]}
+          </div>
+        )
+      }
+    }
+    return inputs;
+  }
 
   return (
     <>
@@ -98,26 +178,6 @@ export const SignUp = ({ toast }) => {
         onChange={setLastName}
         isMobile={isMobile}
       />
-      <AuthSelectBlock
-        label={AUTH_INPUT_LABELS.SCHOOL_DISTRICT}
-        containerClassName={cx(styles.selectBlock)}
-        options={SCHOOL_DISTRICT}
-        onChange={setSchoolDistrict}
-        placeholder={"Select School District..."}
-        isClearable={true}
-        isMulti={false}
-        isMobile={isMobile}
-      />
-      <AuthSelectBlock
-        label={AUTH_INPUT_LABELS.DISABILITY}
-        containerClassName={cx(styles.selectBlock)}
-        options={DISABILITY}
-        onChange={setDisability}
-        placeholder={"Select Disabilities..."}
-        isClearable={true}
-        isMulti={true}
-        isMobile={isMobile}
-      />
       <AuthInputBlock
         label={AUTH_INPUT_LABELS.ZIP_CODE}
         containerClassName={cx(styles.inputBlock)}
@@ -132,6 +192,17 @@ export const SignUp = ({ toast }) => {
         onChange={setPhoneNumber}
         isMobile={isMobile}
       />
+      {renderChildren()}
+      <AuthButton
+        className={cx(styles.inputBlock)}
+        label={"Add a Child"}
+        onClick={() => setAddChildPopUp(true)}
+        isMobile={isMobile}
+      />
+      {addChildPopUp &&
+        <AddChild setAddChild={setAddChildPopUp} setChildren={setChildren} currChildren={children} toast={toast} />
+      }
+
       <AuthButton
         className={cx(styles.register)}
         label={AUTH_INPUT_LABELS.SIGN_UP}
@@ -141,3 +212,6 @@ export const SignUp = ({ toast }) => {
     </>
   );
 };
+
+
+

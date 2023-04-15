@@ -168,7 +168,11 @@ export const Community = () => {
           );
         })}
       </div>
-      <div className={rotate ? cx(styles.create_post_rotate) : cx(styles.create_post)} onClick={createPost}>
+      <div
+        className={
+          rotate ? cx(styles.create_post_rotate) : cx(styles.create_post)
+        }
+        onClick={createPost}>
         <img src={PlusSign} alt="" />
       </div>
       <NavBar />

@@ -46,6 +46,8 @@ export const AUTH_INPUT_LABELS = {
   ZIP_CODE: "Zip Code",
   PHONE_NUMBER: "Phone Number",
   SIGN_UP: "Sign Up!",
+  ADD_CHILD: "Add Child",
+  BIRTH_DATE: "Birth Date (MM-DD-YYYY)"
 };
 
 // page titles
