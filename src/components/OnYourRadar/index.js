@@ -27,6 +27,10 @@ export const OnYourRadar = React.forwardRef((props, ref) => {
     </p>
   ));
 
+  if (hpElements.length === 0 || elseElements.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={cx(styles.todo_div)}>
       <h1 className={cx(styles.radar)}>On Your Radar</h1>
