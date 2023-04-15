@@ -41,6 +41,8 @@ export const UpcomingComponent = (props) => {
         className={cx(styles.upcomingWrapper)}
         style={{
           backgroundColor: color,
+          padding: "4vh",
+          margin: "4vh",
         }}
       >
         <div

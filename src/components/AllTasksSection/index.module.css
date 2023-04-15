@@ -11,10 +11,19 @@
 .childName {
   font-family: "Poppins";
   font-weight:400;
+  font-size: 2vw;
+  margin: 0;
+  margin-left: 6vh;
+}
+
+.childName.mobile {
+  font-family: "Poppins";
+  font-weight:400;
   font-size: 5vw;
   margin: 0;
-  margin-left: 1vh;
+  margin-left: 6vh;
 }
+
 
 .tasksSection {
   margin-top: 3vw;

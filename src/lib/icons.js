@@ -1,17 +1,13 @@
-import { useWindowSize } from "./hooks";
-
 export const HomeIcon = (props) => {
-  const color = props.filled ? "#0198BA" : "#CCCCCC";
-  const textColor = props.filled ? "black" : "#CCCCCC";
-  const { height } = useWindowSize();
+  const { isMobile, filled } = props;
+  const color = filled ? "#0198BA" : "#CCCCCC";
+  const textColor = filled ? "black" : "#CCCCCC";
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width= "190" //2.5*original ratio
-      height= "107.3"
-      //don't know how to change width and height based on screen
-      //change to be based on different device
-      viewBox="0 0 76 43"
+      width={isMobile ? 190 : 100}
+      height={isMobile ? 120 : 100}
+      viewBox="0 -1 76 43"
       fill="none"
     >
       <path
@@ -35,15 +31,15 @@ export const HomeIcon = (props) => {
 };
 
 export const RoadmapIcon = (props) => {
-  const color = props.filled ? "#0198BA" : "#CCCCCC";
-  const textColor = props.filled ? "black" : "#CCCCCC";
-  const { height } = useWindowSize();
+  const { isMobile, filled } = props;
+  const color = filled ? "#0198BA" : "#CCCCCC";
+  const textColor = filled ? "black" : "#CCCCCC";
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="172.5"
-      height="140"
-      viewBox="0 0 69 56"
+      width={isMobile ? 190 : 100}
+      height={isMobile ? 130 : 100}
+      viewBox="0 2 69 56"
       fill="none"
     >
       <path
@@ -62,15 +58,15 @@ export const RoadmapIcon = (props) => {
 };
 
 export const CommunityIcon = (props) => {
-  const color = props.filled ? "#0198BA" : "#CCCCCC";
-  const textColor = props.filled ? "black" : "#CCCCCC";
-  const { height } = useWindowSize();
+  const { isMobile, filled } = props;
+  const color = filled ? "#0198BA" : "#CCCCCC";
+  const textColor = filled ? "black" : "#CCCCCC";
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="207.5"
-      height="122.5"
-      viewBox="0 0 83 49"
+      width={isMobile ? 190 : 100}
+      height={isMobile ? 150 : 100}
+      viewBox="0 -2 83 49"
       fill="none"
     >
       <path

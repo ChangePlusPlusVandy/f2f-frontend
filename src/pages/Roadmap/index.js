@@ -14,10 +14,14 @@ import {
 } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
 import { toast } from "react-toastify";
+import { useWindowSize } from "../../lib/hooks";
+import { WINDOW_TYPE } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
 export const Roadmap = ({ toast }) => {
+  const { width, type } = useWindowSize();
+  const isMobile = type === WINDOW_TYPE.MOBILE;
   const navigate = useNavigate();
   const [numTasks, setNumTasks] = useState(0);
   const [numAllTasks, setNumAllTasks] = useState(0);
@@ -124,7 +128,7 @@ export const Roadmap = ({ toast }) => {
           className={cx(styles.csvButton)}
           label="Import Task CSV"
           onClick={onImport}
-          isMobile={true}
+          isMobile={isMobile}
         />
         <input
           type="file"
@@ -139,18 +143,24 @@ export const Roadmap = ({ toast }) => {
           className={cx(styles.csvButton)}
           label="Export Task CSV"
           onClick={onExport}
-          isMobile={true}
+          isMobile={isMobile}
         />
       </div>
 
       <div
         onClick={() => navigate(ROUTES.UPCOMING_TASKS)}
-        className={cx(styles.tasks_div)}
+        className={cx(styles.tasks_div, {
+          [styles.mobile]: isMobile,
+        })}
       >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
-              <Calender className={cx(styles.icon)} />
+              <Calender
+                className={cx(styles.icon, {
+                  [styles.mobile]: isMobile,
+                })}
+              />
               <div
                 style={{
                   position: "relative",
@@ -158,25 +168,47 @@ export const Roadmap = ({ toast }) => {
                   margin: "10px",
                 }}
               >
-                <p className={cx(styles.taskDesc)}>Upcoming</p>
+                <p
+                  className={cx(styles.taskDesc, {
+                    [styles.mobile]: isMobile,
+                  })}
+                >
+                  Upcoming
+                </p>
               </div>
             </div>
-            <p className={cx(styles.header, "small")}>
+            <p
+              className={cx(styles.header, "small", {
+                [styles.mobile]: isMobile,
+              })}
+            >
               All tasks with priority level 2
             </p>
           </div>
-          <p className={cx(styles.taskNum)}>{numTasks}</p>
+          <p
+            className={cx(styles.taskNum, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {numTasks}
+          </p>
         </div>
       </div>
 
       <div
         onClick={() => navigate(ROUTES.ALL_TASKS)}
-        className={cx(styles.tasks_div, "all")}
+        className={cx(styles.tasks_div, "all", {
+          [styles.mobile]: isMobile,
+        })}
       >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
-              <Box className={cx(styles.icon)} />
+              <Box
+                className={cx(styles.icon, {
+                  [styles.mobile]: isMobile,
+                })}
+              />
               <div
                 style={{
                   position: "relative",
@@ -184,12 +216,30 @@ export const Roadmap = ({ toast }) => {
                   margin: "10px",
                 }}
               >
-                <p className={cx(styles.taskDesc)}>All&nbsp;Tasks</p>
+                <p
+                  className={cx(styles.taskDesc, {
+                    [styles.mobile]: isMobile,
+                  })}
+                >
+                  All&nbsp;Tasks
+                </p>
               </div>
             </div>
-            <p className={cx(styles.header, "small")}>Everything on the list</p>
+            <p
+              className={cx(styles.header, "small", {
+                [styles.mobile]: isMobile,
+              })}
+            >
+              Everything on the list
+            </p>
           </div>
-          <p className={cx(styles.taskNum)}>{numAllTasks}</p>
+          <p
+            className={cx(styles.taskNum, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {numAllTasks}
+          </p>
         </div>
       </div>
     </div>

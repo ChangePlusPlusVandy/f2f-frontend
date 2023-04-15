@@ -80,6 +80,11 @@ export const useCaption = () => {
  */
 export const useBackArrow = () => {
   const { pathname } = useLocation();
+  const { width, type } = useWindowSize();
+  const isMobile = type === WINDOW_TYPE.MOBILE;
+  if (!isMobile) {
+    return { showBackArrow: false };
+  }
   switch (pathname) {
     case ROUTES.LOGIN:
       return { showBackArrow: false };

@@ -28,7 +28,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/children/63d58b72c2e0063e64001a1e
+GET http://localhost:3001/children/
 Content-Type: application/json
 
 

@@ -3,12 +3,9 @@
 .container {
     width: 100%;
     box-sizing: border-box;
-    padding: 70px 40px 80px 40px;
-}
-.container.mobile {
-    width: 100%;
     padding: 2vw 2vw 2vw 2vw;
 }
+
 .text_div {
     margin-left: auto;
     margin-right: auto;
@@ -16,7 +13,7 @@
     position: relative;
 }
 .text_div.first {
-    margin-top: 10vw;
+    margin-top: 5vw;
 }
 .text_div.second {
     margin-top: 3vw;

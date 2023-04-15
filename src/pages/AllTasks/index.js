@@ -5,11 +5,15 @@ import { AllTasksSection } from "../../components/AllTasksSection";
 import ReactSearchBox from "react-search-box";
 import { getChildrenTasksArray } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
-import { TIMEOUT } from "../../lib/constants";
+import { TIMEOUT, WINDOW_TYPE } from "../../lib/constants";
+import { useWindowSize } from "../../lib/hooks";
 
 const cx = classNames.bind(styles);
 
 export const AllTasks = () => {
+  const { width, type } = useWindowSize();
+  const isMobile = type === WINDOW_TYPE.MOBILE;
+
   const [allTaskArray, setAllTaskArray] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   //TODO: get information using cache
@@ -55,27 +59,29 @@ export const AllTasks = () => {
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "92vh",
-      }}>
+      }}
+    >
       <ReactSearchBox
         placeholder="Search"
         onChange={handleSearch}
-        inputHeight="10vw"
-        inputFontSize="5vw"
+        inputHeight={isMobile ? "10vw" : "5vw"}
+        inputFontSize={isMobile ? "5vw" : "2vw"}
       />
       <div
         style={{
           overflow: "scroll",
           overscrollBehavior: "none",
           height: "66vh",
-        }}>
+        }}
+      >
         {filteredSections.map((childTasks, childTasksIndex) => (
-          <AllTasksSection taskList={childTasks} key={childTasksIndex} />
+          <AllTasksSection
+            taskList={childTasks}
+            isMobile={isMobile}
+            key={childTasksIndex}
+          />
         ))}
       </div>
     </div>
   );
 };
-
-//first two headers may go on separate lines
-//check this for other code
-//add search bar implementation**
