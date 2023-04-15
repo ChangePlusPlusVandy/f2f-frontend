@@ -112,11 +112,11 @@ export const Login = () => {
           />
           <label htmlFor="rem">Remember Me</label>
           <text className={cx(styles.form_extras, "desc")}>
-            <Link
+            {/* <Link
               to="/forgot-password"
               style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
               <b>Forgot Password</b>
-            </Link>
+            </Link> */}
           </text>
         </div>
 
