@@ -11,35 +11,41 @@ import {
 const cx = classNames.bind(styles);
 
 export const PointsDisplay = React.forwardRef((props, ref) => {
+  // const { childName, points, goal } = props;
   const { childId } = props;
-  const [goal, setGoal] = useState(100);
-  const [points, setPoints] = useState(0);
   const [childName, setChildName] = useState("");
+  const [points, setPoints] = useState(0);
+  const [goal, setGoal] = useState(0);
 
   useEffect(() => {
     // get child's name and disabilities
     const childUrl = "/children/" + childId;
+    console.log(childId);
     fetch(process.env.REACT_APP_HOST_URL + childUrl)
       .then((response) => response.json())
       .then((childrenData) => {
-        const childName = childrenData.firstName;
-        setChildName(childName);
-        const age = getAgeGivenBirthday(childrenData.birthDate);
-        const completedTasks = childrenData.completedTasks;
-        setPoints(completedTasks.length);
-        const params = {
-          disabilities: JSON.stringify(childrenData.disabilities),
-          age: JSON.stringify(age),
-        };
+        if (childrenData === undefined) {
+          console.log("No child data");
+        } else {
+          const childName = childrenData.firstName;
+          setChildName(childName);
+          const age = getAgeGivenBirthday(childrenData.birthDate);
+          const completedTasks = childrenData.completedTasks;
+          setPoints(completedTasks.length);
+          const params = {
+            disabilities: JSON.stringify(childrenData.disabilities),
+            age: JSON.stringify(age),
+          };
 
-        // get tasks based on children's attributes
-        const url = formGetRequest("/tasks/byAttributes/", params);
-        fetch(process.env.REACT_APP_HOST_URL + url)
-          .then((response) => response.json())
-          .then((taskData) => {
-            setGoal(taskData.length);
-          })
-          .catch((error) => console.log(error));
+          // get tasks based on children's attributes
+          const url = formGetRequest("/tasks/byAttributes/", params);
+          fetch(process.env.REACT_APP_HOST_URL + url)
+            .then((response) => response.json())
+            .then((taskData) => {
+              setGoal(taskData.length);
+            })
+            .catch((error) => console.log(error));
+        }
       });
   }, []);
 

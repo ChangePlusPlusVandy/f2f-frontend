@@ -4,7 +4,6 @@ import Papa from "papaparse";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
 import { ROUTES, PRIORITY_LEVEL, TIMEOUT } from "../../lib/constants";
-import { getChildrenTasksArray } from "../../lib/services";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
 import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
 import { useNavigate } from "react-router-dom";
