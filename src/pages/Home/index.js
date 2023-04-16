@@ -32,14 +32,19 @@ export const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/userData")
+    fetch(
+      process.env.REACT_APP_HOST_URL +
+        "/users/" +
+        localStorage.getItem("userID")
+    )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setLastName(data.lastName);
-        setGoal(data.goal);
-        setPoints(data.points);
-        sethpList(data.hpList);
-        setElseList(data.elseList);
+        // setGoal(data.goal);
+        // setPoints(data.points);
+        // sethpList(data.hpList);
+        // setElseList(data.elseList);
       })
       .catch((error) => console.log(error));
   }, []);

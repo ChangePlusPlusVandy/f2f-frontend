@@ -10,40 +10,34 @@ const Post = (props) => {
     <div className={cx(styles.post_body)}>
       <div className={cx(styles.post_header)}>
         <div className={cx(styles.post_pfp)}>
-          <ProfilePicture image={props.img} />
+          <ProfilePicture />
         </div>
         <div className={cx(styles.post_user)}>
           <p>
-            <b>{props.user}</b>
+            <b>{props.name}</b>
           </p>
-          <p>{props.location}</p>
+          <span>{props.heading}</span>
         </div>
       </div>
       <div className={cx(styles.post_content)}>
-        <p>{props.content}</p>
+        <p>{props.body}</p>
       </div>
 
-      <div className={cx(styles.post_info)}>
+      {/* <div className={cx(styles.post_info)}>
         <div className={cx(styles.post_caption)}>
           <span>
-            <b>{props.user}</b>&nbsp;
+            <b>{props.name}</b>&nbsp;
           </span>
-          <span>{props.caption}</span>
-        </div>
-        <div>
-          <p className={cx(styles.post_comments)}>
-            View all {props.comments.length} comments
-          </p>
         </div>
         <div>
           <p className={cx(styles.first_comment)}>
             <span>
-              <b>{props.comments[0].user}</b>&nbsp;
+              <b>{props.comments}</b>&nbsp;
             </span>
-            {props.comments[0].comment}
+            {props.comments}
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

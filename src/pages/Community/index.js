@@ -18,6 +18,21 @@ import { CreatePost } from "../../components/CreatePost";
 const cx = classNames.bind(styles);
 
 export const Community = () => {
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = () => {
+    fetch(process.env.REACT_APP_HOST_URL + "/posts")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setPosts(data);
+      });
+  };
+
   const [posts, setPosts] = useState([
     {
       user: "blah",
@@ -157,11 +172,9 @@ export const Community = () => {
         {posts.map((post) => {
           return (
             <Post
-              user={post.user}
-              location={post.location}
-              img={post.img}
-              content={post.content}
-              caption={post.caption}
+              name={post.name}
+              heading={post.heading}
+              body={post.body}
               comments={post.comments}
             />
           );
