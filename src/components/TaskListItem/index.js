@@ -10,7 +10,7 @@ import { checkEvent, uncheckEvent } from "../../lib/services";
 const cx = classNames.bind(styles);
 
 export const TaskListItem = React.forwardRef((props, ref) => {
-  const { taskName, dueAt, taskId, childName, childId, completed } = props;
+  const { taskName, dueAt, taskId, childId, completed, isMobile } = props;
   const navigate = useNavigate();
   const [checked, setChecked] = useState(completed);
 
@@ -29,11 +29,22 @@ export const TaskListItem = React.forwardRef((props, ref) => {
           })
         }
       >
-        <p className={cx(styles.taskName)}>{taskName}</p>
-        <p className={cx(styles.taskDate)}>{dueAt}</p>
-        <p className={cx(styles.childName)}>{childName}</p>
+        <p
+          className={cx(styles.taskName, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          {taskName}
+        </p>
+        <p
+          className={cx(styles.taskDate, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          {dueAt}
+        </p>
       </div>
-      <CheckBox value={checked} onChange={handleChecked} />
+      <CheckBox value={checked} onChange={handleChecked} isMobile={isMobile} />
     </div>
   );
 });

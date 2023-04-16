@@ -1,7 +1,16 @@
 .checkBox{
     display: inline-block;
-    width: 3vh;
-    height: 3vh;
+    width: 6vh;
+    height: 6vh;
+    background: #E0E0E0;
+    margin-left: auto; 
+    margin-right: 0;
+}
+
+.checkBox.mobile{
+    display: inline-block;
+    width: 4vh;
+    height: 4vh;
     background: #E0E0E0;
     margin-left: auto; 
     margin-right: 0;

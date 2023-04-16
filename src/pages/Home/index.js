@@ -1,81 +1,79 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./index.module.css";
 import { NavBar } from "../NavBar";
-import { ROUTES } from "../../lib/constants";
 import { useWindowSize } from "../../lib/hooks";
-import { WINDOW_TYPE, TIMEOUT } from "../../lib/constants";
-import { useNavigate } from "react-router-dom";
-
-import {
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+import { WINDOW_TYPE } from "../../lib/constants";
+import { OnYourRadar } from "../../components/OnYourRadar";
+import { Slider } from "../../components/Slider";
+import ProgressBar from "@ramonak/react-progress-bar";
+import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
 
 const cx = classNames.bind(styles);
 
 export const Home = () => {
   const { width, type } = useWindowSize();
-
   const isMobile = type === WINDOW_TYPE.MOBILE;
-
+  // TODO: use Cache to store the user
   const [lastName, setLastName] = useState("Adam's");
-  const [goal, setGoal] = useState(100);
-  const [points, setPoints] = useState(71);
-  const [hpList, sethpList] = useState(["Medicaid Waitlist"]);
-  const [elseList, setElseList] = useState([
-    "Register for Autism Symposium",
-    "Intensive IEP support & training",
-  ]);
-  const [timer, setTimer] = useState();
-  const navigate = useNavigate();
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [totalGoal, setTotalGoal] = useState(0);
+  const [childrenStats, setChildrenStats] = useState([]);
+  // TODO: cache
+  const childrenId = [
+    "63e5c4936d51fdbbbedb5503",
+    "63e5c4296d51fdbbbedb5500",
+    "63e5c4176d51fdbbbedb54fd",
+    "63e5c40a6d51fdbbbedb54fa",
+  ];
 
-  useEffect(() => {
-    fetch(
-      process.env.REACT_APP_HOST_URL +
-        "/users/" +
-        localStorage.getItem("userID")
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setLastName(data.lastName);
-        // setGoal(data.goal);
-        // setPoints(data.points);
-        // sethpList(data.hpList);
-        // setElseList(data.elseList);
-      })
-      .catch((error) => console.log(error));
+  const getChildrenPointsStats = async () => {
+    let totalPoints = 0;
+    let totalGoal = 0;
+    let childrenStats = [];
+    const childPromises = childrenId.map(async (childId) => {
+      // get child's name and disabilities
+      const childUrl = "/children/" + childId;
+      const response = await fetch(process.env.REACT_APP_HOST_URL + childUrl);
+      const childData = await response.json();
+      const childName = childData.firstName;
+      const age = getAgeGivenBirthday(childData.birthDate);
+      totalPoints += childData.completedTasks.length;
+      const params = {
+        disabilities: JSON.stringify(childData.disabilities),
+        age: JSON.stringify(age),
+      };
+
+      // get tasks based on children's attributes
+      const url = formGetRequest("/tasks/byAttributes/", params);
+      const taskResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
+      const taskData = await taskResponse.json();
+      totalGoal += taskData.length;
+      const childStats = {
+        childId,
+        childName,
+        points: childData.completedTasks.length,
+        goal: taskData.length,
+      };
+      childrenStats.push(childStats);
+    });
+
+    await Promise.all(childPromises); // wait for all child promises to complete
+
+    return { totalPoints, totalGoal, childrenStats };
+  };
+
+  useEffect(async () => {
+    const { totalPoints, totalGoal, childrenStats } =
+      await getChildrenPointsStats();
+    setTotalPoints(totalPoints);
+    setTotalGoal(totalGoal);
+    setChildrenStats(childrenStats);
   }, []);
 
-  useEffect(() => {
-    console.log(localStorage);
-    setTimer(
-      setTimeout(() => {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("userID");
-        navigate("/login");
-      }, TIMEOUT)
-    );
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [timer]);
-
-  const hpElements = hpList.map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing}
-    </p>
-  ));
-  const elseElements = elseList.map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing}
-    </p>
-  ));
+  if (childrenStats.length !== childrenId.length) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -88,52 +86,50 @@ export const Home = () => {
         className={cx(styles.container, {
           [styles.mobile]: isMobile,
         })}>
-        <div className={cx(styles.text_div, "first")}>
-          <p className={cx(styles.welcome)}>Welcome&nbsp;</p>
-          <p className={cx(styles.welcome, "family")}>{lastName} Family!</p>
-        </div>
-        <div className={cx(styles.text_div, "second")}>
-          <p className={cx(styles.cruising)}>You're&nbsp;</p>
-          <p className={cx(styles.cruising, "color")}>Cruising it!</p>
-        </div>
-        <div className={cx(styles.text_div)}>
-          <p className={cx(styles.points)}>{goal - points}</p>
-          <p className={cx(styles.points, "text")}>
-            &nbsp;points away from your weekly goal
+        <div
+          className={cx(styles.text_div, "first", {
+            [styles.mobile]: isMobile,
+          })}>
+          <p
+            className={cx(styles.welcome, {
+              [styles.mobile]: isMobile,
+            })}>
+            Welcome&nbsp;
+          </p>
+          <p
+            className={cx(styles.welcome, "family", {
+              [styles.mobile]: isMobile,
+            })}>
+            {lastName} Family!
           </p>
         </div>
-        <div className={cx(styles.progress_circle)}>
-          <CircularProgressbarWithChildren
-            value={(100 * points) / goal}
-            strokeWidth={16}
-            styles={buildStyles({
-              pathColor: "#E3D150",
-              trailColor: "#F9F6DC",
+        <div className={cx(styles.text_div, "second")}>
+          <p
+            className={cx(styles.cruising, {
+              [styles.mobile]: isMobile,
             })}>
-            <div className={cx(styles.progress_circle_text)}>{points}</div>
-            <div className={cx(styles.progress_circle_text)}>Points</div>
-          </CircularProgressbarWithChildren>
+            You're&nbsp;
+          </p>
+          <p
+            className={cx(styles.cruising, "color", {
+              [styles.mobile]: isMobile,
+            })}>
+            Cruising it!
+          </p>
         </div>
-        <div className={cx(styles.todo_div)}>
-          <h1 className={cx(styles.radar)}>On Your Radar</h1>
-          <h2 className={cx(styles.priority)}>High Priority</h2>
-          {hpElements}
-          <h2 className={cx(styles.priority, "else")}>Everything Else</h2>
-          {elseElements}
-          <div className={cx(styles.link_div)}>
-            <a href={ROUTES.ROADMAP} className={cx(styles.link)}>
-              See in Roadmap
-            </a>
-          </div>
-        </div>
+        <ProgressBar
+          completed={Math.round((totalPoints / totalGoal) * 100)}
+          height="4vh"
+          width="95%"
+          margin="1.5vh"
+          bgColor="#569DAA"
+          isLabelVisible={false}
+          animateOnRender={true}
+        />
+        <Slider childrenStats={childrenStats} isMobile={isMobile} />
+        <OnYourRadar childrenId={childrenId} isMobile={isMobile} />
         <NavBar />
       </div>
     </div>
   );
 };
-
-//issues:
-//what happens when todo list becomes larger than the screen
-//or family last name is too long
-//fix navbar for computer screen (looks bad on screen anyways)
-//spacing can be tweaked

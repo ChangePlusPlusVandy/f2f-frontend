@@ -6,7 +6,7 @@ import backArrow from "../../images/Vector.png";
 
 const cx = classNames.bind(styles);
 
-export const BackArrow = ({ showBackArrow = true }) => {
+export const BackArrow = ({ showBackArrow = true, isMobile }) => {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);

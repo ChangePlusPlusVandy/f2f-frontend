@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../lib/constants";
 import { CheckBox } from "../CheckBox";
 import { checkEvent, uncheckEvent } from "../../lib/services";
+import { COLORS_ARR } from "../../lib/constants";
 import React from "react";
 const cx = classNames.bind(styles);
 
@@ -25,8 +26,7 @@ export const UpcomingComponent = (props) => {
 
   useEffect(() => {
     // randomize color for the display block
-    const colors = ["#0198BA26", "#E3D15033", "#8B567478"];
-    setColor(colors[Math.floor(Math.random() * colors.length)]);
+    setColor(COLORS_ARR[Math.floor(Math.random() * COLORS_ARR.length)]);
   }, []);
 
   const handleChecked = () => {
@@ -41,6 +41,8 @@ export const UpcomingComponent = (props) => {
         className={cx(styles.upcomingWrapper)}
         style={{
           backgroundColor: color,
+          padding: "4vh",
+          margin: "4vh",
         }}
       >
         <div

@@ -3,6 +3,8 @@ export const PRIORITY_LEVEL = {
   PRIORITY_LEVEL: 2,
 };
 
+export const COLORS_ARR = ["#0198BA26", "#E3D15033", "#8B567478"];
+
 export const WINDOW_TYPE = {
   WEB: "WEB",
   MOBILE: "MOBILE",
@@ -25,6 +27,7 @@ export const ROUTES = {
   UPCOMING_TASKS: "/upcoming",
   ALL_TASKS: "/tasks",
   TASK_DETAILS: "/task-details",
+  VERIFICATION: "/verification",
 };
 
 export const HOME_NAV_LABELS = {
@@ -47,7 +50,7 @@ export const AUTH_INPUT_LABELS = {
   PHONE_NUMBER: "Phone Number",
   SIGN_UP: "Sign Up!",
   ADD_CHILD: "Add Child",
-  BIRTH_DATE: "Birth Date (MM-DD-YYYY)"
+  BIRTH_DATE: "Birth Date (MM-DD-YYYY)",
 };
 
 // page titles

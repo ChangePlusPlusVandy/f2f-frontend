@@ -2,7 +2,7 @@ import styles from "./index.module.css";
 import classNames from "classnames/bind";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useWindowSize } from "../../lib/hooks";
-import { HOME_NAV_LABELS, ROUTES, WINDOW_TYPE } from "../../lib/constants";
+import { ROUTES, WINDOW_TYPE } from "../../lib/constants";
 import { HomeIcon, RoadmapIcon, CommunityIcon } from "../../lib/icons";
 
 const cx = classNames.bind(styles);
@@ -12,7 +12,6 @@ export const NavBar = ({ showNavBar = true }) => {
   const isMobile = type === WINDOW_TYPE.MOBILE;
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const isSmall = width < 600 || isMobile;
 
   const goTo = (route) => {
     navigate(route);
@@ -26,21 +25,41 @@ export const NavBar = ({ showNavBar = true }) => {
             [styles.mobile]: isMobile,
           })}
         >
-          <div className={cx(styles.navBar)}>
+          <div
+            className={cx(styles.navBar, {
+              [styles.mobile]: isMobile,
+            })}
+          >
             <div
               onClick={() => goTo(ROUTES.HOME)}
-              className={cx(styles.navItem)}
+              className={cx(styles.navItem, {
+                [styles.mobile]: isMobile,
+              })}
             >
-              <div className={cx(styles.icon_div)}>
-                <HomeIcon filled={pathname === ROUTES.HOME} />
+              <div
+                className={cx(styles.icon_div, {
+                  [styles.mobile]: isMobile,
+                })}
+              >
+                <HomeIcon
+                  isMobile={isMobile}
+                  filled={pathname === ROUTES.HOME}
+                />
               </div>
             </div>
             <div
               onClick={() => goTo(ROUTES.ROADMAP)}
-              className={cx(styles.navItem)}
+              className={cx(styles.navItem, {
+                [styles.mobile]: isMobile,
+              })}
             >
-              <div className={cx(styles.icon_div)}>
+              <div
+                className={cx(styles.icon_div, {
+                  [styles.mobile]: isMobile,
+                })}
+              >
                 <RoadmapIcon
+                  isMobile={isMobile}
                   filled={
                     pathname === ROUTES.ROADMAP ||
                     pathname === ROUTES.ALL_TASKS ||
@@ -51,10 +70,19 @@ export const NavBar = ({ showNavBar = true }) => {
             </div>
             <div
               onClick={() => goTo(ROUTES.COMMUNITY)}
-              className={cx(styles.navItem)}
+              className={cx(styles.navItem, {
+                [styles.mobile]: isMobile,
+              })}
             >
-              <div className={cx(styles.icon_div)}>
-                <CommunityIcon filled={pathname === ROUTES.COMMUNITY} />
+              <div
+                className={cx(styles.icon_div, {
+                  [styles.mobile]: isMobile,
+                })}
+              >
+                <CommunityIcon
+                  isMobile={isMobile}
+                  filled={pathname === ROUTES.COMMUNITY}
+                />
               </div>
             </div>
           </div>

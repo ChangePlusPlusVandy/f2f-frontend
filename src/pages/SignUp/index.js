@@ -1,10 +1,10 @@
-
 import styles from "./index.module.css";
 import classNames from "classnames/bind";
 import {
   AUTH_INPUT_LABELS,
   SCHOOL_DISTRICT,
   DISABILITY,
+  ROUTES,
   WINDOW_TYPE,
   STATUS_CODE,
 } from "../../lib/constants";
@@ -12,7 +12,7 @@ import { AuthInputBlock } from "../../components/AuthInputBlock";
 import { AuthSelectBlock } from "../../components/AuthSelectBlock";
 import { AuthButton } from "../../components/AuthButton";
 import { useState, useEffect } from "react";
-import { signUp, signUpChildren } from "../../lib/services";
+import { signUp, signUpChildren, mongoCheck } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
 import { useWindowSize } from "../../lib/hooks";
 import { AddChild } from "../../components/AddChild";
@@ -41,37 +41,38 @@ export const SignUp = ({ toast }) => {
   const [addChildPopUp, setAddChildPopUp] = useState(false);
   const [childIDArray, setChildIDArray] = useState([]);
   const [registered, setRegistered] = useState(false);
+  const [error, setError] = useState("");
 
   const [test, setTest] = useState("gabe");
 
   async function addChildren() {
     await children.forEach(async (child) => {
       try {
-        let disArray = []
+        let disArray = [];
         for (let i = 0; i < child.disabilities.length; i++) {
           disArray.push(child.disabilities[i].label);
         }
-        let fn = child.firstName
-        let bd = child.birthDate
-        let sd = child.schoolDistrict
+        let fn = child.firstName;
+        let bd = child.birthDate;
+        let sd = child.schoolDistrict;
         const result = await signUpChildren({
           firstName: fn,
           birthDate: bd,
           disabilities: disArray,
-          schoolDistrict: sd
-        })
-        console.log("returned child id")
+          schoolDistrict: sd,
+        });
+        console.log("returned child id");
         console.log(result);
         setChildIDArray([...childIDArray, result]);
       } catch (error) {
         console.log(error);
       }
-    })
+    });
   }
 
   useEffect(() => {
-    if(childIDArray.length == children.length && registered) {
-      console.log(childIDArray)
+    if (childIDArray.length == children.length && registered) {
+      console.log(childIDArray);
       signUp({
         email,
         password,
@@ -79,7 +80,7 @@ export const SignUp = ({ toast }) => {
         lastName,
         zipCode,
         phoneNumber,
-        children: childIDArray
+        children: childIDArray,
       })
         .then((res) => {
           const { status } = res;
@@ -87,8 +88,7 @@ export const SignUp = ({ toast }) => {
         })
         .catch((err) => toast("Internal error"));
     }
-  }, [childIDArray])
-  
+  }, [childIDArray]);
 
   const onRegister = async () => {
     if (!email) toast("Please provide your email");
@@ -103,39 +103,68 @@ export const SignUp = ({ toast }) => {
       // send response to backend and create a record
       addChildren();
       setRegistered(true);
+      mongoCheck(email).then((res) => {
+        console.log(res);
+        if (res.status === "Found") {
+          setError("Email already exists");
+        } else {
+          navigate(ROUTES.VERIFICATION, {
+            state: {
+              email: email,
+              password: password,
+              firstName: firstName,
+              lastName: lastName,
+              schoolDistrict: schoolDistrict,
+              zipCode: zipCode,
+              phoneNumber: phoneNumber,
+            },
+          });
+        }
+      });
     }
   };
-
 
   function renderChildren() {
     const inputs = [];
     if (children.length >= 1) {
-
-
       for (let j = 0; j < children.length / 3; j++) {
         const array = [];
         for (let i = j * 3; i < children.length && i < j * 3 + 3; i++) {
           const child = children[i];
           array.push(
-            <div key={i} style={{
-              backgroundColor: '#dbf0f5',
-              borderRadius: '5px',
-              padding: '20px',
-              margin: '10px',
-              fontSize: '30px',
-              fontFamily: 'Poppins'
-            }}>
-              <p style={{ color: 'black', fontWeight: 'bold', margin: '0 10px' }}>{child.firstName}</p>
+            <div
+              key={i}
+              style={{
+                backgroundColor: "#dbf0f5",
+                borderRadius: "5px",
+                padding: "20px",
+                margin: "10px",
+                fontSize: "30px",
+                fontFamily: "Poppins",
+              }}>
+              <p
+                style={{
+                  color: "black",
+                  fontWeight: "bold",
+                  margin: "0 10px",
+                }}>
+                {child.firstName}
+              </p>
             </div>
           );
         }
         inputs.push(
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}>
             {array[0]}
             {array.length >= 1 && array[1]}
             {array.length >= 2 && array[2]}
           </div>
-        )
+        );
       }
     }
     return inputs;
@@ -199,9 +228,14 @@ export const SignUp = ({ toast }) => {
         onClick={() => setAddChildPopUp(true)}
         isMobile={isMobile}
       />
-      {addChildPopUp &&
-        <AddChild setAddChild={setAddChildPopUp} setChildren={setChildren} currChildren={children} toast={toast} />
-      }
+      {addChildPopUp && (
+        <AddChild
+          setAddChild={setAddChildPopUp}
+          setChildren={setChildren}
+          currChildren={children}
+          toast={toast}
+        />
+      )}
 
       <AuthButton
         className={cx(styles.register)}
@@ -212,6 +246,3 @@ export const SignUp = ({ toast }) => {
     </>
   );
 };
-
-
-

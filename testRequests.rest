@@ -23,12 +23,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/children/63e5c4936d51fdbbbedb5503
+GET http://localhost:3001/children/63e5c4296d51fdbbbedb5500
 Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/children/63d58b72c2e0063e64001a1e
+GET http://localhost:3001/children/
 Content-Type: application/json
 
 

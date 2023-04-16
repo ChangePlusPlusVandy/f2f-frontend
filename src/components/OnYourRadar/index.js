@@ -1,0 +1,95 @@
+import styles from "./index.module.css";
+import classNames from "classnames/bind";
+import React from "react";
+import { useState, useEffect } from "react";
+import { getChildrenTasksArray } from "../../lib/services";
+
+const cx = classNames.bind(styles);
+
+export const OnYourRadar = React.forwardRef((props, ref) => {
+  const { childrenId, isMobile } = props;
+  const [hpList, sethpList] = useState([]);
+  const [elseList, setElseList] = useState([]);
+
+  useEffect(() => {
+    getChildrenTasksArray(childrenId, true, hpList, sethpList);
+    getChildrenTasksArray(childrenId, false, elseList, setElseList);
+  }, []);
+
+  const hpElements = hpList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
+  const elseElements = elseList.flat().map((thing, index) => (
+    <p className={styles.list} key={index}>
+      {index + 1 + ". " + thing.title}
+    </p>
+  ));
+
+  if (hpElements.length === 0 || elseElements.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div
+      className={cx(styles.todo_div, {
+        [styles.mobile]: isMobile,
+      })}
+    >
+      <h1
+        className={cx(styles.radar, {
+          [styles.mobile]: isMobile,
+        })}
+      >
+        On Your Radar
+      </h1>
+      <div
+        className={cx(styles.priorityParent, {
+          [styles.mobile]: isMobile,
+        })}
+      >
+        <div
+          className={cx(styles.priorityBlock, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          <h2
+            className={cx(styles.priority, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            High Priority
+          </h2>
+          <p
+            className={cx(styles.list, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {hpElements}
+          </p>
+        </div>
+        <div
+          className={cx(styles.priorityBlock, {
+            [styles.mobile]: isMobile,
+          })}
+        >
+          <h2
+            className={cx(styles.priority, "else", {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            All Tasks
+          </h2>
+          <p
+            className={cx(styles.list, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {elseElements}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+});

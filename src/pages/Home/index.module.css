@@ -3,12 +3,9 @@
 .container {
     width: 100%;
     box-sizing: border-box;
-    padding: 70px 40px 80px 40px;
-}
-.container.mobile {
-    width: 100%;
     padding: 2vw 2vw 2vw 2vw;
 }
+
 .text_div {
     margin-left: auto;
     margin-right: auto;
@@ -16,12 +13,21 @@
     position: relative;
 }
 .text_div.first {
-    margin-top: 10vw;
+    margin-top: 5vw;
 }
 .text_div.second {
     margin-top: 3vw;
 }
 .welcome {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 4vw;
+    margin: auto;
+    display: inline-block;
+    color: #A8A8A8;
+}
+
+.welcome.mobile {
     font-family: 'Poppins';
     font-style: normal;
     font-size: 7vw;
@@ -38,7 +44,16 @@
 .cruising {
     font-family: 'Poppins';
     font-style: normal;
-    font-size: 5vw;
+    font-size: 3vw;
+    margin: auto;
+    display: inline-block;
+    color: #A8A8A8;
+}
+
+.cruising.mobile {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 6vw;
     margin: auto;
     display: inline-block;
     color: #A8A8A8;
@@ -47,72 +62,6 @@
 .cruising.color {
     color: #E3D150;
     font-weight: 900;
-}
-
-.points {
-    font-family: 'Poppins';
-    font-weight: 800;
-    font-size: 4.2vw;
-    margin: auto;
-    display: inline-block;
-    color: #000000;
-}
-
-.points.text {
-    font-weight: 600;
-    color: #818181;
-}
-
-.progress_circle {
-    width: 40vw;
-    height: 40vw;
-    margin-top: 5vw;
-    margin-bottom: 5vw;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.progress_circle_text {
-    font-family: 'Poppins';
-    font-weight: 900;
-    color: black;
-    font-size: 6vw;
-}
-
-.todo_div {
-    border: 6px #0198BA;
-    border-style: solid;
-    border-radius: 50px;
-    margin: 2vw;
-    margin-bottom: 4vw;
-    padding: 3vw; 
-}
-
-.radar {
-    font-family: 'Poppins';
-    font-weight: 900;
-    color: black;
-    font-size: 7vw;
-    margin-top: 3vw;
-}
-
-.priority {
-    font-family: 'Poppins';
-    font-weight: bolder;
-    color: #8B5674;
-    font-size: 5vw;
-    margin-top: 6vw;
-}
-
-.priority.else {
-    color: #E3D150;
-}
-
-.list {
-    font-family: 'Poppins';
-    color: black;
-    font-weight: 600;
-    font-size: 3vw;
 }
 
 .link_div {
@@ -128,6 +77,3 @@
     font-size: 3vw;
     font-weight: 400;
 }
-
-/* need to fix font later */
-/*Not set to percentage*/

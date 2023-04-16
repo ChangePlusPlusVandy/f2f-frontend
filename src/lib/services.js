@@ -7,6 +7,33 @@ import { PRIORITY_LEVEL, STATUS_CODE } from "./constants";
 import { formGetRequest, getAgeGivenBirthday } from "./utils";
 import { toast } from "react-toastify";
 
+export const mongoCheck = (email) => {
+  console.log("email " + email);
+  return new Promise((resolve, reject) => {
+    //make localhost call a constant
+    fetch(`http://localhost:3001/verification/checkMongo/?email=${email}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((err) => reject(err));
+  });
+};
+export const sendVerificationEmail = (email) => {
+  return new Promise((resolve, reject) => {
+    fetch(`http://localhost:3001/verification/sendEmail/?email=${email}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((response) => resolve(response))
+      .catch((err) => reject(err));
+  });
+};
+
 export const signUpChildren = (inputs) => {
   return new Promise((resolve, reject) => {
     fetch(process.env.REACT_APP_HOST_URL + "/children", {
@@ -18,14 +45,14 @@ export const signUpChildren = (inputs) => {
       .then((response) => resolve(response))
       .catch((err) => reject(err));
   });
-}
+};
 
 export const signUp = (inputs) => {
-  console.log("user call to backend")
-  console.log(inputs)
+  console.log("user call to backend");
+  console.log(inputs);
   return new Promise((resolve, reject) => {
-    console.log(JSON.stringify(inputs))
-    console.log(inputs)
+    console.log(JSON.stringify(inputs));
+    console.log(inputs);
     fetch(process.env.REACT_APP_HOST_URL + "/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

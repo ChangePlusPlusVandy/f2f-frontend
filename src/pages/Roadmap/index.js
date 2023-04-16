@@ -4,7 +4,6 @@ import Papa from "papaparse";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
 import { ROUTES, PRIORITY_LEVEL, TIMEOUT } from "../../lib/constants";
-import { getChildrenTasksArray } from "../../lib/services";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
 import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
 import { useNavigate } from "react-router-dom";
@@ -14,17 +13,20 @@ import {
   getAgeGivenBirthday,
 } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
+import { toast } from "react-toastify";
+import { useWindowSize } from "../../lib/hooks";
+import { WINDOW_TYPE } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
 export const Roadmap = ({ toast }) => {
+  const { width, type } = useWindowSize();
+  const isMobile = type === WINDOW_TYPE.MOBILE;
   const navigate = useNavigate();
   const [numTasks, setNumTasks] = useState(0);
   const [numAllTasks, setNumAllTasks] = useState(0);
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
-  const [hpList, sethpList] = useState([]);
-  const [elseList, setElseList] = useState([]);
   //TODO: get the information from cache
   const childrenId = ["63e5c4936d51fdbbbedb5503"];
   const [timer, setTimer] = useState();
@@ -36,9 +38,7 @@ export const Roadmap = ({ toast }) => {
       fetch(process.env.REACT_APP_HOST_URL + childUrl)
         .then((response) => response.json())
         .then((childrenData) => {
-          const childName = childrenData.firstName;
           const age = getAgeGivenBirthday(childrenData.birthDate);
-          const completedTasks = childrenData.completedTasks;
           const params = {
             disabilities: JSON.stringify(childrenData.disabilities),
             age: JSON.stringify(age),
@@ -61,8 +61,6 @@ export const Roadmap = ({ toast }) => {
 
   useEffect(() => {
     getStats(childrenId);
-    getChildrenTasksArray(childrenId, true, hpList, sethpList);
-    getChildrenTasksArray(childrenId, false, elseList, setElseList);
   }, []);
 
   // set the import csv file
@@ -83,7 +81,8 @@ export const Roadmap = ({ toast }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(inputObj),
           })
-            .then((response) => console.log(response.json()))
+            .then((response) => response.json())
+            .then((data) => toast("Successfully uploaded the csv!"))
             .catch((error) => {
               console.error(error);
             });
@@ -101,7 +100,8 @@ export const Roadmap = ({ toast }) => {
   };
 
   const onExport = async () => {
-    fetch(process.env.REACT_APP_HOST_URL + "/users/exportCSV")
+    const exportUrl = "/users/exportCSV";
+    fetch(process.env.REACT_APP_HOST_URL + exportUrl)
       .then((response) => response.arrayBuffer())
       .then((arrayBuffer) => {
         const blob = new Blob([arrayBuffer], { type: "text/csv" });
@@ -115,33 +115,6 @@ export const Roadmap = ({ toast }) => {
       .catch((error) => console.error(error));
   };
 
-  const hpElements = hpList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-  const elseElements = elseList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-
-  useEffect(() => {
-    setTimer(
-      setTimeout(() => {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("userID");
-        navigate("/login");
-      }, TIMEOUT)
-    );
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [timer]);
-
   return (
     <div
       style={{
@@ -149,19 +122,12 @@ export const Roadmap = ({ toast }) => {
         overscrollBehavior: "none",
         height: "80vh",
       }}>
-      {/* <div style={{ textAlign: "center" }}>
-        <p className={cx(styles.header)}>Road Map</p>
-        <p className={cx(styles.header, "small")}>
-          Below are all the tasks needed to be completed
-        </p>
-      </div> */}
-
       <div>
         <AuthButton
           className={cx(styles.csvButton)}
           label="Import Task CSV"
           onClick={onImport}
-          isMobile={true}
+          isMobile={isMobile}
         />
         <input
           type="file"
@@ -176,63 +142,94 @@ export const Roadmap = ({ toast }) => {
           className={cx(styles.csvButton)}
           label="Export Task CSV"
           onClick={onExport}
-          isMobile={true}
+          isMobile={isMobile}
         />
       </div>
 
       <div
         onClick={() => navigate(ROUTES.UPCOMING_TASKS)}
-        className={cx(styles.tasks_div)}>
+        className={cx(styles.tasks_div, {
+          [styles.mobile]: isMobile,
+        })}>
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
-              <Calender className={cx(styles.icon)} />
+              <Calender
+                className={cx(styles.icon, {
+                  [styles.mobile]: isMobile,
+                })}
+              />
               <div
                 style={{
                   position: "relative",
                   display: "flex",
                   margin: "10px",
                 }}>
-                <p className={cx(styles.taskDesc)}>Upcoming</p>
+                <p
+                  className={cx(styles.taskDesc, {
+                    [styles.mobile]: isMobile,
+                  })}>
+                  Upcoming
+                </p>
               </div>
             </div>
-            <p className={cx(styles.header, "small")}>
+            <p
+              className={cx(styles.header, "small", {
+                [styles.mobile]: isMobile,
+              })}>
               All tasks with priority level 2
             </p>
           </div>
-          <p className={cx(styles.taskNum)}>{numTasks}</p>
+          <p
+            className={cx(styles.taskNum, {
+              [styles.mobile]: isMobile,
+            })}>
+            {numTasks}
+          </p>
         </div>
       </div>
 
       <div
         onClick={() => navigate(ROUTES.ALL_TASKS)}
-        className={cx(styles.tasks_div, "all")}>
+        className={cx(styles.tasks_div, "all", {
+          [styles.mobile]: isMobile,
+        })}>
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
-              <Box className={cx(styles.icon)} />
+              <Box
+                className={cx(styles.icon, {
+                  [styles.mobile]: isMobile,
+                })}
+              />
               <div
                 style={{
                   position: "relative",
                   display: "flex",
                   margin: "10px",
                 }}>
-                <p className={cx(styles.taskDesc)}>All&nbsp;Tasks</p>
+                <p
+                  className={cx(styles.taskDesc, {
+                    [styles.mobile]: isMobile,
+                  })}>
+                  All&nbsp;Tasks
+                </p>
               </div>
             </div>
-            <p className={cx(styles.header, "small")}>Everything on the list</p>
+            <p
+              className={cx(styles.header, "small", {
+                [styles.mobile]: isMobile,
+              })}>
+              Everything on the list
+            </p>
           </div>
-          <p className={cx(styles.taskNum)}>{numAllTasks}</p>
+          <p
+            className={cx(styles.taskNum, {
+              [styles.mobile]: isMobile,
+            })}>
+            {numAllTasks}
+          </p>
         </div>
-      </div>
-
-      {/* just for mvp */}
-      <div className={cx(styles.todo_div)}>
-        <h1 className={cx(styles.radar)}>On Your Radar</h1>
-        <h2 className={cx(styles.priority)}>High Priority</h2>
-        {hpElements}
-        <h2 className={cx(styles.priority, "else")}>All Tasks</h2>
-        {elseElements}
       </div>
     </div>
   );
