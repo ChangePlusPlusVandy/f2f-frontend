@@ -60,7 +60,23 @@ export const Roadmap = ({ toast }) => {
   };
 
   useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
+  useEffect(() => {
     getStats(childrenId);
+  }, []);
+
+  useEffect(() => {
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
   }, []);
 
   // set the import csv file

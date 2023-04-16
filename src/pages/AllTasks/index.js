@@ -23,6 +23,12 @@ export const AllTasks = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
+  useEffect(() => {
     getChildrenTasksArray(childrenId, false, allTaskArray, setAllTaskArray);
   }, []);
 
@@ -59,8 +65,7 @@ export const AllTasks = () => {
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "92vh",
-      }}
-    >
+      }}>
       <ReactSearchBox
         placeholder="Search"
         onChange={handleSearch}
@@ -72,8 +77,7 @@ export const AllTasks = () => {
           overflow: "scroll",
           overscrollBehavior: "none",
           height: "66vh",
-        }}
-      >
+        }}>
         {filteredSections.map((childTasks, childTasksIndex) => (
           <AllTasksSection
             taskList={childTasks}

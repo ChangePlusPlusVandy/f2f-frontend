@@ -8,6 +8,9 @@ import { OnYourRadar } from "../../components/OnYourRadar";
 import { Slider } from "../../components/Slider";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
+import { AuthButton } from "../../components/AuthButton";
+import { useNavigate } from "react-router-dom";
+import { TIMEOUT } from "../../lib/constants";
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +18,7 @@ export const Home = () => {
   const { width, type } = useWindowSize();
   const isMobile = type === WINDOW_TYPE.MOBILE;
   // TODO: use Cache to store the user
-  const [lastName, setLastName] = useState("Adam's");
+  const [lastName, setLastName] = useState("");
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalGoal, setTotalGoal] = useState(0);
   const [childrenStats, setChildrenStats] = useState([]);
@@ -26,6 +29,14 @@ export const Home = () => {
     "63e5c4176d51fdbbbedb54fd",
     "63e5c40a6d51fdbbbedb54fa",
   ];
+  const [timer, setTimer] = useState();
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   const getChildrenPointsStats = async () => {
     let totalPoints = 0;
@@ -63,12 +74,25 @@ export const Home = () => {
     return { totalPoints, totalGoal, childrenStats };
   };
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
   useEffect(async () => {
     const { totalPoints, totalGoal, childrenStats } =
       await getChildrenPointsStats();
     setTotalPoints(totalPoints);
     setTotalGoal(totalGoal);
     setChildrenStats(childrenStats);
+    console.log(localStorage);
+    setTimer(
+      setTimeout(() => {
+        localStorage.clear();
+        navigate("/login");
+      }, TIMEOUT)
+    );
   }, []);
 
   if (childrenStats.length !== childrenId.length) {
@@ -128,6 +152,11 @@ export const Home = () => {
         />
         <Slider childrenStats={childrenStats} isMobile={isMobile} />
         <OnYourRadar childrenId={childrenId} isMobile={isMobile} />
+        <AuthButton
+          label="Logout"
+          onClick={() => logout()}
+          isMobile={isMobile}
+        />
         <NavBar />
       </div>
     </div>
