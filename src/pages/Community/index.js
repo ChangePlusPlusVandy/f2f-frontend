@@ -163,7 +163,8 @@ export const Community = () => {
         overflow: "scroll",
         overscrollBehavior: "none",
         height: "92vh",
-      }}>
+      }}
+    >
       <header className={cx(styles.header)}>
         <Dropdown options={options} />
       </header>

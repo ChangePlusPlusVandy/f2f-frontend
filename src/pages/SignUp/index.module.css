@@ -12,3 +12,29 @@
 .register {
     margin-top: 36px;
 }
+.link{
+    text-decoration:underline;
+    font-weight:bold;
+    font-family: "Poppins";
+    
+}
+
+
+
+.create_post {
+    width: 160px;
+    height: 160px;
+    background-color: #0298ba;
+    box-shadow: 0 2px 16px 0 gray;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: absolute;
+    cursor: pointer;
+    right: 4vw;
+    bottom: 10vh;
+    z-index: 2;
+  }
+  

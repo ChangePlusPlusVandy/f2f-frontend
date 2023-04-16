@@ -31,16 +31,10 @@ body {
   align-items: center;
   overflow: hidden;
   position: absolute;
+  cursor: pointer;
   right: 4vw;
   bottom: 10vh;
   z-index: 2;
-}
-
-.create_post:hover {
-  cursor: pointer;
-  transform: scale(1.01);
-  transition: 0.2s;
-  box-shadow: 0 6px 4px darkgray;
 }
 
 .posts {
@@ -54,6 +48,7 @@ body {
 .create_post:hover {
   cursor: pointer;
 }
+
 
 .create_post_rotate {
   width: 160px;
