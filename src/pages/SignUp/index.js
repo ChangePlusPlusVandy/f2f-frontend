@@ -42,8 +42,7 @@ export const SignUp = ({ toast }) => {
   const [childIDArray, setChildIDArray] = useState([]);
   const [registered, setRegistered] = useState(false);
   const [error, setError] = useState("");
-
-  const [test, setTest] = useState("gabe");
+  const [renderedChildren, setRenderedChildren] = useState();
 
   async function addChildren() {
     await children.forEach(async (child) => {
@@ -62,8 +61,11 @@ export const SignUp = ({ toast }) => {
           schoolDistrict: sd,
         });
         console.log("returned child id");
-        console.log(result);
         setChildIDArray([...childIDArray, result]);
+        console.log(result);
+        console.log([...childIDArray, result]);
+        console.log("here is the array");
+        console.log(childIDArray);
       } catch (error) {
         console.log(error);
       }
@@ -71,40 +73,10 @@ export const SignUp = ({ toast }) => {
   }
 
   useEffect(() => {
-    if (childIDArray.length == children.length && registered) {
-      console.log(childIDArray);
-      signUp({
-        email,
-        password,
-        firstName,
-        lastName,
-        zipCode,
-        phoneNumber,
-        children: childIDArray,
-      })
-        .then((res) => {
-          const { status } = res;
-          if (status === STATUS_CODE.SUCESS) navigate("/login");
-        })
-        .catch((err) => toast("Internal error"));
-    }
-  }, [childIDArray]);
-
-  const onRegister = async () => {
-    if (!email) toast("Please provide your email");
-    else if (!password) toast("Please provide your password");
-    else if (password.length < 8) toast("Password length must be at least 8");
-    else if (password !== repeatPassword) toast("Passwords mismatch");
-    else if (!firstName) toast("Please provide your first name");
-    else if (!lastName) toast("Please provide your last name");
-    else if (!zipCode) toast("Please provide your zip code");
-    else if (!phoneNumber) toast("Please provide your phone number");
-    else {
-      // send response to backend and create a record
-      addChildren();
-      setRegistered(true);
+    console.log(childIDArray.length);
+    console.log(children.length);
+    if (childIDArray.length === children.length && registered) {
       mongoCheck(email).then((res) => {
-        console.log(res);
         if (res.status === "Found") {
           setError("Email already exists");
         } else {
@@ -117,14 +89,42 @@ export const SignUp = ({ toast }) => {
               schoolDistrict: schoolDistrict,
               zipCode: zipCode,
               phoneNumber: phoneNumber,
+              children: childIDArray,
             },
           });
         }
       });
     }
+  }, [childIDArray]);
+
+  const onRegister = async () => {
+    if (!email) toast("Please provide your email");
+    else if (!password) toast("Please provide your password");
+    else if (password.length < 8) toast("Password length must be at least 8");
+    else if (password !== repeatPassword) toast("Passwords mismatch");
+    else if (!firstName) toast("Please provide your first name");
+    else if (!lastName) toast("Please provide your last name");
+    else if (!zipCode) toast("Please provide your zip code");
+    else if (!phoneNumber) toast("Please provide your phone number");
+    else if (children.length === 0 || children === [])
+      toast("Please add at least one child");
+    else {
+      // send response to backend and create a record
+      addChildren();
+      setRegistered(true);
+    }
   };
 
-  function renderChildren() {
+  function handleClick(i) {
+    children.splice(i, 1);
+    renderChildrenFunc();
+  }
+
+  useEffect(() => {
+    renderChildrenFunc();
+  }, [children]);
+
+  function renderChildrenFunc() {
     const inputs = [];
     if (children.length >= 1) {
       for (let j = 0; j < children.length / 3; j++) {
@@ -142,14 +142,28 @@ export const SignUp = ({ toast }) => {
                 fontSize: "30px",
                 fontFamily: "Poppins",
               }}>
-              <p
-                style={{
-                  color: "black",
-                  fontWeight: "bold",
-                  margin: "0 10px",
-                }}>
-                {child.firstName}
-              </p>
+              <div>
+                <p
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    margin: "0 10px",
+                    display: "inline-block",
+                    padding: "0.5rem 0.5rem",
+                    verticalAlign: "middle",
+                  }}>
+                  {child.firstName}
+                </p>
+                <button
+                  style={{
+                    display: "inline-block",
+                    padding: "0rem 1rem",
+                    verticalAlign: "middle",
+                  }}
+                  onClick={() => handleClick(i)}>
+                  <h3>X</h3>
+                </button>
+              </div>
             </div>
           );
         }
@@ -167,7 +181,7 @@ export const SignUp = ({ toast }) => {
         );
       }
     }
-    return inputs;
+    setRenderedChildren(inputs);
   }
 
   return (
@@ -221,7 +235,7 @@ export const SignUp = ({ toast }) => {
         onChange={setPhoneNumber}
         isMobile={isMobile}
       />
-      {renderChildren()}
+      {renderedChildren}
       <AuthButton
         className={cx(styles.inputBlock)}
         label={"Add a Child"}
@@ -236,7 +250,6 @@ export const SignUp = ({ toast }) => {
           toast={toast}
         />
       )}
-
       <AuthButton
         className={cx(styles.register)}
         label={AUTH_INPUT_LABELS.SIGN_UP}

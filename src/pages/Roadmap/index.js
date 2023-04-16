@@ -72,8 +72,7 @@ export const Roadmap = ({ toast }) => {
   useEffect(() => {
     setTimer(
       setTimeout(() => {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("userID");
+        localStorage.clear();
         navigate("/login");
       }, TIMEOUT)
     );

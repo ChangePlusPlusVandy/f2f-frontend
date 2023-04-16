@@ -33,10 +33,39 @@ export function AddChild(props) {
     }
   }, [leavePage]);
 
+  const checkValidBirthday = () => {
+    const birthday = child.birthDate;
+
+    // Regular expression for MM-DD-YYYY format
+    const regex = /^\d{2}-\d{2}-\d{4}$/;
+
+    // Check if the input matches the regular expression
+    if (!regex.test(birthday)) {
+      return false;
+    }
+
+    // Check if the date is valid
+    const parts = birthday.split("-");
+    const month = parseInt(parts[0], 10);
+    const day = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+
+    // JavaScript Date object will automatically handle leap year
+    const date = new Date(year, month - 1, day);
+    const isValid =
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day;
+
+    return isValid;
+  };
+
   const onSubmit = async () => {
     if (!child.firstName) props.toast("Please provide your child's name");
     else if (!child.birthDate)
       props.toast("Please provide your child's birthdate");
+    else if (!checkValidBirthday(child.birthDate))
+      props.toast("Please enter the birthday in the correct format");
     else if (!child.schoolDistrict)
       props.toast("Please provide your child's school district");
     else if (!child.disabilities)

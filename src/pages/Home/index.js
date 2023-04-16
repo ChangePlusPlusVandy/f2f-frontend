@@ -18,17 +18,12 @@ export const Home = () => {
   const { width, type } = useWindowSize();
   const isMobile = type === WINDOW_TYPE.MOBILE;
   // TODO: use Cache to store the user
-  const [lastName, setLastName] = useState("");
+  const [lastName, setLastName] = useState(localStorage.getItem("lastName"));
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalGoal, setTotalGoal] = useState(0);
   const [childrenStats, setChildrenStats] = useState([]);
   // TODO: cache
-  const childrenId = [
-    "63e5c4936d51fdbbbedb5503",
-    "63e5c4296d51fdbbbedb5500",
-    "63e5c4176d51fdbbbedb54fd",
-    "63e5c40a6d51fdbbbedb54fa",
-  ];
+  const childrenId = JSON.parse(localStorage.getItem("children"));
   const [timer, setTimer] = useState();
 
   const navigate = useNavigate();
@@ -43,6 +38,8 @@ export const Home = () => {
     let totalGoal = 0;
     let childrenStats = [];
     const childPromises = childrenId.map(async (childId) => {
+      console.log(childId);
+
       // get child's name and disabilities
       const childUrl = "/children/" + childId;
       const response = await fetch(process.env.REACT_APP_HOST_URL + childUrl);
@@ -54,6 +51,8 @@ export const Home = () => {
         disabilities: JSON.stringify(childData.disabilities),
         age: JSON.stringify(age),
       };
+
+      console.log(childName);
 
       // get tasks based on children's attributes
       const url = formGetRequest("/tasks/byAttributes/", params);

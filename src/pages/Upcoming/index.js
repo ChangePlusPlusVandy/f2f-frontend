@@ -31,8 +31,7 @@ export const Upcoming = ({ toast }) => {
     console.log(localStorage);
     setTimer(
       setTimeout(() => {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("userID");
+        localStorage.clear();
         navigate("/login");
       }, TIMEOUT)
     );
