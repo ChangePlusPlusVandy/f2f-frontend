@@ -21,15 +21,17 @@ export function AddChild(props) {
   const [child, setChild] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
   const [submitted, setSubmitted] = useState(false);
+  const [leavePage, setLeavePage] = useState(false);
 
   useEffect(() => {
-    if (submitted) {
+    if (leavePage) {
+      if (submitted) {
+        props.setChildren([...props.currChildren, child]);
+      }
       props.setAddChild(false);
-      props.setChildren([...props.currChildren, child]);
     }
-  }, [submitted]);
+  }, [leavePage]);
 
   const onSubmit = async () => {
     if (!child.firstName) props.toast("Please provide your child's name");
@@ -41,6 +43,7 @@ export function AddChild(props) {
       props.toast("Please provide your child's disability");
     else {
       setSubmitted(true);
+      setLeavePage(true);
     }
   };
 
@@ -49,7 +52,18 @@ export function AddChild(props) {
       <div className={cx(styles.popup)}>
         <div classname={cx(styles.close_wrapper)}>
           <div className={cx(styles.close)}>
-            <AuthButton label={"X"} onClick={() => setSubmitted(true)} />
+            <AuthButton
+              label={"X"}
+              onClick={() => setLeavePage(true)}
+              style={{
+                borderRadius: "30%",
+                height: "auto",
+                width: "30px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            />
           </div>{" "}
         </div>
         <h1 className={cx(styles.title)}>Add a Child</h1>
