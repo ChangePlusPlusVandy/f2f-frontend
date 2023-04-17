@@ -45,8 +45,8 @@ export const SignUp = ({ toast }) => {
   const [renderedChildren, setRenderedChildren] = useState();
 
   async function addChildren() {
-    try {
-      const promises = children.map(async (child) => {
+    await children.forEach(async (child) => {
+      try {
         let disArray = [];
         for (let i = 0; i < child.disabilities.length; i++) {
           disArray.push(child.disabilities[i].label);
@@ -60,14 +60,16 @@ export const SignUp = ({ toast }) => {
           disabilities: disArray,
           schoolDistrict: sd,
         });
-        return result;
-      });
-      const results = await Promise.all(promises);
-      console.log("returned child ids:", results);
-      setChildIDArray(results);
-    } catch (error) {
-      console.log(error);
-    }
+        console.log("returned child id");
+        setChildIDArray([...childIDArray, result]);
+        console.log(result);
+        console.log([...childIDArray, result]);
+        console.log("here is the array");
+        console.log(childIDArray);
+      } catch (error) {
+        console.log(error);
+      }
+    });
   }
 
   useEffect(() => {
