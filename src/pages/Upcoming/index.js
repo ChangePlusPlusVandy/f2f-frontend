@@ -14,7 +14,7 @@ export const Upcoming = ({ toast }) => {
   const isMobile = useWindowSize().type === WINDOW_TYPE.MOBILE;
   const [taskArray, setTaskArray] = useState([]);
   //TODO: get information using cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const childrenId = JSON.parse(localStorage.getItem("children"));
   const [timer, setTimer] = useState();
 
   const navigate = useNavigate();

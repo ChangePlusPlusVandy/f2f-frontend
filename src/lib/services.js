@@ -157,6 +157,9 @@ export const getChildrenTasksArray = (
           params.priority = JSON.stringify(2);
         }
 
+        console.log("help")
+        console.log("/tasks/byAttributes/", params)
+
         // get tasks based on children's attributes
         const url = formGetRequest("/tasks/byAttributes/", params);
         fetch(process.env.REACT_APP_HOST_URL + url)

@@ -28,7 +28,7 @@ export const Roadmap = ({ toast }) => {
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
   //TODO: get the information from cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const childrenId = JSON.parse(localStorage.getItem("children"));
   const [timer, setTimer] = useState();
 
   const getStats = (childrenId) => {

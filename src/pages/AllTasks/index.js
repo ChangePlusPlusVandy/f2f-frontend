@@ -17,8 +17,10 @@ export const AllTasks = () => {
   const [allTaskArray, setAllTaskArray] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   //TODO: get information using cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const childrenId = JSON.parse(localStorage.getItem("children"));
   const [timer, setTimer] = useState();
+
+  console.log(childrenId)
 
   const navigate = useNavigate();
 
@@ -29,6 +31,8 @@ export const AllTasks = () => {
   }, [timer]);
 
   useEffect(() => {
+    console.log("here")
+    console.log(allTaskArray)
     getChildrenTasksArray(childrenId, false, allTaskArray, setAllTaskArray);
   }, []);
 
