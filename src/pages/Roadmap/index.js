@@ -13,7 +13,6 @@ import {
   getAgeGivenBirthday,
 } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
-import { toast } from "react-toastify";
 import { useWindowSize } from "../../lib/hooks";
 import { WINDOW_TYPE } from "../../lib/constants";
 
@@ -54,7 +53,6 @@ export const Roadmap = ({ toast }) => {
       const url = formGetRequest("/tasks/getStats/", params);
       const statsResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
       const statsData = await statsResponse.json();
-      console.log(statsData);
       childrenStatsData.numUpcoming += statsData.numUpcoming;
       childrenStatsData.numAll += statsData.numAll;
     });

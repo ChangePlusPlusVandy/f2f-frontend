@@ -4,13 +4,13 @@
     width: 70%;
     margin: auto;
     box-sizing: border-box;
-    padding: 2vw 2vw 2vw 2vw;
+    padding: 2vw 2vw 10vw 2vw;
 }
 
 .container.mobile {
     width: 100%;
     box-sizing: border-box;
-    padding: 2vw 2vw 2vw 2vw;
+    padding: 2vw 2vw 10vw 2vw;
 }
 
 .text_div {
