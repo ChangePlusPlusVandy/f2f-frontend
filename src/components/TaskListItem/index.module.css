@@ -17,7 +17,7 @@
 .taskName {
   font-family: "Poppins";
   font-style: normal;
-  font-size: 2vw;
+  font-size: 1.4vw;
   font-weight: 500;
   margin: 0;
 }
@@ -41,7 +41,7 @@
 .taskDate {
   font-family: "Poppins";
   font-weight:400;
-  font-size: 1.5vw;
+  font-size: 1.2vw;
   color: #8B5674;
   margin: 0;
 }

@@ -2,6 +2,14 @@
 
 .entireSection {
     border-radius: 50px;
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+  }
+
+  .entireSection.mobile {
+    border-radius: 50px;
     margin-top: 3vw;
     margin-bottom: 3vw;
     padding-top: 3vw;
@@ -11,7 +19,7 @@
 .childName {
   font-family: "Poppins";
   font-weight:400;
-  font-size: 2vw;
+  font-size: 1.5vw;
   margin: 0;
   margin-left: 6vh;
 }

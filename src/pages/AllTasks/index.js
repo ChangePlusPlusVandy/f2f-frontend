@@ -7,13 +7,14 @@ import { getChildrenTasksArray } from "../../lib/services";
 import { useNavigate } from "react-router-dom";
 import { TIMEOUT, WINDOW_TYPE } from "../../lib/constants";
 import { useWindowSize } from "../../lib/hooks";
+import Loader from "../LoadScreen";
 
 const cx = classNames.bind(styles);
 
 export const AllTasks = () => {
   const { width, type } = useWindowSize();
   const isMobile = type === WINDOW_TYPE.MOBILE;
-
+  const [loaded, setLoaded] = useState(false);
   const [allTaskArray, setAllTaskArray] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   //TODO: get information using cache
@@ -29,6 +30,7 @@ export const AllTasks = () => {
   useEffect(async () => {
     const { taskArray } = await getChildrenTasksArray(childrenId, false);
     setAllTaskArray(taskArray);
+    setLoaded(true);
   }, []);
 
   // handler for search box
@@ -58,6 +60,8 @@ export const AllTasks = () => {
     };
   }, [timer]);
 
+  if (!loaded) return <Loader />;
+
   return (
     <div
       style={{
@@ -69,8 +73,8 @@ export const AllTasks = () => {
       <ReactSearchBox
         placeholder="Search"
         onChange={handleSearch}
-        inputHeight={isMobile ? "10vw" : "5vw"}
-        inputFontSize={isMobile ? "5vw" : "2vw"}
+        inputHeight={isMobile ? "10vw" : "3vw"}
+        inputFontSize={isMobile ? "5vw" : "1.5vw"}
       />
       <div
         style={{

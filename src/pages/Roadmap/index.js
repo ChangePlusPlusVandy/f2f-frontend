@@ -15,6 +15,7 @@ import {
 import { AuthButton } from "../../components/AuthButton";
 import { useWindowSize } from "../../lib/hooks";
 import { WINDOW_TYPE } from "../../lib/constants";
+import Loader from "../LoadScreen";
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +23,7 @@ export const Roadmap = ({ toast }) => {
   const { width, type } = useWindowSize();
   const isMobile = type === WINDOW_TYPE.MOBILE;
   const navigate = useNavigate();
+  const [loaded, setLoaded] = useState(false);
   const [numTasks, setNumTasks] = useState(0);
   const [numAllTasks, setNumAllTasks] = useState(0);
   const uploadRef = useRef();
@@ -65,6 +67,7 @@ export const Roadmap = ({ toast }) => {
     const { numUpcoming, numAll } = await getStats(childrenId);
     setNumAllTasks(numAll);
     setNumTasks(numUpcoming);
+    setLoaded(true);
   }, []);
 
   // set the import csv file
@@ -118,6 +121,8 @@ export const Roadmap = ({ toast }) => {
       })
       .catch((error) => console.error(error));
   };
+
+  if (!loaded) return <Loader />;
 
   return (
     <div

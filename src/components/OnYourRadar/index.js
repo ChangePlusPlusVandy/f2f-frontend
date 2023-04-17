@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import React from "react";
 import { useState, useEffect } from "react";
 import { getChildrenTasksArray } from "../../lib/services";
+import { Loader } from "../../pages/LoadScreen";
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +34,7 @@ export const OnYourRadar = React.forwardRef((props, ref) => {
   ));
 
   if (hpElements.length === 0 || elseElements.length === 0) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

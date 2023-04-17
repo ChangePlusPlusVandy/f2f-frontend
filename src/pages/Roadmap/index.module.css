@@ -3,7 +3,7 @@
 .header {
   font-family: "Poppins";
   font-style: normal;
-  font-size: 2vw;
+  font-size: 1vw;
   font-weight: 900;
   display: inline-block;
   color: black;
@@ -17,6 +17,17 @@
 }
 
 .tasks_div {
+  border: 1px black;
+  border-style: solid;
+  border-radius: 50px;
+  margin-top: 8vw;
+  margin-left: 3vw;
+  margin-right: 3vw;
+  padding: 3vw;
+  background-color: #dbf0f5;
+}
+
+.tasks_div.mobile {
   border: 4px black;
   border-style: solid;
   border-radius: 50px;
@@ -31,17 +42,14 @@
   background-color: #f9f6dc;
 }
 
+.icon {
+  height: 3vw;
+  width: 3vw;
+}
+
 .icon.mobile {
   height: 12vw;
   width: 12vw;
-}
-.icon {
-  height: 6vw;
-  width: 6vw;
-}
-
-.taskDesc.mobile {
-  font-size: 7vw;
 }
 
 .taskDesc {
@@ -53,8 +61,11 @@
   display: inline-block;
   font-family: "Poppins";
   font-style: normal;
-  font-size: 3vw;
+  font-size: 2vw;
   font-weight: 900;
+}
+.taskDesc.mobile {
+  font-size: 7vw;
 }
 
 
@@ -62,7 +73,7 @@
   display: inline-block;
   font-family: "Poppins";
   font-style: normal;
-  font-size: 3vw;
+  font-size: 2vw;
   font-weight: bolder;
   margin-left: auto;
 }

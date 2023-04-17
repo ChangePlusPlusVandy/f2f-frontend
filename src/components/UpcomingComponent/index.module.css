@@ -12,7 +12,7 @@
 
 .title{
     font-style: normal;
-    font-size: 2vw;
+    font-size: 1.7vw;
     font-weight: 500;
     margin: 0;
     color: #000000;
@@ -20,32 +20,24 @@
 }
 
 .title.mobile {
-    font-style: normal;
     font-size: 7vw;
-    font-weight: 500;
-    margin: 0;
-    color: #000000;
 }
 
 .time{
     font-style: normal;
     font-weight: 400;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     color: #0198BA;
 }
 
 .time.mobile{
-    font-style: normal;
-    font-weight: 400;
     font-size: 3vw;
-
-    color: #0198BA;
 }
 
 .content{
     font-style: normal;
     font-weight: 300;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     color: #8B5674;
     margin: 2;
 
@@ -53,11 +45,5 @@
 }
 
 .content.mobile {
-    font-style: normal;
-    font-weight: 300;
     font-size: 3vw;
-    color: #8B5674;
-    margin: 2;
-
-    color: #818181;
 }

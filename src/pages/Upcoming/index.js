@@ -7,6 +7,7 @@ import { WINDOW_TYPE, TIMEOUT } from "../../lib/constants";
 import { getChildrenTasksArray } from "../../lib/services";
 import { separateWebsiteLink } from "../../lib/utils";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../LoadScreen";
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +15,7 @@ const cx = classNames.bind(styles);
 export const Upcoming = ({ toast }) => {
   const isMobile = useWindowSize().type === WINDOW_TYPE.MOBILE;
   const [taskArray, setTaskArray] = useState([]);
+  const [loaded, setLoaded] = useState(false);
   //TODO: get information using cache
   const childrenId = [
     "63e5c4936d51fdbbbedb5503",
@@ -27,6 +29,7 @@ export const Upcoming = ({ toast }) => {
   useEffect(async () => {
     const { taskArray } = await getChildrenTasksArray(childrenId, true);
     setTaskArray(taskArray);
+    setLoaded(true);
   }, []);
 
   const deduplicatedList = taskArray.flat().filter((obj, index, self) => {
@@ -48,6 +51,8 @@ export const Upcoming = ({ toast }) => {
       clearTimeout(timer);
     };
   }, [timer]);
+
+  if (!loaded) return <Loader />;
 
   return (
     <>

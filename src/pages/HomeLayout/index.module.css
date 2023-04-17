@@ -12,7 +12,13 @@
 .container.mobile {
     height: 100%;
     width: 100%;
-    padding: 2vw;
+    padding: 0vw;
+}
+
+.caption {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    text-align: center;
 }
 
 .caption.mobile {
@@ -21,11 +27,6 @@
     text-align: center;
 }
 
-.caption {
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-    text-align: center;
-}
 
 .header {
     display: flex;

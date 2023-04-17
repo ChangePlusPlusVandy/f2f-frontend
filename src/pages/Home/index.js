@@ -8,6 +8,7 @@ import { OnYourRadar } from "../../components/OnYourRadar";
 import { Slider } from "../../components/Slider";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
+import { Loader } from "../LoadScreen";
 
 const cx = classNames.bind(styles);
 
@@ -71,7 +72,7 @@ export const Home = () => {
   }, []);
 
   if (childrenStats.length !== childrenId.length) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

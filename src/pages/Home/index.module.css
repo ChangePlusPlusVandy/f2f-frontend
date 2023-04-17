@@ -19,16 +19,18 @@
     text-align: center;
     position: relative;
 }
+
 .text_div.first {
     margin-top: 5vw;
 }
+
 .text_div.second {
     margin-top: 3vw;
 }
 .welcome {
     font-family: 'Poppins';
     font-style: normal;
-    font-size: 4vw;
+    font-size: 3vw;
     margin: auto;
     display: inline-block;
     color: #A8A8A8;
@@ -51,7 +53,7 @@
 .cruising {
     font-family: 'Poppins';
     font-style: normal;
-    font-size: 3vw;
+    font-size: 2vw;
     margin: auto;
     display: inline-block;
     color: #A8A8A8;

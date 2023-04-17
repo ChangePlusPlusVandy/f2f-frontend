@@ -23,7 +23,9 @@ export const AllTasksSection = React.forwardRef((props, ref) => {
 
   return (
     <div
-      className={cx(styles.entireSection)}
+      className={cx(styles.entireSection, {
+        [styles.mobile]: isMobile,
+      })}
       style={{
         backgroundColor: color,
       }}
