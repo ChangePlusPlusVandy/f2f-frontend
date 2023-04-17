@@ -11,9 +11,14 @@ export const OnYourRadar = React.forwardRef((props, ref) => {
   const [hpList, sethpList] = useState([]);
   const [elseList, setElseList] = useState([]);
 
-  useEffect(() => {
-    getChildrenTasksArray(childrenId, true, hpList, sethpList);
-    getChildrenTasksArray(childrenId, false, elseList, setElseList);
+  useEffect(async () => {
+    const { taskArray } = await getChildrenTasksArray(childrenId, true);
+    sethpList(taskArray);
+  }, []);
+
+  useEffect(async () => {
+    const { taskArray } = await getChildrenTasksArray(childrenId, false);
+    setElseList(taskArray);
   }, []);
 
   const hpElements = hpList.flat().map((thing, index) => (

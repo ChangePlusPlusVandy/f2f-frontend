@@ -17,13 +17,18 @@ export const AllTasks = () => {
   const [allTaskArray, setAllTaskArray] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   //TODO: get information using cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const childrenId = [
+    "63e5c4936d51fdbbbedb5503",
+    "643b22b6ee8225a6684ac159",
+    "643b22b6ee8225a6684ac15b",
+  ];
   const [timer, setTimer] = useState();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getChildrenTasksArray(childrenId, false, allTaskArray, setAllTaskArray);
+  useEffect(async () => {
+    const { taskArray } = await getChildrenTasksArray(childrenId, false);
+    setAllTaskArray(taskArray);
   }, []);
 
   // handler for search box
@@ -36,8 +41,8 @@ export const AllTasks = () => {
       return task.title.toLowerCase().includes(searchQuery.toLowerCase());
     })
   );
+
   useEffect(() => {
-    console.log(localStorage);
     setTimer(
       setTimeout(() => {
         localStorage.removeItem("jwtToken");
@@ -71,7 +76,6 @@ export const AllTasks = () => {
         style={{
           overflow: "scroll",
           overscrollBehavior: "none",
-          height: "66vh",
         }}
       >
         {filteredSections.map((childTasks, childTasksIndex) => (

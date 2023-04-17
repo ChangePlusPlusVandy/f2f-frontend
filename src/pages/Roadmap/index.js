@@ -28,39 +28,45 @@ export const Roadmap = ({ toast }) => {
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
   //TODO: get the information from cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const childrenId = [
+    "63e5c4936d51fdbbbedb5503",
+    "643b22b6ee8225a6684ac159",
+    "643b22b6ee8225a6684ac15b",
+  ];
   const [timer, setTimer] = useState();
 
-  const getStats = (childrenId) => {
-    childrenId.forEach((childId) => {
+  const getStats = async (childrenId) => {
+    let childrenStatsData = { numUpcoming: 0, numAll: 0 };
+    const childPromises = childrenId.map(async (childId) => {
       // get child's name and disabilities
       const childUrl = "/children/" + childId;
-      fetch(process.env.REACT_APP_HOST_URL + childUrl)
-        .then((response) => response.json())
-        .then((childrenData) => {
-          const age = getAgeGivenBirthday(childrenData.birthDate);
-          const params = {
-            disabilities: JSON.stringify(childrenData.disabilities),
-            age: JSON.stringify(age),
-            //TODO: fix the data for upcoming vs priority
-            priority: JSON.stringify(2),
-          };
+      const response = await fetch(process.env.REACT_APP_HOST_URL + childUrl);
+      const childData = await response.json();
+      const age = getAgeGivenBirthday(childData.birthDate);
+      const params = {
+        disabilities: JSON.stringify(childData.disabilities),
+        age: JSON.stringify(age),
+        //TODO: fix the data for upcoming vs priority
+        priority: JSON.stringify(2),
+      };
 
-          // get tasks based on children's attributes
-          const url = formGetRequest("/tasks/getStats/", params);
-          fetch(process.env.REACT_APP_HOST_URL + url)
-            .then((response) => response.json())
-            .then((data) => {
-              setNumTasks(data.numUpcoming);
-              setNumAllTasks(data.numAll);
-            })
-            .catch((error) => console.log(error));
-        });
+      // get tasks based on children's attributes
+      const url = formGetRequest("/tasks/getStats/", params);
+      const statsResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
+      const statsData = await statsResponse.json();
+      console.log(statsData);
+      childrenStatsData.numUpcoming += statsData.numUpcoming;
+      childrenStatsData.numAll += statsData.numAll;
     });
+
+    await Promise.all(childPromises); // wait for all child promises to complete
+    return childrenStatsData;
   };
 
-  useEffect(() => {
-    getStats(childrenId);
+  useEffect(async () => {
+    const { numUpcoming, numAll } = await getStats(childrenId);
+    setNumAllTasks(numAll);
+    setNumTasks(numUpcoming);
   }, []);
 
   // set the import csv file
@@ -173,7 +179,7 @@ export const Roadmap = ({ toast }) => {
                     [styles.mobile]: isMobile,
                   })}
                 >
-                  Upcoming
+                  High&nbsp;Priority
                 </p>
               </div>
             </div>
@@ -182,7 +188,7 @@ export const Roadmap = ({ toast }) => {
                 [styles.mobile]: isMobile,
               })}
             >
-              All tasks with priority level 2
+              All tasks with priority level higher than 2
             </p>
           </div>
           <p
@@ -245,5 +251,3 @@ export const Roadmap = ({ toast }) => {
     </div>
   );
 };
-
-//Make each box into a compenent (lot of redundant code)** (move to components folder)

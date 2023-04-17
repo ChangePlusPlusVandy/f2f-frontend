@@ -16,6 +16,7 @@
     font-weight: 500;
     margin: 0;
     color: #000000;
+    width: 90%;
 }
 
 .title.mobile {
@@ -59,10 +60,4 @@
     margin: 2;
 
     color: #818181;
-}
-
-.upcomingIcon {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
 }

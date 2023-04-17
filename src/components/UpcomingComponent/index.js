@@ -19,6 +19,7 @@ export const UpcomingComponent = (props) => {
     completed,
     priority,
     childId,
+    childName,
     isMobile,
   } = props;
   const [checked, setChecked] = useState(completed);
@@ -54,16 +55,16 @@ export const UpcomingComponent = (props) => {
             className={cx(styles.title, {
               [styles.mobile]: isMobile,
             })}
+            onClick={() =>
+              navigate(ROUTES.TASK_DETAILS, {
+                state: { taskId, completed, childId },
+              })
+            }
           >
-            {title}
+            {title + " - " + childName}
           </p>
           <CheckBox value={checked} onChange={handleChecked} />
         </div>
-        {/* <img
-                src={upcomingIcon}
-                className={cx(styles.upcomingIcon)}
-                ref={imageEle}
-            /> */}
         <p
           className={cx(styles.time, {
             [styles.mobile]: isMobile,
@@ -74,7 +75,7 @@ export const UpcomingComponent = (props) => {
             })
           }
         >
-          {time}
+          {time + ", priority level: " + priority}
         </p>
         <p
           className={cx(styles.content, {
@@ -85,16 +86,6 @@ export const UpcomingComponent = (props) => {
           }
         >
           {content}
-        </p>
-        <p
-          className={cx(styles.content, {
-            [styles.mobile]: isMobile,
-          })}
-          onClick={() =>
-            navigate(ROUTES.TASK_DETAILS, { state: { taskId, completed } })
-          }
-        >
-          {priority}
         </p>
       </div>
     </>

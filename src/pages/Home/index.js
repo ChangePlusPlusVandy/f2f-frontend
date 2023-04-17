@@ -22,9 +22,8 @@ export const Home = () => {
   // TODO: cache
   const childrenId = [
     "63e5c4936d51fdbbbedb5503",
-    "63e5c4296d51fdbbbedb5500",
-    "63e5c4176d51fdbbbedb54fd",
-    "63e5c40a6d51fdbbbedb54fa",
+    "643b22b6ee8225a6684ac159",
+    "643b22b6ee8225a6684ac15b",
   ];
 
   const getChildrenPointsStats = async () => {

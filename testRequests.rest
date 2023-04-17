@@ -54,11 +54,12 @@ POST http://localhost:3001/tasks
 Content-Type: application/json
 
 {
-    "title": "Task 3",
+    "title": "Task 5",
     "details": "Call LIDDA based on county|https://resources.hhs.texas.gov/pages/find-services|https://resources.hhs.texas.gov/pages",
     "disabilities": ["ADHD", "disability1", "disability2"],
     "timePeriod": "monthly",
-    "age": "Adult"
+    "age": "Adult",
+    "priority": 1
 }
 
 ###

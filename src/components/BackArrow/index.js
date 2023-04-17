@@ -16,14 +16,13 @@ export const BackArrow = ({ showBackArrow = true, isMobile }) => {
     <>
       {showBackArrow && (
         <img
-          className={cx(styles.backArrow)}
+          className={cx(styles.backArrow, {
+            [styles.mobile]: isMobile,
+          })}
           src={backArrow}
           onClick={goBack}
           alt=""
         />
-        // <div >
-
-        // </div>
       )}
     </>
   );

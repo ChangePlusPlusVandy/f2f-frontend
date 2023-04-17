@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
 .container {
+    width: 70%;
+    margin: auto;
+    box-sizing: border-box;
+    padding: 2vw 2vw 2vw 2vw;
+}
+
+.container.mobile {
     width: 100%;
     box-sizing: border-box;
     padding: 2vw 2vw 2vw 2vw;

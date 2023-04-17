@@ -21,12 +21,16 @@
     bottom: 0;
 }
 
-@media screen and (min-width: 1000px) {
+.navBar.mobile {
+    height: 10vh;
+}
+
+/* @media screen and (min-width: 1000px) {
     .navBar {
         top: 0;
         height: 15vh;
     }
- }
+ } */
 
 .navItem.mobile {
     box-sizing: border-box;
