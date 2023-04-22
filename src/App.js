@@ -15,6 +15,7 @@ import { Roadmap } from "./pages/Roadmap";
 import { Community } from "./pages/Community";
 import { TaskDetails } from "./pages/TaskDetails";
 import { AllTasks } from "./pages/AllTasks";
+import { EmailVerification } from "./pages/Verification";
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="community" element={<Community />} />
           <Route path="login" element={<Login />} />
           <Route path="home" element={<Home />} />
+          <Route path="verification" element={<EmailVerification />} />
         </Routes>
       </BrowserRouter>
     </AppContextProvider>

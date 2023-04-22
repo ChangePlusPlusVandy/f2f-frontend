@@ -8,6 +8,9 @@ import { OnYourRadar } from "../../components/OnYourRadar";
 import { Slider } from "../../components/Slider";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { formGetRequest, getAgeGivenBirthday } from "../../lib/utils";
+import { AuthButton } from "../../components/AuthButton";
+import { useNavigate } from "react-router-dom";
+import { TIMEOUT } from "../../lib/constants";
 import { Loader } from "../LoadScreen";
 
 const cx = classNames.bind(styles);
@@ -15,17 +18,19 @@ const cx = classNames.bind(styles);
 export const Home = () => {
   const { width, type } = useWindowSize();
   const isMobile = type === WINDOW_TYPE.MOBILE;
-  // TODO: use Cache to store the user
-  const [lastName, setLastName] = useState("Adam's");
+  const [lastName, setLastName] = useState(localStorage.getItem("lastName"));
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalGoal, setTotalGoal] = useState(0);
   const [childrenStats, setChildrenStats] = useState([]);
-  // TODO: cache
-  const childrenId = [
-    "63e5c4936d51fdbbbedb5503",
-    "643b22b6ee8225a6684ac159",
-    "643b22b6ee8225a6684ac15b",
-  ];
+  const childrenId = JSON.parse(localStorage.getItem("children"));
+  const [timer, setTimer] = useState();
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   const getChildrenPointsStats = async () => {
     let totalPoints = 0;
@@ -63,12 +68,25 @@ export const Home = () => {
     return { totalPoints, totalGoal, childrenStats };
   };
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
   useEffect(async () => {
     const { totalPoints, totalGoal, childrenStats } =
       await getChildrenPointsStats();
     setTotalPoints(totalPoints);
     setTotalGoal(totalGoal);
     setChildrenStats(childrenStats);
+    console.log(localStorage);
+    setTimer(
+      setTimeout(() => {
+        localStorage.clear();
+        navigate("/login");
+      }, TIMEOUT)
+    );
   }, []);
 
   if (childrenStats.length !== childrenId.length) {
@@ -77,7 +95,11 @@ export const Home = () => {
 
   return (
     <div
-      style={{ overflow: "scroll", overscrollBehavior: "none", height: "92vh" }}
+      style={{
+        overflow: "scroll",
+        overscrollBehavior: "none",
+        height: "92vh",
+      }}
     >
       <div
         className={cx(styles.container, {
@@ -131,6 +153,11 @@ export const Home = () => {
         />
         <Slider childrenStats={childrenStats} isMobile={isMobile} />
         <OnYourRadar childrenId={childrenId} isMobile={isMobile} />
+        <AuthButton
+          label="Logout"
+          onClick={() => logout()}
+          isMobile={isMobile}
+        />
         <NavBar />
       </div>
     </div>

@@ -33,10 +33,6 @@ export const OnYourRadar = React.forwardRef((props, ref) => {
     </p>
   ));
 
-  if (hpElements.length === 0 || elseElements.length === 0) {
-    return <Loader />;
-  }
-
   return (
     <div
       className={cx(styles.todo_div, {

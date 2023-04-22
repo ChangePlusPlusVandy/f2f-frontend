@@ -28,7 +28,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/children/
+GET http://localhost:3001/children/643b22b6ee8225a6684ac15b
 Content-Type: application/json
 
 
@@ -46,7 +46,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/tasks/byAttributes/?disabilities=["ADHD","disability2"]&age=30
+GET http://localhost:3001/tasks/byAttributes/?disabilities=["ADHD","disability2"]
 Content-Type: application/json
 
 ###
@@ -63,5 +63,9 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3001/tasks
+GET http://localhost:3001/tasks/byAttributes/?disabilities=["ADHD/ADD"]&age="Adult"
+Content-Type: application/json
+
+###
+GET http://localhost:3001/tasks/getStats/?disabilities=["ADHD/ADD"]&age="Adult"&priority=2
 Content-Type: application/json

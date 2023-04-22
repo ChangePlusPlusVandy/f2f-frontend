@@ -17,12 +17,7 @@ export const AllTasks = () => {
   const [loaded, setLoaded] = useState(false);
   const [allTaskArray, setAllTaskArray] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  //TODO: get information using cache
-  const childrenId = [
-    "63e5c4936d51fdbbbedb5503",
-    "643b22b6ee8225a6684ac159",
-    "643b22b6ee8225a6684ac15b",
-  ];
+  const childrenId = JSON.parse(localStorage.getItem("children"));
   const [timer, setTimer] = useState();
 
   const navigate = useNavigate();
@@ -32,6 +27,12 @@ export const AllTasks = () => {
     setAllTaskArray(taskArray);
     setLoaded(true);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
 
   // handler for search box
   const handleSearch = (text) => {
@@ -47,8 +48,7 @@ export const AllTasks = () => {
   useEffect(() => {
     setTimer(
       setTimeout(() => {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("userID");
+        localStorage.clear();
         navigate("/login");
       }, TIMEOUT)
     );

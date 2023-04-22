@@ -31,8 +31,7 @@ export const TaskDetails = () => {
     console.log(localStorage);
     setTimer(
       setTimeout(() => {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("userID");
+        localStorage.clear();
         navigate("/login");
       }, TIMEOUT)
     );
@@ -90,6 +89,3 @@ export const TaskDetails = () => {
     </div>
   );
 };
-
-// need to import image/svg from backend
-// for page and each resource card

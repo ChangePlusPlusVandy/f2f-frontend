@@ -62,9 +62,9 @@ export const importCSVToJSON = (data) => {
       let obj = {};
       for (let c = 0; c < data[r].length; ++c) {
         var content = data[r][c];
-        // convert the string to array with spliterator "/"
-        if (content.includes("/")) {
-          content = content.split("/");
+        // convert the string to array with spliterator "|"
+        if (content.includes("|")) {
+          content = content.split("|");
         }
         obj[keys[c.toString()]] = content;
       }

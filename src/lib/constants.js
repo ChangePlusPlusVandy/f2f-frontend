@@ -11,7 +11,7 @@ export const WINDOW_TYPE = {
 };
 
 export const STATUS_CODE = {
-  SUCESS: "SUCESS",
+  SUCESS: "SUCCESS",
   ERROR: "ERROR",
 };
 
@@ -27,6 +27,7 @@ export const ROUTES = {
   UPCOMING_TASKS: "/upcoming",
   ALL_TASKS: "/tasks",
   TASK_DETAILS: "/task-details",
+  VERIFICATION: "/verification",
 };
 
 export const HOME_NAV_LABELS = {
@@ -48,6 +49,8 @@ export const AUTH_INPUT_LABELS = {
   ZIP_CODE: "Zip Code",
   PHONE_NUMBER: "Phone Number",
   SIGN_UP: "Sign Up!",
+  ADD_CHILD: "Add Child",
+  BIRTH_DATE: "Birth Date (MM-DD-YYYY)",
 };
 
 // page titles

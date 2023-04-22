@@ -5,7 +5,6 @@
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +14,7 @@
   display: block;
   background-color: white;
   width: 80%;
-  height: 50%;
+  height: auto;
 
   font-family: "Poppins";
   padding: 30px;
@@ -72,4 +71,8 @@
   align-items: center;
   justify-content: center;
   border-width: 0;
+}
+
+.content_container {
+  font-size: 10vw;
 }

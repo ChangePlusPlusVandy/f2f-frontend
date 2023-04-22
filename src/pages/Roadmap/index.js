@@ -28,12 +28,7 @@ export const Roadmap = ({ toast }) => {
   const [numAllTasks, setNumAllTasks] = useState(0);
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
-  //TODO: get the information from cache
-  const childrenId = [
-    "63e5c4936d51fdbbbedb5503",
-    "643b22b6ee8225a6684ac159",
-    "643b22b6ee8225a6684ac15b",
-  ];
+  const childrenId = JSON.parse(localStorage.getItem("children"));
   const [timer, setTimer] = useState();
 
   const getStats = async (childrenId) => {
@@ -48,11 +43,12 @@ export const Roadmap = ({ toast }) => {
         disabilities: JSON.stringify(childData.disabilities),
         age: JSON.stringify(age),
         //TODO: fix the data for upcoming vs priority
-        priority: JSON.stringify(2),
+        priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
       };
 
       // get tasks based on children's attributes
       const url = formGetRequest("/tasks/getStats/", params);
+      console.log(url);
       const statsResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
       const statsData = await statsResponse.json();
       childrenStatsData.numUpcoming += statsData.numUpcoming;
@@ -68,6 +64,21 @@ export const Roadmap = ({ toast }) => {
     setNumAllTasks(numAll);
     setNumTasks(numUpcoming);
     setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
+  useEffect(() => {
+    setTimer(
+      setTimeout(() => {
+        localStorage.clear();
+        navigate("/login");
+      }, TIMEOUT)
+    );
   }, []);
 
   // set the import csv file

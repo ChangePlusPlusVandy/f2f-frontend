@@ -52,17 +52,12 @@ export const Login = () => {
         return response.json();
       })
       .then((res) => {
-        console.log(res);
         if (res.message === STATUS_CODE.SUCESS) {
           localStorage.setItem("userID", res.id);
           localStorage.setItem("jwtToken", res.token);
-          fetch(process.env.REACT_APP_HOST_URL + "/users/getChildren")
-            .then((response) => {
-              response.json();
-            })
-            .then((data) => {
-              localStorage.setItem("children", data);
-            });
+          localStorage.setItem("firstName", res.firstName);
+          localStorage.setItem("lastName", res.lastName);
+          localStorage.setItem("children", JSON.stringify(res.children));
           setIsLoggedIn(true);
         } else {
           setError(res.message);
@@ -138,7 +133,8 @@ export const Login = () => {
           <text className={cx(styles.form_extras, "desc")}>
             <Link
               to="/forgot-password"
-              style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
+              style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}
+            >
               <b>Forgot Password</b>
             </Link>
           </text>
@@ -156,7 +152,8 @@ export const Login = () => {
           Don't have an account?&nbsp;
           <Link
             to={ROUTES.SIGN_UP}
-            style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}>
+            style={{ textDecoration: "none", color: "rgb(2, 152, 186)" }}
+          >
             <b>Sign up</b>
           </Link>
         </text>
