@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, createContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import classNames from "classnames/bind";
 import Papa from "papaparse";
-import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
 import { ROUTES, PRIORITY_LEVEL, TIMEOUT } from "../../lib/constants";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
@@ -30,6 +29,7 @@ export const Roadmap = ({ toast }) => {
   const [importFile, setImportFile] = useState(null);
   const childrenId = JSON.parse(localStorage.getItem("children"));
   const [timer, setTimer] = useState();
+  const userId = localStorage.getItem("userID");
 
   const getStats = async (childrenId) => {
     let childrenStatsData = { numUpcoming: 0, numAll: 0 };
@@ -42,13 +42,11 @@ export const Roadmap = ({ toast }) => {
       const params = {
         disabilities: JSON.stringify(childData.disabilities),
         age: JSON.stringify(age),
-        //TODO: fix the data for upcoming vs priority
         priority: JSON.stringify(PRIORITY_LEVEL.PRIORITY_LEVEL),
       };
 
       // get tasks based on children's attributes
       const url = formGetRequest("/tasks/getStats/", params);
-      console.log(url);
       const statsResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
       const statsData = await statsResponse.json();
       childrenStatsData.numUpcoming += statsData.numUpcoming;
@@ -143,29 +141,33 @@ export const Roadmap = ({ toast }) => {
         height: "80vh",
       }}
     >
-      <div>
-        <AuthButton
-          className={cx(styles.csvButton)}
-          label="Import Task CSV"
-          onClick={onImport}
-          isMobile={isMobile}
-        />
-        <input
-          type="file"
-          accept=".csv"
-          ref={uploadRef}
-          style={{ display: "none" }}
-          onChange={(e) => setImportFile(e.target.files[0])}
-        />
-      </div>
-      <div>
-        <AuthButton
-          className={cx(styles.csvButton)}
-          label="Export Task CSV"
-          onClick={onExport}
-          isMobile={isMobile}
-        />
-      </div>
+      {userId === process.env.REACT_APP_ADMIN_ID && (
+        <div>
+          <div>
+            <AuthButton
+              className={cx(styles.csvButton)}
+              label="Import Task CSV"
+              onClick={onImport}
+              isMobile={isMobile}
+            />
+            <input
+              type="file"
+              accept=".csv"
+              ref={uploadRef}
+              style={{ display: "none" }}
+              onChange={(e) => setImportFile(e.target.files[0])}
+            />
+          </div>
+          <div>
+            <AuthButton
+              className={cx(styles.csvButton)}
+              label="Export Task CSV"
+              onClick={onExport}
+              isMobile={isMobile}
+            />
+          </div>
+        </div>
+      )}
 
       <div
         onClick={() => navigate(ROUTES.UPCOMING_TASKS)}
