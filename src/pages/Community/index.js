@@ -3,6 +3,8 @@ import classNames from "classnames";
 import styles from "./index.module.css";
 import { BackArrow } from "../../components/BackArrow";
 import { NavBar } from "../NavBar";
+import { useNavigate } from "react-router-dom";
+import { TIMEOUT } from "../../lib/constants";
 
 // component imports
 import Dropdown from "../../components/CommunityHeader";
@@ -99,6 +101,10 @@ export const Community = () => {
     "Autism",
     "Cant be ",
   ]);
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [timer, setTimer] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/community")
@@ -111,6 +117,22 @@ export const Community = () => {
         console.log(error.message);
       });
   }, []);
+
+  useEffect(() => {
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
 
   const createPost = () => {
     console.log("called");

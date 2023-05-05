@@ -1,7 +1,16 @@
 .backArrow {
     display: flex;
     justify-content: center;
-    width: 5%;
+    width: 2%;
+    height: auto;
+    margin-top: 4vh;
+    margin-left: 5%;
+  }
+
+  .backArrow.mobile {
+    display: flex;
+    justify-content: center;
+    width: 4%;
     height: auto;
     margin-top: 4vh;
     margin-left: 5%;

@@ -7,14 +7,13 @@ const cx = classNames.bind(styles);
 
 // The caption of each home page
 export const CheckBox = (props) => {
-  const { value, onChange } = props;
-
-  const { type } = useWindowSize();
-  const isMobile = type === WINDOW_TYPE.MOBILE;
+  const { value, onChange, isMobile } = props;
 
   return (
     <input
-      className={cx(styles.checkBox)}
+      className={cx(styles.checkBox, {
+        [styles.mobile]: isMobile,
+      })}
       type="checkbox"
       checked={value}
       onChange={onChange}

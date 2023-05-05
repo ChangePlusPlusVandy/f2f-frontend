@@ -86,50 +86,51 @@ export const uncheckEvent = (childId, taskId) => {
 /**
  * @param {Array} childrenId an array of children Id's
  * @param {boolean} priority the priority level queried for Upcoming tasks
- * @param {Array} taskArray the task array to be set: a 2D array where each child possesses their respective
- * tasks based on age and disabilities
- * @param {Function} setTaskArray the function to set task array
+ * @return {Array} taskArray the nested 2D array of tasks belonging to each child
  */
-export const getChildrenTasksArray = (
-  childrenId,
-  priority,
-  taskArray,
-  setTaskArray
-) => {
-  childrenId.forEach((childId) => {
+
+export const getChildrenTasksArray = async (childrenId, priority) => {
+  let taskArray = [];
+  const childPromises = childrenId.map(async (childId) => {
     // get child's name and disabilities
     const childUrl = "/children/" + childId;
-    fetch(process.env.REACT_APP_HOST_URL + childUrl)
-      .then((response) => response.json())
-      .then((childrenData) => {
-        const childName = childrenData.firstName;
-        const age = getAgeGivenBirthday(childrenData.birthDate);
-        const completedTasks = childrenData.completedTasks;
-        const params = {
-          disabilities: JSON.stringify(childrenData.disabilities),
-          age: JSON.stringify(age),
-        };
-        if (priority) {
-          params.priority = JSON.stringify(2);
-        }
+    const response = await fetch(process.env.REACT_APP_HOST_URL + childUrl);
+    const childData = await response.json();
+    const childName = childData.firstName;
+    const completedTasks = childData.completedTasks;
+    const age = getAgeGivenBirthday(childData.birthDate);
+    const params = {
+      disabilities: JSON.stringify(childData.disabilities),
+      age: JSON.stringify(age),
+    };
+    if (priority) {
+      params.priority = JSON.stringify(2);
+    }
 
-        // get tasks based on children's attributes
-        const url = formGetRequest("/tasks/byAttributes/", params);
-        fetch(process.env.REACT_APP_HOST_URL + url)
-          .then((response) => response.json())
-          .then((taskData) => {
-            const namedTasks = taskData.map((item) => {
-              return {
-                ...item,
-                childName: childName,
-                childId: childId,
-                completed: completedTasks.includes(item._id),
-              };
-            });
-            const newTaskArray = [...taskArray, namedTasks];
-            setTaskArray(newTaskArray);
-          })
-          .catch((error) => console.log(error));
-      });
+    // get tasks based on children's attributes
+    const url = formGetRequest("/tasks/byAttributes/", params);
+    const taskResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
+    const taskData = await taskResponse.json();
+    const namedTasks = taskData.map((item) => {
+      return {
+        ...item,
+        childName: childName,
+        childId: childId,
+        completed: completedTasks.includes(item._id),
+      };
+    });
+    taskArray.push(namedTasks);
   });
+
+  await Promise.all(childPromises); // wait for all child promises to complete
+
+  return { taskArray };
+};
+
+export const logoutTimer = () => {
+  setTimeout(() => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("userID");
+    return;
+  }, 15000);
 };

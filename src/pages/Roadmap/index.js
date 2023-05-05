@@ -3,8 +3,7 @@ import classNames from "classnames/bind";
 import Papa from "papaparse";
 import { useAuth } from "../../lib/AuthContext";
 import styles from "./index.module.css";
-import { ROUTES, PRIORITY_LEVEL } from "../../lib/constants";
-import { getChildrenTasksArray } from "../../lib/services";
+import { ROUTES, PRIORITY_LEVEL, TIMEOUT } from "../../lib/constants";
 import { ReactComponent as Calender } from "../../svg/roadmapCalender.svg";
 import { ReactComponent as Box } from "../../svg/roadmapBox.svg";
 import { useNavigate } from "react-router-dom";
@@ -14,54 +13,61 @@ import {
   getAgeGivenBirthday,
 } from "../../lib/utils";
 import { AuthButton } from "../../components/AuthButton";
+import { useWindowSize } from "../../lib/hooks";
+import { WINDOW_TYPE } from "../../lib/constants";
+import Loader from "../LoadScreen";
 
 const cx = classNames.bind(styles);
 
 export const Roadmap = ({ toast }) => {
+  const { width, type } = useWindowSize();
+  const isMobile = type === WINDOW_TYPE.MOBILE;
   const navigate = useNavigate();
+  const [loaded, setLoaded] = useState(false);
   const [numTasks, setNumTasks] = useState(0);
   const [numAllTasks, setNumAllTasks] = useState(0);
   const uploadRef = useRef();
   const [importFile, setImportFile] = useState(null);
-  const [hpList, sethpList] = useState([]);
-  const [elseList, setElseList] = useState([]);
   //TODO: get the information from cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const childrenId = [
+    "63e5c4936d51fdbbbedb5503",
+    "643b22b6ee8225a6684ac159",
+    "643b22b6ee8225a6684ac15b",
+  ];
+  const [timer, setTimer] = useState();
 
-  const getStats = (childrenId) => {
-    childrenId.forEach((childId) => {
+  const getStats = async (childrenId) => {
+    let childrenStatsData = { numUpcoming: 0, numAll: 0 };
+    const childPromises = childrenId.map(async (childId) => {
       // get child's name and disabilities
       const childUrl = "/children/" + childId;
-      fetch(process.env.REACT_APP_HOST_URL + childUrl)
-        .then((response) => response.json())
-        .then((childrenData) => {
-          const childName = childrenData.firstName;
-          const age = getAgeGivenBirthday(childrenData.birthDate);
-          const completedTasks = childrenData.completedTasks;
-          const params = {
-            disabilities: JSON.stringify(childrenData.disabilities),
-            age: JSON.stringify(age),
-            //TODO: fix the data for upcoming vs priority
-            priority: JSON.stringify(2),
-          };
+      const response = await fetch(process.env.REACT_APP_HOST_URL + childUrl);
+      const childData = await response.json();
+      const age = getAgeGivenBirthday(childData.birthDate);
+      const params = {
+        disabilities: JSON.stringify(childData.disabilities),
+        age: JSON.stringify(age),
+        //TODO: fix the data for upcoming vs priority
+        priority: JSON.stringify(2),
+      };
 
-          // get tasks based on children's attributes
-          const url = formGetRequest("/tasks/getStats/", params);
-          fetch(process.env.REACT_APP_HOST_URL + url)
-            .then((response) => response.json())
-            .then((data) => {
-              setNumTasks(data.numUpcoming);
-              setNumAllTasks(data.numAll);
-            })
-            .catch((error) => console.log(error));
-        });
+      // get tasks based on children's attributes
+      const url = formGetRequest("/tasks/getStats/", params);
+      const statsResponse = await fetch(process.env.REACT_APP_HOST_URL + url);
+      const statsData = await statsResponse.json();
+      childrenStatsData.numUpcoming += statsData.numUpcoming;
+      childrenStatsData.numAll += statsData.numAll;
     });
+
+    await Promise.all(childPromises); // wait for all child promises to complete
+    return childrenStatsData;
   };
 
-  useEffect(() => {
-    getStats(childrenId);
-    getChildrenTasksArray(childrenId, true, hpList, sethpList);
-    getChildrenTasksArray(childrenId, false, elseList, setElseList);
+  useEffect(async () => {
+    const { numUpcoming, numAll } = await getStats(childrenId);
+    setNumAllTasks(numAll);
+    setNumTasks(numUpcoming);
+    setLoaded(true);
   }, []);
 
   // set the import csv file
@@ -82,7 +88,8 @@ export const Roadmap = ({ toast }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(inputObj),
           })
-            .then((response) => console.log(response.json()))
+            .then((response) => response.json())
+            .then((data) => toast("Successfully uploaded the csv!"))
             .catch((error) => {
               console.error(error);
             });
@@ -99,27 +106,23 @@ export const Roadmap = ({ toast }) => {
     uploadRef.current.click();
   };
 
-  const hpElements = hpList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-  const elseElements = elseList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
+  const onExport = async () => {
+    const exportUrl = "/users/exportCSV";
+    fetch(process.env.REACT_APP_HOST_URL + exportUrl)
+      .then((response) => response.arrayBuffer())
+      .then((arrayBuffer) => {
+        const blob = new Blob([arrayBuffer], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "users.csv");
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((error) => console.error(error));
+  };
 
-  const hpElements = hpList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
-  const elseElements = elseList.flat().map((thing, index) => (
-    <p className={styles.list} key={index}>
-      {index + 1 + ". " + thing.title}
-    </p>
-  ));
+  if (!loaded) return <Loader />;
 
   return (
     <div
@@ -129,19 +132,12 @@ export const Roadmap = ({ toast }) => {
         height: "80vh",
       }}
     >
-      {/* <div style={{ textAlign: "center" }}>
-        <p className={cx(styles.header)}>Road Map</p>
-        <p className={cx(styles.header, "small")}>
-          Below are all the tasks needed to be completed
-        </p>
-      </div> */}
-
       <div>
         <AuthButton
           className={cx(styles.csvButton)}
           label="Import Task CSV"
           onClick={onImport}
-          isMobile={true}
+          isMobile={isMobile}
         />
         <input
           type="file"
@@ -151,15 +147,29 @@ export const Roadmap = ({ toast }) => {
           onChange={(e) => setImportFile(e.target.files[0])}
         />
       </div>
+      <div>
+        <AuthButton
+          className={cx(styles.csvButton)}
+          label="Export Task CSV"
+          onClick={onExport}
+          isMobile={isMobile}
+        />
+      </div>
 
       <div
         onClick={() => navigate(ROUTES.UPCOMING_TASKS)}
-        className={cx(styles.tasks_div)}
+        className={cx(styles.tasks_div, {
+          [styles.mobile]: isMobile,
+        })}
       >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
-              <Calender className={cx(styles.icon)} />
+              <Calender
+                className={cx(styles.icon, {
+                  [styles.mobile]: isMobile,
+                })}
+              />
               <div
                 style={{
                   position: "relative",
@@ -167,25 +177,47 @@ export const Roadmap = ({ toast }) => {
                   margin: "10px",
                 }}
               >
-                <p className={cx(styles.taskDesc)}>High&nbsp;Priority</p>
+                <p
+                  className={cx(styles.taskDesc, {
+                    [styles.mobile]: isMobile,
+                  })}
+                >
+                  High&nbsp;Priority
+                </p>
               </div>
             </div>
-            <p className={cx(styles.header, "small")}>
-              All tasks with priority level 2
+            <p
+              className={cx(styles.header, "small", {
+                [styles.mobile]: isMobile,
+              })}
+            >
+              All tasks with priority level higher than 2
             </p>
           </div>
-          <p className={cx(styles.taskNum)}>{numTasks}</p>
+          <p
+            className={cx(styles.taskNum, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {numTasks}
+          </p>
         </div>
       </div>
 
       <div
         onClick={() => navigate(ROUTES.ALL_TASKS)}
-        className={cx(styles.tasks_div, "all")}
+        className={cx(styles.tasks_div, "all", {
+          [styles.mobile]: isMobile,
+        })}
       >
         <div style={{ display: "flex", margin: "10px" }}>
           <div style={{ display: "inline-block" }}>
             <div style={{ display: "flex" }}>
-              <Box className={cx(styles.icon)} />
+              <Box
+                className={cx(styles.icon, {
+                  [styles.mobile]: isMobile,
+                })}
+              />
               <div
                 style={{
                   position: "relative",
@@ -193,25 +225,32 @@ export const Roadmap = ({ toast }) => {
                   margin: "10px",
                 }}
               >
-                <p className={cx(styles.taskDesc)}>All&nbsp;Tasks</p>
+                <p
+                  className={cx(styles.taskDesc, {
+                    [styles.mobile]: isMobile,
+                  })}
+                >
+                  All&nbsp;Tasks
+                </p>
               </div>
             </div>
-            <p className={cx(styles.header, "small")}>Everything on the list</p>
+            <p
+              className={cx(styles.header, "small", {
+                [styles.mobile]: isMobile,
+              })}
+            >
+              Everything on the list
+            </p>
           </div>
-          <p className={cx(styles.taskNum)}>{numAllTasks}</p>
+          <p
+            className={cx(styles.taskNum, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            {numAllTasks}
+          </p>
         </div>
-      </div>
-
-      {/* just for mvp */}
-      <div className={cx(styles.todo_div)}>
-        <h1 className={cx(styles.radar)}>On Your Radar</h1>
-        <h2 className={cx(styles.priority)}>High Priority</h2>
-        {hpElements}
-        <h2 className={cx(styles.priority, "else")}>All Tasks</h2>
-        {elseElements}
       </div>
     </div>
   );
 };
-
-//Make each box into a compenent (lot of redundant code)** (move to components folder)

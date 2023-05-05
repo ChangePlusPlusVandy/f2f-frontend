@@ -4,17 +4,33 @@ import styles from "./index.module.css";
 import { AllTasksSection } from "../../components/AllTasksSection";
 import ReactSearchBox from "react-search-box";
 import { getChildrenTasksArray } from "../../lib/services";
+import { useNavigate } from "react-router-dom";
+import { TIMEOUT, WINDOW_TYPE } from "../../lib/constants";
+import { useWindowSize } from "../../lib/hooks";
+import Loader from "../LoadScreen";
 
 const cx = classNames.bind(styles);
 
 export const AllTasks = () => {
+  const { width, type } = useWindowSize();
+  const isMobile = type === WINDOW_TYPE.MOBILE;
+  const [loaded, setLoaded] = useState(false);
   const [allTaskArray, setAllTaskArray] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   //TODO: get information using cache
-  const childrenId = ["63e5c4936d51fdbbbedb5503"];
+  const childrenId = [
+    "63e5c4936d51fdbbbedb5503",
+    "643b22b6ee8225a6684ac159",
+    "643b22b6ee8225a6684ac15b",
+  ];
+  const [timer, setTimer] = useState();
 
-  useEffect(() => {
-    getChildrenTasksArray(childrenId, false, allTaskArray, setAllTaskArray);
+  const navigate = useNavigate();
+
+  useEffect(async () => {
+    const { taskArray } = await getChildrenTasksArray(childrenId, false);
+    setAllTaskArray(taskArray);
+    setLoaded(true);
   }, []);
 
   // handler for search box
@@ -28,6 +44,24 @@ export const AllTasks = () => {
     })
   );
 
+  useEffect(() => {
+    setTimer(
+      setTimeout(() => {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userID");
+        navigate("/login");
+      }, TIMEOUT)
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timer]);
+
+  if (!loaded) return <Loader />;
+
   return (
     <div
       style={{
@@ -39,24 +73,23 @@ export const AllTasks = () => {
       <ReactSearchBox
         placeholder="Search"
         onChange={handleSearch}
-        inputHeight="10vw"
-        inputFontSize="5vw"
+        inputHeight={isMobile ? "10vw" : "3vw"}
+        inputFontSize={isMobile ? "5vw" : "1.5vw"}
       />
       <div
         style={{
           overflow: "scroll",
           overscrollBehavior: "none",
-          height: "66vh",
         }}
       >
         {filteredSections.map((childTasks, childTasksIndex) => (
-          <AllTasksSection taskList={childTasks} key={childTasksIndex} />
+          <AllTasksSection
+            taskList={childTasks}
+            isMobile={isMobile}
+            key={childTasksIndex}
+          />
         ))}
       </div>
     </div>
   );
 };
-
-//first two headers may go on separate lines
-//check this for other code
-//add search bar implementation**

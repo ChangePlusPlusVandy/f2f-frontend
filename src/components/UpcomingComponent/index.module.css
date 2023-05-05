@@ -2,8 +2,6 @@
 
 .upcomingWrapper {
     composes: font;
-    margin: 4vw 0;
-    padding: 4vw;
     background-color: rgba(1, 152, 186, 0.15);
     border-radius: 50px;
 }
@@ -12,50 +10,34 @@
     display: flex;
 }
 
-.header.mobile {
-    display: flex;
-}
-
 .title{
     font-style: normal;
-    font-size: 4vw;
+    font-size: 1.7vw;
     font-weight: 500;
     margin: 0;
     color: #000000;
+    width: 90%;
 }
 
 .title.mobile {
-    font-style: normal;
     font-size: 7vw;
-    font-weight: 500;
-    margin: 0;
-    color: #000000;
 }
 
 .time{
     font-style: normal;
     font-weight: 400;
-    font-size: 1.5vw;
-    color: #8B5674;
-    margin: 2;
-
+    font-size: 1.2vw;
     color: #0198BA;
 }
 
 .time.mobile{
-    font-style: normal;
-    font-weight: 400;
     font-size: 3vw;
-    color: #8B5674;
-    margin: 2;
-
-    color: #0198BA;
 }
 
 .content{
     font-style: normal;
     font-weight: 300;
-    font-size: 2vw;
+    font-size: 1.2vw;
     color: #8B5674;
     margin: 2;
 
@@ -63,17 +45,5 @@
 }
 
 .content.mobile {
-    font-style: normal;
-    font-weight: 300;
     font-size: 3vw;
-    color: #8B5674;
-    margin: 2;
-
-    color: #818181;
-}
-
-.upcomingIcon {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
 }

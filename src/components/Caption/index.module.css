@@ -9,6 +9,14 @@
     border: 0;
 }
 
+.mainTitle {
+    height: fit-content;
+    font-family: "Poppins";
+    font-style: normal;
+    font-size: 3vw;
+    font-weight: 900;
+}
+
 .mainTitle.mobile {
     height: fit-content;
     font-family: "Poppins";
@@ -17,12 +25,13 @@
     font-weight: 900;
 }
 
-.mainTitle {
+.subTitle {
     height: fit-content;
     font-family: "Poppins";
     font-style: normal;
-    font-size: 4vw;
-    font-weight: 900;
+    font-size: 1vw;
+    font-weight: 500;
+    color: #818181;
 }
 
 .subTitle.mobile {
@@ -30,15 +39,6 @@
     font-family: "Poppins";
     font-style: normal;
     font-size: 4vw;
-    font-weight: 500;
-    color: #818181;
-}
-
-.subTitle {
-    height: fit-content;
-    font-family: "Poppins";
-    font-style: normal;
-    font-size: 2vw;
     font-weight: 500;
     color: #818181;
 }

@@ -37,7 +37,7 @@ export const HomeLayout = () => {
           {" "}
         </div>
       )}
-      <BackArrow showBackArrow={showBackArrow} />
+      <BackArrow showBackArrow={showBackArrow} isMobile={isMobile} />
 
       <Caption
         mainTitle={mainTitle}
